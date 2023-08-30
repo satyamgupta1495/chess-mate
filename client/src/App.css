@@ -33,6 +33,21 @@ p {
   color: white !important;
 }
 
+.custom-btn {
+  background-color: #f5f5f5;
+  color: #000;
+  border: none;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.reset-button {}
+
 .container {
   /* background-color: red; */
   display: flex;
