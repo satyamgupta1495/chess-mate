@@ -17,19 +17,20 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   font-family: 'Roboto', sans-serif;
-  font-weight: 300;
 }
 
-h1 {
+h1,
+p {
   color: white !important;
 }
 
 .container {
   /* background-color: red; */
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  width: 50vw !important;
+  width: 100vw !important;
+  height: 100vh !important;
 }
 
 .chess-board {
@@ -40,16 +41,19 @@ h1 {
   flex-direction: column;
 }
 
-.chess-board h1 {
+.chess-board p {
   /* background-color: violet; */
+  font-size: 1rem;
+
 }
 
-#BasicBoard {
-  /* background-color: aquamarine; */
-}
 
 .controls {
   /* background-color: yellow; */
+  position: absolute;
+  left: 0;
+  top: 5rem;
+  z-index: 999;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

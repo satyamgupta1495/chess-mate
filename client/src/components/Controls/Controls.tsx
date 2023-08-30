@@ -16,10 +16,9 @@ function Controls({ setGame, setMode, mode }: ControlsProps) {
             <div className="controls">
                 <Form.Select className='custom-select' aria-label="Default select" value={mode} onChange={onSelect}>
                     <option>Choose mode</option>
-                    <option value="analyze">Analyze</option>
+                    <option value="analyze">Two Players</option>
                     <option value="random">Computer</option>
                 </Form.Select>
-
             </div>
         </>
     )
