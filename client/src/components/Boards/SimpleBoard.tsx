@@ -8,10 +8,11 @@ type SimpleBoardProps = {
   mode?: string,
   position?: any,
   game?: any,
-  setGame?: any
+  setGame?: any,
+  currentTheme?: string,
 }
 
-export default function SimpleBoard({ position, game, setGame, mode }: SimpleBoardProps) {
+export default function SimpleBoard({ position, game, setGame, mode, currentTheme }: SimpleBoardProps) {
 
   const [boardWidth, setBoardWidth] = useState(window.innerWidth * 0.8);
 
@@ -39,7 +40,7 @@ export default function SimpleBoard({ position, game, setGame, mode }: SimpleBoa
       <p>♟️Chess-mate</p>
       <Chessboard id="BasicBoard"
         boardWidth={boardWidth}
-        customDarkSquareStyle={{ backgroundColor: '#769656' }}
+        customDarkSquareStyle={{ backgroundColor: `${currentTheme}` || '#769656' }}
         customLightSquareStyle={{ backgroundColor: '#eeeed2' }}
         customBoardStyle={{ borderRadius: '5px', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5 ' }}
         position={position}

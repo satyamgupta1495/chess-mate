@@ -5,12 +5,14 @@ import useControl from './hooks/useControl';
 type ControlsProps = {
     setGame: any,
     setMode: any,
-    mode: string
+    mode: string,
+    currentTheme: string,
+    setCurrTheme: any
 }
 
-function Controls({ setGame, setMode, mode }: ControlsProps) {
+function Controls({ setGame, setMode, mode, currentTheme, setCurrTheme }: ControlsProps) {
 
-    const { onSelect } = useControl({ setGame, setMode })
+    const { onSelect, onThemeSelect } = useControl({ setGame, setMode, setCurrTheme })
     return (
         <>
             <div className="controls">
@@ -18,6 +20,13 @@ function Controls({ setGame, setMode, mode }: ControlsProps) {
                     <option>Choose mode</option>
                     <option value="analyze">Two Players</option>
                     <option value="random">Computer</option>
+                </Form.Select>
+
+                <Form.Select className='custom-select' aria-label="Default select" value={currentTheme} onChange={onThemeSelect}>
+                    <option>Choose theme</option>
+                    <option value="red">Red</option>
+                    <option value="purple">Purple</option>
+                    <option value="pink">Baby Pink</option>
                 </Form.Select>
             </div>
         </>
