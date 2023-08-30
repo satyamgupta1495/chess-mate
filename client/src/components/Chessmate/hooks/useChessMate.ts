@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { Chess } from 'chess.js'
-import SimpleBoard from './Boards/SimpleBoard'
-import Controls from './Controls/Controls';
 
-function ChessMate() {
+export default function useChessMate() {
+
     const [game, setGame] = useState<any>(new Chess());
     const [mode, setMode] = useState<string>("")
 
@@ -15,18 +14,20 @@ function ChessMate() {
     function makeRandomMove() {
         const possibleMoves = game.moves();
         if (game.isGameOver() || game.isDraw() || possibleMoves.length === 0) {
-            alert("Game over");
+            alert("Game over!");
             return;
         }
         const randomIndex = Math.floor(Math.random() * possibleMoves.length);
         makeMove(possibleMoves[randomIndex]);
     }
 
-    function onDrop(sourceSquare: string, targetSquare: string) {
+    function onDrop(sourceSquare: string, targetSquare: string, piece: string) {
+
+        console.log(piece)
         const move = makeMove({
             from: sourceSquare,
             to: targetSquare,
-            promotion: "q",
+            promotion: piece.slice(1).toLowerCase() ?? "q",
         });
 
         // illegal move
@@ -35,14 +36,8 @@ function ChessMate() {
         return true;
     }
 
-    return (
-        <>
-            <div className="container">
-                <Controls setGame={setGame} setMode={setMode} mode={mode} />
-                <SimpleBoard position={game.fen()} onPieceDrop={onDrop} />
-            </div >
-        </>
-    )
-}
+    return {
+        game, setGame, mode, setMode, makeMove, makeRandomMove, onDrop
+    }
 
-export default ChessMate
+}

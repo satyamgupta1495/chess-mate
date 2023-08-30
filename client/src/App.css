@@ -1,3 +1,8 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Rubik+Iso&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rubik+Iso&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rubik+Iso&family=Sedgwick+Ave+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rubik+Iso&family=Sedgwick+Ave+Display&family=Ubuntu&display=swap');
+
 #root {
   margin: 0 auto;
   text-align: center;
@@ -9,6 +14,10 @@
   padding: 0;
   text-align: center;
   box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+  /* font-family: 'Rubik Iso', cursive; */
+  /* font-family: 'Black Ops One', cursive; */
+  /* font-family: 'Sedgwick Ave Display', cursive; */
 }
 
 body {
@@ -16,7 +25,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  font-family: 'Roboto', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
 }
 
 h1,
@@ -33,6 +42,10 @@ p {
   height: 100vh !important;
 }
 
+.container p {
+  font-family: 'Black Ops One', cursive;
+}
+
 .chess-board {
   /* background-color: blue; */
   display: flex;
@@ -43,7 +56,7 @@ p {
 
 .chess-board p {
   /* background-color: violet; */
-  font-size: 1rem;
+  font-size: 2.5rem;
 
 }
 

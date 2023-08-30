@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
 import { Chessboard } from "react-chessboard";
+// import useSimpleBoard from "./hooks/useSimpleBoard";
 
 type SimpleBoardProps = {
   onPieceDrop?: any,
-  position?: any
+  position?: any,
 }
 
 export default function SimpleBoard({ onPieceDrop, position }: SimpleBoardProps) {
 
   const [boardWidth, setBoardWidth] = useState(window.innerWidth * 0.8);
 
+  // const { onSquareClick, onSquareRightClick, showPromotionDialog, } = useSimpleBoard()
+
+  function handleResize() {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const minDimension = Math.min(windowWidth, windowHeight);
+    const boardWidth = Math.floor(minDimension * 0.8);
+    setBoardWidth(boardWidth);
+  }
+
   useEffect(() => {
-    function handleResize() {
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-      const minDimension = Math.min(windowWidth, windowHeight);
-      const boardWidth = Math.floor(minDimension * 0.8);
-      setBoardWidth(boardWidth);
-    }
 
     handleResize();
     window.addEventListener("resize", handleResize);
