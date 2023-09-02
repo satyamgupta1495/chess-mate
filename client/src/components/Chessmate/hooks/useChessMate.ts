@@ -5,7 +5,7 @@ export default function useChessMate() {
 
     const [game, setGame] = useState<any>(new Chess());
     const [mode, setMode] = useState<string>("")
-    const [currTheme, setCurrTheme] = useState<string>("")
+    const [currTheme, setCurrTheme] = useState<string>("default")
     const [currentTurn, setCurrentTurn] = useState<string>("White")
 
     return {
