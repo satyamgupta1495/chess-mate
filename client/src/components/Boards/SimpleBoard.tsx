@@ -65,6 +65,9 @@ export default function SimpleBoard({ position, game, setGame, mode, currentThem
             <span className="turns-icon">{currentTurn === "White" ? <TbChessQueen /> : <TbChessQueenFilled />}</span>
             {currentTurn === "White" ? "White to move!" : "Black to move!"}
           </p>
+          <p>
+            Current mode : <span className="mode">{mode}</span>
+          </p>
         </div>
         <div className="control-btns">
           <Button

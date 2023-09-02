@@ -36,8 +36,8 @@ export default function useSimpleBoard({ game, setGame, mode, setCurrentTurn, cu
 
     function makeRandomMove() {
         const possibleMoves = game.moves();
-        if (game.isGameOver() || game.isDraw() || possibleMoves.length === 0) {
-            alert("Game over!");
+        if (game.game_over() || game.in_draw() || possibleMoves.length === 0) {
+            alert(currentTurn === 'White' ? 'White wins🎊' : 'Black Wins🎊')
             return;
         }
         const randomIndex = Math.floor(Math.random() * possibleMoves.length);
@@ -56,7 +56,6 @@ export default function useSimpleBoard({ game, setGame, mode, setCurrentTurn, cu
         { mode === 'random' && setTimeout(makeRandomMove, 200); }
 
         resetMove()
-
         return true;
     }
 
@@ -158,7 +157,7 @@ export default function useSimpleBoard({ game, setGame, mode, setCurrentTurn, cu
 
             makeMove(move);
 
-            // setTimeout(makeRandomMove, 300);
+            { mode === 'random' && setTimeout(makeRandomMove, 300) }
 
             //! Reset all suggestions
             resetMove()
