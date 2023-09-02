@@ -2,7 +2,7 @@ import { Chess, Move } from 'chess.js';
 import { useState } from 'react';
 import { Square } from 'react-chessboard/dist/chessboard/types';
 
-export default function useSimpleBoard({ game, setGame, mode }: any) {
+export default function useSimpleBoard({ game, setGame, mode, setCurrentTurn, currentTurn }: any) {
 
     const [moveFrom, setMoveFrom] = useState("");
     const [moveTo, setMoveTo] = useState<Square | null>(null);
@@ -11,9 +11,27 @@ export default function useSimpleBoard({ game, setGame, mode }: any) {
     const [moveSquares, setMoveSquares] = useState({});
     const [optionSquares, setOptionSquares] = useState({});
 
+    //! This function is used to update the game state in a safe way.
+    function safeGameMutate(modify: any) {
+        setGame((g) => {
+            const update = { ...g };
+            modify(update);
+            return update;
+        });
+    }
+
+    function resetMove() {
+        setMoveFrom("");
+        setMoveTo(null);
+        setShowPromotionDialog(false);
+        setOptionSquares({});
+    }
+
     const makeMove = (move: object) => {
         game.move(move)
         setGame(new Chess(game.fen()))
+        resetMove()
+        setCurrentTurn(currentTurn === 'White' ? 'Black' : 'White')
     }
 
     function makeRandomMove() {
@@ -37,21 +55,9 @@ export default function useSimpleBoard({ game, setGame, mode }: any) {
         if (move === null) return false;
         { mode === 'random' && setTimeout(makeRandomMove, 200); }
 
-        setMoveFrom("");
-        setMoveTo(null);
-        setShowPromotionDialog(false);
-        setOptionSquares({});
+        resetMove()
 
         return true;
-    }
-
-    //! This function is used to update the game state in a safe way.
-    function safeGameMutate(modify: any) {
-        setGame((g) => {
-            const update = { ...g };
-            modify(update);
-            return update;
-        });
     }
 
     //! This takes a square like "h2" and returns a boolean indicating whether the square has any valid moves.
@@ -136,8 +142,8 @@ export default function useSimpleBoard({ game, setGame, mode }: any) {
             }
 
             //! If normal move
-            const gameCopy = { ...game };
-            const move = gameCopy.move({
+            // const gameCopy = { ...game };
+            const move: any = makeMove({
                 from: moveFrom,
                 to: square,
                 promotion: "q",
@@ -150,11 +156,12 @@ export default function useSimpleBoard({ game, setGame, mode }: any) {
                 return;
             }
 
+            makeMove(move);
+
+            // setTimeout(makeRandomMove, 300);
+
             //! Reset all suggestions
-            setGame(gameCopy);
-            setMoveFrom("");
-            setMoveTo(null);
-            setOptionSquares({});
+            resetMove()
             return;
         }
     }
@@ -170,10 +177,7 @@ export default function useSimpleBoard({ game, setGame, mode }: any) {
             setGame(gameCopy);
         }
 
-        setMoveFrom("");
-        setMoveTo(null);
-        setShowPromotionDialog(false);
-        setOptionSquares({});
+        resetMove()
         return true;
     }
 

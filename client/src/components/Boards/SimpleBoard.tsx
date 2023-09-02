@@ -3,6 +3,7 @@ import { Chessboard } from "react-chessboard";
 import useSimpleBoard from "./hooks/useSimpleBoard";
 import { Button } from "react-bootstrap";
 import { Chess } from "chess.js";
+import { TbChessQueen, TbChessQueenFilled } from "react-icons/tb";
 
 type SimpleBoardProps = {
   mode?: string,
@@ -10,13 +11,15 @@ type SimpleBoardProps = {
   game?: any,
   setGame?: any,
   currentTheme?: string,
+  setCurrentTurn?: any,
+  currentTurn?: string,
 }
 
-export default function SimpleBoard({ position, game, setGame, mode, currentTheme }: SimpleBoardProps) {
+export default function SimpleBoard({ position, game, setGame, mode, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
 
   const [boardWidth, setBoardWidth] = useState(window.innerWidth * 0.8);
 
-  const { moveTo, showPromotionDialog, rightClickedSquares, moveSquares, optionSquares, onSquareClick, onPromotionPieceSelect, onSquareRightClick, setMoveSquares, setOptionSquares, setRightClickedSquares, onDrop } = useSimpleBoard({ game, setGame, mode })
+  const { moveTo, showPromotionDialog, rightClickedSquares, moveSquares, optionSquares, onSquareClick, onSquareRightClick, setMoveSquares, setOptionSquares, setRightClickedSquares, onDrop } = useSimpleBoard({ game, setGame, mode, currentTurn, setCurrentTurn })
 
   function handleResize() {
     const windowWidth = window.innerWidth;
@@ -37,7 +40,7 @@ export default function SimpleBoard({ position, game, setGame, mode, currentThem
 
   return (
     <div className="chess-board">
-      <p>♟️Chess-mate</p>
+      <p>♟️Chessmate</p>
       <Chessboard id="BasicBoard"
         boardWidth={boardWidth}
         customDarkSquareStyle={{ backgroundColor: `${currentTheme}` || '#769656' }}
@@ -48,7 +51,6 @@ export default function SimpleBoard({ position, game, setGame, mode, currentThem
 
         onSquareClick={onSquareClick}
         onSquareRightClick={onSquareRightClick}
-        onPromotionPieceSelect={onPromotionPieceSelect}
         customSquareStyles={{
           ...moveSquares,
           ...optionSquares,
@@ -57,20 +59,29 @@ export default function SimpleBoard({ position, game, setGame, mode, currentThem
         promotionToSquare={moveTo}
         showPromotionDialog={showPromotionDialog}
       />
-      <Button
-        className="custom-btn reset-button"
-        onClick={() => {
-          setGame(new Chess());
-          setMoveSquares({});
-          setOptionSquares({});
-          setRightClickedSquares({});
-        }}
-      >
-        Reset
-      </Button>
-
-      {/* TODO: Add undo button */}
-
+      <div className="chess-board-controls">
+        <div className="turns">
+          <p>
+            <span className="turns-icon">{currentTurn === "White" ? <TbChessQueen /> : <TbChessQueenFilled />}</span>
+            {currentTurn === "White" ? "White to move!" : "Black to move!"}
+          </p>
+        </div>
+        <div className="control-btns">
+          <Button
+            className="custom-btn reset-button"
+            onClick={() => {
+              setGame(new Chess());
+              setMoveSquares({});
+              setOptionSquares({});
+              setRightClickedSquares({});
+              setCurrentTurn("White");
+            }}
+          >
+            Reset
+          </Button>
+        </div>
+        {/* TODO: Add undo button */}
+      </div>
     </div>
   );
 }

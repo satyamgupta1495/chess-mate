@@ -1,23 +1,18 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Rubik+Iso&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rubik+Iso&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rubik+Iso&family=Sedgwick+Ave+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Rubik+Iso&family=Sedgwick+Ave+Display&family=Ubuntu&display=swap');
-
-#root {
-  margin: 0 auto;
-  text-align: center;
-  box-sizing: border-box;
-}
 
 * {
   margin: 0;
   padding: 0;
-  text-align: center;
   box-sizing: border-box;
   font-family: 'Ubuntu', sans-serif;
-  /* font-family: 'Rubik Iso', cursive; */
-  /* font-family: 'Black Ops One', cursive; */
-  /* font-family: 'Sedgwick Ave Display', cursive; */
+}
+
+:root {
+  --primary-color: #1d1e25;
+  --primary-grey: #3b3c45;
+  --primary-light-grey: #6b6d7b;
+  --primary-white: #e5e5eb;
 }
 
 body {
@@ -25,7 +20,11 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  /* font-family: 'Roboto', sans-serif; */
+}
+
+#root {
+  width: 100vw !important;
+  height: 100vh;
 }
 
 h1,
@@ -46,20 +45,25 @@ p {
   transition: all 0.3s ease-in-out;
 }
 
-.reset-button {}
+/* Chessmate components styling  starts-here*/
 
 .container {
-  /* background-color: red; */
+  /* background-color: rgb(30, 255, 0); */
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw !important;
-  height: 100vh !important;
+  height: 100vh;
 }
 
 .container p {
   font-family: 'Black Ops One', cursive;
 }
+
+/* Chessmate components styling  ends-here*/
+
+
+/* SimpleBoard styling starts-here*/
 
 .chess-board {
   /* background-color: blue; */
@@ -72,19 +76,193 @@ p {
 .chess-board p {
   /* background-color: violet; */
   font-size: 2.5rem;
-
 }
 
+.chess-board-controls {
+  background-color: var(--primary-color);
+  padding: 0.2rem 0 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.chess-board-controls p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.turns-icon {
+  /* background-color: red; */
+  margin: 0 0.3rem;
+  font-size: 1.5rem;
+}
+
+.control-btns button {
+  background-color: var(--primary-white);
+  color: #000;
+  border: none;
+}
+
+.control-btns button:hover {
+  background-color: var(--primary-color);
+  color: var(--primary-white);
+  border: 1px dashed var(--primary-white);
+  transition: all 0.2s ease-in-out;
+}
+
+/* SimpleBoard styling ends-here*/
+
+/* Conrols styling starts-here*/
+
+.side-bar {
+  background-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: absolute;
+  left: 0;
+  top: 0;
+  gap: 1rem;
+  z-index: 999;
+  height: 100vh !important;
+  width: 12vw;
+  color: var(--primary-white);
+}
+
+.logo-container {
+  /* background-color: blueviolet; */
+  padding: 5px 5px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-container img {
+  /* background-color: yellow; */
+  width: 2rem;
+  height: 2rem;
+}
 
 .controls {
   /* background-color: yellow; */
-  position: absolute;
-  left: 0;
-  top: 5rem;
-  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  padding: 0 0.2rem;
+  gap: 1rem;
+}
+
+.sidebar-options {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-
+  width: 100%;
+  padding: 0 0.5rem;
 }
+
+.sidebar-options p {
+  width: inherit;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+
+.menu-icons {
+  margin-right: 0.5rem;
+}
+
+.menu {
+  background-color: var(--primary-grey);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  padding: 0 0.2rem;
+  position: absolute;
+  height: 100vh !important;
+  top: 0;
+  left: calc(12vw + 0.1rem);
+}
+
+.menu button {
+  background-color: var(--primary-light-grey) !important;
+  border-radius: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 3rem;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu button:hover {
+  background-color: var(--primary-white) !important;
+  color: var(--primary-color) !important;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Conrols styling ends-here*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =====================Mobile Portrait Size to Mobile Landscape Size (devices and browsers)===================== */
+@media screen and (max-width: 479px) {
+  .side-bar {
+    width: 55vw !important;
+    /* background-color: aqua; */
+  }
+}
+
+/* ===================Mobile Landscape Size to Tablet Portrait (devices and browsers)=================== */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .side-bar {
+    /* background-color: violet; */
+    width: 45vw;
+  }
+}
+
+/* ==================All Mobile Sizes (devices and browser) ==================*/
+@media only screen and (max-width: 767px) {}
+
+/* ================Tablet Portrait size to standard 960 (devices and browsers) ================*/
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+  .container {
+    /* background-color: violet; */
+  }
+
+  .side-bar {
+    width: 35vw;
+    display: block;
+    position: relative;
+    /* background-color: yellow; */
+  }
+}
+
+/* For Projectors or Higher Resolution Screens (Full HD) */
+@media screen and (min-width: 1920px) {}
+
+/*============================= Tablet landscape size to standard 960  =============================*/
+@media only screen and (min-width: 959px) and (max-width: 1024px) {}
+
+/* ============================= global tablet and mobile =============================*/
+@media only screen and (max-width: 959px) {}
