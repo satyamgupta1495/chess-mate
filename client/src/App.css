@@ -240,9 +240,21 @@ p {
 
 /* =====================Mobile Portrait Size to Mobile Landscape Size (devices and browsers)===================== */
 @media screen and (max-width: 479px) {
-  /* .ham-burger {
-    display: block;
-  } */
+
+  .side-bar-container {
+    width: 0;
+  }
+
+  .menu {
+    background-color: transparent;
+    margin-left: 3rem;
+  }
+
+  .menu button {
+   width: 11rem;
+   background: transparent !important;
+  }
+
 }
 
 /* ===================Mobile Landscape Size to Tablet Portrait (devices and browsers)=================== */

@@ -58,7 +58,7 @@ function Controls({ setGame, setMode, setCurrTheme }: ControlsProps) {
                         </div>
 
                     </div>
-                    <Menu>
+                    <Menu className='menu-item'>
                         <MenuItem> <p onMouseEnter={() => handleMouseEnter("Mode")}> <span className='menu-icons'><GiArtificialIntelligence /></span>Mode</p></MenuItem>
                         <MenuItem> <p onMouseEnter={() => handleMouseEnter("Theme")}> <span className='menu-icons'><IoColorPalette /></span>Theme</p></MenuItem>
                     </Menu>
