@@ -1,13 +1,25 @@
-import express from 'express';
+import express from "express";
+import { createServer } from "http";
+import { Server, Socket } from "socket.io";
 
 const app = express();
-
-app.get('/', (req, res) => {
-    res.send('OK 👍');
+const port = 3000;
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+        origin: "*"
+    },
 });
 
-
-const server = app.listen(3000, () => {
-    console.log('Server is running at http://localhost:' + (server.address() as any).port);
+io.on("connection", (socket: Socket) => {
+    socket.on("move", (payload) => {
+        console.log(payload);
+        io.emit("move", payload);
+    });
 });
 
+app.get("/", (req, res) => {
+    res.send("OK 👍");
+});
+
+httpServer.listen(port, () => console.log(`Port: ${port} Server active...`));

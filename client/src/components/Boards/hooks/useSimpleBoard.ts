@@ -1,8 +1,13 @@
 import { Chess, Move } from 'chess.js';
 import { useState } from 'react';
 import { Square } from 'react-chessboard/dist/chessboard/types';
+import io from 'socket.io-client'
 
 export default function useSimpleBoard({ game, setGame, mode, setCurrentTurn, currentTurn }: any) {
+
+    //Socket connection 
+    const socket = io('http://localhost:3000')
+
 
     const [moveFrom, setMoveFrom] = useState("");
     const [moveTo, setMoveTo] = useState<Square | null>(null);
@@ -29,9 +34,10 @@ export default function useSimpleBoard({ game, setGame, mode, setCurrentTurn, cu
 
     const makeMove = (move: object) => {
         game.move(move)
+        socket.emit('move', move)
         setGame(new Chess(game.fen()))
         resetMove()
-        setCurrentTurn(currentTurn === 'White' ? 'Black' : 'White')
+        setCurrentTurn(currentTurn === 'White' ? 'White' : 'Black')
     }
 
     function makeRandomMove() {
@@ -54,6 +60,8 @@ export default function useSimpleBoard({ game, setGame, mode, setCurrentTurn, cu
         //! illegal move
         if (move === null) return false;
         { mode === 'random' && setTimeout(makeRandomMove, 200); }
+
+        socket.emit('move', move)
 
         resetMove()
         return true;
@@ -156,6 +164,7 @@ export default function useSimpleBoard({ game, setGame, mode, setCurrentTurn, cu
             }
 
             makeMove(move);
+            socket.emit('move', move)
 
             { mode === 'random' && setTimeout(makeRandomMove, 300) }
 
