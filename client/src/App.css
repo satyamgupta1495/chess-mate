@@ -260,6 +260,16 @@ p {
 
 
 
+/* CustomDialog styling starts-here*/
+
+.room-btn-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+}
+
+/* CustomDialog styling ends-here*/
 
 
 

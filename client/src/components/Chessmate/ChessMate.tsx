@@ -1,12 +1,12 @@
 
 import { useEffect } from 'react';
 import SimpleBoard from '../Boards/SimpleBoard'
-import Controls from '../Controls/Controls';
 import useChessMate from './hooks/useChessMate';
+import Controls from '../Controls/Controls';
 
 function ChessMate() {
 
-  const { game, mode, setMode, setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn } = useChessMate()
+  const { game, mode, setMode, setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
 
   useEffect(() => {
     const selectedTheme = localStorage.getItem('theme')
@@ -19,8 +19,22 @@ function ChessMate() {
   return (
     <>
       <div className="container">
-        <Controls setGame={setGame} setMode={setMode} mode={mode} currentTheme={currTheme} setCurrTheme={setCurrTheme} />
-        <SimpleBoard position={game.fen()} mode={mode} game={game} setGame={setGame} currentTheme={currTheme} currentTurn={currentTurn} setCurrentTurn={setCurrentTurn} />
+        <Controls
+          setGame={setGame}
+          setMode={setMode}
+          mode={mode}
+          currentTheme={currTheme}
+          setCurrTheme={setCurrTheme} />
+
+        < SimpleBoard
+          position={position}
+          setPosition={setPosition}
+          mode={mode}
+          game={game}
+          setGame={setGame}
+          currentTheme={currTheme}
+          currentTurn={currentTurn}
+          setCurrentTurn={setCurrentTurn} />
       </div >
 
     </>
