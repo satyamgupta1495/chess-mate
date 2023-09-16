@@ -4,7 +4,7 @@ import { Chess } from 'chess.js'
 export default function useChessMate() {
 
     const [game, setGame] = useState<any>(new Chess());
-    const [mode, setMode] = useState<string>("random")
+    const [mode, setMode] = useState<string>("")
     const [currTheme, setCurrTheme] = useState<string>("#769656")
     const [currentTurn, setCurrentTurn] = useState("w")
     const [position, setPosition] = useState("start")

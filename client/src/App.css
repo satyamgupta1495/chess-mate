@@ -16,11 +16,7 @@
 }
 
 body {
-  background-image: url("./assets/img/bg.jpg");
-  background-color: #000;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  background: #000 url("./assets/img/bg.jpg") center/cover no-repeat;
 }
 
 
@@ -87,9 +83,8 @@ div::-webkit-scrollbar {
   /* background-color: blue; */
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   flex-wrap: wrap;
-  flex-grow: 1;
   z-index: 214748;
   /* width: 100vw; */
 }
@@ -262,7 +257,7 @@ div::-webkit-scrollbar {
 
 .side-bar-container {
   background-color: var(--primary-color);
-  /* background-color: rgb(0, 0, 0); */
+  background-color: rgb(0, 0, 0);
   display: flex;
   /* height: 100vh; */
   position: absolute;
@@ -302,7 +297,7 @@ div::-webkit-scrollbar {
 .sidebar-options {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-start;
   /* width: 100%; */
   /* background-color: yellow; */
@@ -474,13 +469,16 @@ div::-webkit-scrollbar {
 /* footer-section starts here */
 
 .footer-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #1A1423 !important;
   z-index: inherit;
   width: inherit;
 }
 
 
-.social-icon{
+.social-icon {
   color: white;
   font-size: 1.42rem;
   margin-right: 1rem;
@@ -590,18 +588,56 @@ div::-webkit-scrollbar {
 }
 
 /* ===================Mobile Landscape Size to Tablet Portrait (devices and browsers)=================== */
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
+@media only screen and (min-width: 480px) and (max-width: 767px) {
 
-/* ==================All Mobile Sizes (devices and browser) ==================*/
-@media only screen and (max-width: 767px) {}
+  .chess-board {
+    background-color: red !important;
+    margin-top: 2rem;
+    margin-right: 1rem;
+  }
 
-/* ================Tablet Portrait size to standard 960 (devices and browsers) ================*/
-@media only screen and (min-width: 768px) and (max-width: 959px) {
-  .container {
-    /* background-color: violet; */
+  .footer-section {
+    background-color: #650fe7 !important;
+  }
+
+  .footer-section-container {
+    background-color: #650fe7 !important;
   }
 
 }
+
+/* ==================All Mobile Sizes (devices and browser) ==================*/
+@media only screen and (max-width: 767px) {
+
+
+  .chess-board {
+    margin-top: 2rem;
+  }
+
+
+  .side-bar-container .offcanvas {
+    background-color: violet !important;
+    max-width: 2rem;
+  }
+
+  .footer-section .container {
+    /* background-color: rgb(253, 83, 5) !important; */
+    height: 3.5rem;
+  }
+
+  .footer-section {
+    font-size: 0.8rem;
+    /* background-color: #650fe7 !important; */
+  }
+
+  .social-icon {
+    font-size: 1rem;
+  }
+
+}
+
+/* ================Tablet Portrait size to standard 960 (devices and browsers) ================*/
+@media only screen and (min-width: 768px) and (max-width: 959px) {}
 
 /* For Projectors or Higher Resolution Screens (Full HD) */
 @media screen and (min-width: 1920px) {}

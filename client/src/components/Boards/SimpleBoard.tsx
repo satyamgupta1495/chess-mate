@@ -47,7 +47,10 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const minDimension = Math.min(windowWidth, windowHeight);
-    const boardWidth = Math.floor(minDimension * 0.65);
+    let boardWidth = Math.floor(minDimension * 0.8);
+    if (windowWidth < 700) {
+      boardWidth = 350;
+    }
     setBoardWidth(boardWidth);
   }
 
@@ -108,7 +111,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
     //* illegal move
     if (move === null) return false;
-    {!startGame && mode === 'random' && setTimeout(makeRandomMove, 200); }
+    { !startGame && mode === 'random' && setTimeout(makeRandomMove, 200); }
 
     makeMove(move)
     { startGame && socket.emit('move', moveData) }
@@ -310,7 +313,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
     <>
       <CustomDialogueBox setRoomType={setRoomType} />
       <Container>
-        <p className="text-center h1 my-5">♟️Chessmate</p>
+        <p className="text-center h1 my-3">♟️Chessmate</p>
         <section className="chess-board-container">
           <div className="chess-board">
             <Chessboard id="BasicBoard"

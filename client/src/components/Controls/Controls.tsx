@@ -5,6 +5,7 @@ import { GiArtificialIntelligence } from 'react-icons/gi';
 import { IoColorPalette } from 'react-icons/io5';
 import { FaUserFriends, FaRobot } from 'react-icons/fa';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import toast from 'react-hot-toast';
 
 
 type ControlsProps = {
@@ -67,9 +68,9 @@ function Controls({ setGame, setMode, setCurrTheme }: ControlsProps) {
                             <div className="controls">
                                 {menu.modeMenu &&
                                     <div className="menu" onMouseLeave={handleMouseLeave}>
-                                        <Button value="Two Players" onClick={() => setMode("analyze")}>
+                                        <Button value="Two Players" onClick={() => { toast("Winner have to buy dinner! 🤼"), setMode("analyze") }}>
                                             <span className='menu-icons'><FaUserFriends /></span> Two Players</Button>
-                                        <Button value="Computer" onClick={() => setMode("random")}><span className='menu-icons'><FaRobot /></span> Computer</Button>
+                                        <Button value="Computer" onClick={() => { toast("Lets do this 🤖"), setMode("random") }}><span className='menu-icons'><FaRobot /></span> Computer</Button>
                                     </div>
                                 }
 
