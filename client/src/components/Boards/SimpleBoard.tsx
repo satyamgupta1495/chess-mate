@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Chessboard } from "react-chessboard";
-// import useSimpleBoard from "./hooks/useSimpleBoard";
-import { Button } from "react-bootstrap";
+import useSimpleBoard from "./hooks/useSimpleBoard";
+import { Container } from "react-bootstrap";
 import { TbChessQueen, TbChessQueenFilled } from "react-icons/tb";
-import { Chess, Move } from 'chess.js';
+import { Move } from 'chess.js';
 import { Square } from 'react-chessboard/dist/chessboard/types';
 import { socket } from "../../Socket";
 import CustomDialogueBox from "../DialogueBox/CustomDialogueBox";
+import Chat from "./Chat/Chat";
+import toast from "react-hot-toast";
 
 type SimpleBoardProps = {
   mode?: string,
@@ -19,10 +21,9 @@ type SimpleBoardProps = {
   setPosition: any
 }
 
-export default function SimpleBoard({ position, setPosition, game, setGame, mode, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
+export default function SimpleBoard({ mode, position, setPosition, game, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
 
   const [boardWidth, setBoardWidth] = useState(window.innerWidth * 0.8);
-
   const [moveFrom, setMoveFrom] = useState("");
   const [moveSquares, setMoveSquares] = useState<any>({});
   const [moveTo, setMoveTo] = useState<Square | null>(null);
@@ -31,14 +32,22 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
   const [rightClickedSquares, setRightClickedSquares] = useState<any>({});
   const [orientation, setOrientation] = useState<any>('')
   const [startGame, setStartGame] = useState(false)
+  const [playerLeft, setPlayerLeft] = useState(false)
   const [roomType, setRoomType] = useState<any>({})
-  // const { moveTo, showPromotionDialog, rightClickedSquares, moveSquares, optionSquares, onSquareClick, onSquareRightClick, setMoveSquares, setOptionSquares, setRightClickedSquares, onDrop } = useSimpleBoard({ game, setGame, mode, currentTurn, setCurrentTurn })
+  const [moveHistory, setMoveHistory] = useState<any>([])
+
+  const [message, setMessage] = useState<any>('')
+  const [chat, setChat] = useState<any>([])
+
+  const chatEventHandlerAdded = useRef(false);
+
+  const { makeRandomMove } = useSimpleBoard({ game, makeMove, currentTurn })
 
   function handleResize() {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const minDimension = Math.min(windowWidth, windowHeight);
-    const boardWidth = Math.floor(minDimension * 0.8);
+    const boardWidth = Math.floor(minDimension * 0.65);
     setBoardWidth(boardWidth);
   }
 
@@ -50,15 +59,6 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  useEffect(() => {
-    socket.on('joinedAs', (data: any) => {
-      console.log('joined room', data)
-      setOrientation(data.playerColor === 'w' ? 'white' : 'black')
-      console.log(data.playerColor)
-    })
-    //eslint-disable-next-line
-  }, [])
 
 
   function resetMove() {
@@ -75,6 +75,12 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
       setCurrentTurn(currentTurn === "w" ? "b" : "w");
       setPosition(game.fen());
     }
+    setMoveHistory(game.history({ verbose: true }).map((move) => ({
+      turn: currentTurn,
+      from: move.from,
+      to: move.to,
+      piece: game.get(move.from)?.type,
+    })));
     return result;
   }
 
@@ -83,7 +89,12 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
     console.log(game.turn() !== orientation[0], game.turn(), orientation[0])
 
     //* check if the player is moving own piece 
-    if (game.turn() !== orientation[0].toLowerCase()) return false;
+    {
+      if (startGame && game.turn() !== orientation[0]?.toLowerCase()) {
+        toast.error('Its not your turn 😏')
+        return false
+      }
+    }
 
     const move: any = {
       from: sourceSquare,
@@ -97,10 +108,10 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
 
     //* illegal move
     if (move === null) return false;
-    // { mode === 'random' && setTimeout(makeRandomMove, 200); }
+    { mode === 'random' && setTimeout(makeRandomMove, 200); }
 
     makeMove(move)
-    socket.emit('move', moveData)
+    { startGame && socket.emit('move', moveData) }
     resetMove()
     return true;
   }
@@ -140,8 +151,12 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
 
   function onSquareClick(square: Square) {
 
-    //* check if the player is moving own piece
-    if (game.turn() !== orientation[0]) return;
+    {
+      if (startGame && game.turn() !== orientation[0]?.toLowerCase()) {
+        toast.error('Its not your turn 😏')
+        return false
+      }
+    }
 
     setRightClickedSquares({});
 
@@ -210,8 +225,8 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
       }
 
       makeMove(move);
-      socket.emit('move', moveData)
-      // { mode === 'random' && setTimeout(makeRandomMove, 300) }
+      { startGame && socket.emit('move', moveData) }
+      { mode === 'random' && setTimeout(makeRandomMove, 300) }
 
       //* Reset all suggestions
       resetMove()
@@ -231,10 +246,28 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
     });
   }
 
-
   useEffect(() => {
+
+    //* joined as white
+    socket.on('joinedAsw', (data: any) => {
+      console.log('joined as', data)
+      setOrientation('white')
+    })
+
+    //* joined as black
+    socket.on('joinedAsb', (data: any) => {
+      console.log('joined as', data)
+      setOrientation('black')
+    })
+
     socket.on('start', () => {
       setStartGame(true)
+    })
+
+    socket.on('playerLeft', (playerData: any) => {
+      console.log('player left', playerData)
+      setStartGame(false)
+      setPlayerLeft(true)
     })
 
     socket.on('move', (playedMove: any) => {
@@ -243,68 +276,87 @@ export default function SimpleBoard({ position, setPosition, game, setGame, mode
       makeMove(playedMove.playedMove.move)
     })
 
+    if (!chatEventHandlerAdded.current) {
+      socket.on('chat', (chatData: any) => {
+        console.log('chat', chatData)
+        setChat((prevChat: any) => [...prevChat, chatData]);
+      });
+      chatEventHandlerAdded.current = true;
+    }
+
     //eslint-disable-next-line
   }, [])
 
-  useEffect(() => {
-    console.log(roomType)
-    socket.emit("startGame", { ...roomType })
 
+
+  useEffect(() => {
+    console.log("roomType", roomType)
+    socket.emit("startGame", { ...roomType })
     //eslint-disable-next-line
   }, [roomType])
 
+  function sendChat(e: any) {
+    e.preventDefault()
+    if (!message) {
+      toast.error('Please enter a message to send')
+      return
+    }
+    setChat((prevChat: any) => [...prevChat, { type: 'sent', message: message, time: Date.now() }])
+    socket.emit('chat', { message: message })
+    setMessage('')
+  }
+
   return (
     <>
+      <CustomDialogueBox setRoomType={setRoomType} />
+      <Container>
+        <p className="text-center h1 my-5">♟️Chessmate</p>
+        <section className="chess-board-container">
+          <div className="chess-board">
+            <Chessboard id="BasicBoard"
+              boardWidth={boardWidth}
+              customDarkSquareStyle={{ backgroundColor: `${currentTheme}` || '#769656' }}
+              customLightSquareStyle={{ backgroundColor: '#eeeed2' }}
+              customBoardStyle={{ borderRadius: '5px', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5 ' }}
+              position={position}
+              onPieceDrop={onDrop}
+              onSquareClick={onSquareClick}
+              onSquareRightClick={onSquareRightClick}
+              customSquareStyles={{
+                ...moveSquares,
+                ...optionSquares,
+                ...rightClickedSquares,
+              }}
+              promotionToSquare={moveTo}
+              showPromotionDialog={showPromotionDialog}
+              boardOrientation={orientation}
+            />
+          </div>
 
-      {startGame ? <div className="chess-board">
-        <p>♟️Chessmate</p>
-        <Chessboard id="BasicBoard"
-          boardWidth={boardWidth}
-          customDarkSquareStyle={{ backgroundColor: `${currentTheme}` || '#769656' }}
-          customLightSquareStyle={{ backgroundColor: '#eeeed2' }}
-          customBoardStyle={{ borderRadius: '5px', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5 ' }}
-          position={position}
-          onPieceDrop={onDrop}
-
-          onSquareClick={onSquareClick}
-          onSquareRightClick={onSquareRightClick}
-          customSquareStyles={{
-            ...moveSquares,
-            ...optionSquares,
-            ...rightClickedSquares,
-          }}
-          promotionToSquare={moveTo}
-          showPromotionDialog={showPromotionDialog}
-          boardOrientation={orientation}
-        />
-        <div className="chess-board-controls">
-          <div className="turns">
-            <p>
+          <div className="chess-board-controls">
+            <p className="my-0">
               <span className="turns-icon">{currentTurn === "w" ? <TbChessQueen /> : <TbChessQueenFilled />}</span>
               {currentTurn === "w" ? "White to move!" : "Black to move!"}
             </p>
-            <p>
-              Current mode : <span className="mode">{mode}</span>
-            </p>
+
+            <div className="move-history">
+              <p className="mr-2">Move history : </p>
+              {moveHistory.map((move: any, index: number) => {
+                return (
+                  <>
+                    <div key={index} className="move-history-item">
+                      <p>{move.piece}{move.to},
+                      </p>
+                    </div>
+                  </>
+                )
+              })}
+            </div>
+            {startGame && <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />}
           </div>
-          <div className="control-btns">
-            <Button
-              className="custom-btn reset-button"
-              onClick={() => {
-                setGame(new Chess());
-                setMoveSquares({});
-                setOptionSquares({});
-                setRightClickedSquares({});
-                setCurrentTurn("w");
-              }}
-            >
-              Reset
-            </Button>
-          </div>
-          {/* TODO: Add undo button */}
-        </div>
-      </div> : <CustomDialogueBox setRoomType={setRoomType} />
-      }
+        </section>
+      </Container >
+      {playerLeft && <h1> Player left the game! </h1>}
     </>
   );
 }
