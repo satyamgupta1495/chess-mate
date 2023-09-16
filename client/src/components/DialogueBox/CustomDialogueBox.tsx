@@ -19,16 +19,16 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
 
 
 
-    const handleCreateRoom = () => {
-        if (createRoomId === '') return alert('Please enter a room id')
+    const handleCreateRoom = (): any => {
+        if (createRoomId === '') return toast('Please enter room id 🚀')
         setShow(false)
         const selectedColor = playAs === 'r' ? (Math.random() < 0.5 ? 'w' : 'b') : playAs;
         console.log(selectedColor, "selectedColor")
-        if (!selectedColor) alert('Please select a color')
+        if (!selectedColor) toast('You should\'ve selected a color too 🤦‍♂️')
         setRoomType({ type: 'create', roomName: createRoomId, selectedColor: selectedColor ? selectedColor : 'w' });
     }
-    const handleJoinRoom = () => {
-        if (createRoomId === '') return alert('Please enter a room id')
+    const handleJoinRoom = ():any => {
+        if (createRoomId === '') return toast('Please create or enter room id 🚀')
         setRoomType({ type: 'join', roomName: createRoomId })
         setShow(false)
     }

@@ -6,9 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const http_1 = require("http");
 const socket_io_1 = require("socket.io");
-// import { Cors } from "cors"
 const app = (0, express_1.default)();
-// app.use(Cors)
 const port = 3000;
 const httpServer = (0, http_1.createServer)(app);
 const io = new socket_io_1.Server(httpServer, {
@@ -19,32 +17,45 @@ const io = new socket_io_1.Server(httpServer, {
 const rooms = new Map();
 io.on("connection", (socket) => {
     let joinedRoom = "";
-    let playerColor = "w";
+    let playerColor = 'w';
     socket.on('startGame', (roomData) => {
+        console.log("roomData", roomData);
+        let player1Color = "";
+        let player2Color = "";
         if ((roomData === null || roomData === void 0 ? void 0 : roomData.type) === 'create') {
-            // console.log("created----", roomData);
+            console.log("created----", roomData);
+            player1Color = roomData.selectedColor ? roomData.selectedColor : "w";
+            player2Color = player1Color === "w" ? "b" : "w";
+            playerColor = player1Color;
             joinedRoom = `${roomData === null || roomData === void 0 ? void 0 : roomData.roomName}`;
-            const players = [{ color: roomData === null || roomData === void 0 ? void 0 : roomData.selectedColor, id: socket.id }];
+            const players = [{ color: player1Color, id: socket.id }];
             rooms.set(joinedRoom, players);
-            console.log(`Player1 ${socket.id} joined room ${joinedRoom} as ${playerColor}---1`);
-            playerColor = (roomData === null || roomData === void 0 ? void 0 : roomData.selectedColor) === "w" ? "b" : "w";
+            console.log(`Player 1 with socket ID ${socket.id} joined room ${joinedRoom} as ${player1Color}.`);
             socket.join(joinedRoom);
-            socket.emit("joinedAs", { playerColor });
+            socket.emit(`joinedAs${player1Color}`, { player1Color });
+            console.log(player1Color, '--42--', player2Color);
         }
         if ((roomData === null || roomData === void 0 ? void 0 : roomData.type) === 'join') {
             joinedRoom = `${roomData === null || roomData === void 0 ? void 0 : roomData.roomName}`;
             const players = rooms.get(joinedRoom) || [];
-            const playerCount = players.length;
-            playerColor = playerCount % 2 === 0 ? 'w' : 'b';
-            players.push({ color: playerColor, id: socket.id });
+            player2Color = 'b';
+            if (players.length === 1) {
+                player2Color = players[0].color === "w" ? "b" : "w";
+            }
+            players.push({ color: player2Color, id: socket.id });
             rooms.set(joinedRoom, players);
-            console.log(`Player2 ${socket.id} joined room ${joinedRoom} as ${playerColor}----2`);
+            console.log(`Player 2 with socket ID ${socket.id} joined room ${joinedRoom} as ${player2Color}.`);
             socket.join(joinedRoom);
-            socket.emit("joinedAs", { playerColor });
+            socket.emit(`joinedAs${player2Color}`, { player2Color });
         }
+        // console.log("rooms", rooms);
         const players = rooms.get(joinedRoom);
         if ((players === null || players === void 0 ? void 0 : players.length) === 2) {
             io.to(joinedRoom).emit("start");
+        }
+        else {
+            socket.emit("roomFull");
+            return;
         }
     });
     // for (const [roomId, players] of rooms.entries()) {
@@ -69,15 +80,25 @@ io.on("connection", (socket) => {
     socket.on("move", (moveData) => {
         socket.to(joinedRoom).emit("move", { playerColor: playerColor, playedMove: moveData });
     });
+    socket.on('chat', (message) => {
+        var _a;
+        let player = (_a = rooms.get(joinedRoom)) === null || _a === void 0 ? void 0 : _a.find((player) => player.id === socket.id);
+        if (player) {
+            socket.to(joinedRoom).emit('chat', Object.assign(Object.assign({}, message), { type: 'received', player: socket.id, time: Date.now() }));
+        }
+    });
     socket.on("disconnect", () => {
         console.log("Client disconnected");
         const players = rooms.get(joinedRoom);
         if (players) {
-            // players.splice(players.indexOf(socket.id), 1);
-            delete players[socket.id];
-            if (players.length === 0) {
-                rooms.delete(joinedRoom);
-            }
+            const playerId = players;
+            // delete players[socket.id];
+            console.log("Player left", playerId);
+            socket.to(joinedRoom).emit("playerLeft", { playerId });
+            // if (Object.keys(players).length === 0) {
+            //     rooms.delete(joinedRoom);
+            //     console.log("Room deleted");
+            // }
         }
     });
 });

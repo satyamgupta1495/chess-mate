@@ -108,7 +108,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
     //* illegal move
     if (move === null) return false;
-    { mode === 'random' && setTimeout(makeRandomMove, 200); }
+    {!startGame && mode === 'random' && setTimeout(makeRandomMove, 200); }
 
     makeMove(move)
     { startGame && socket.emit('move', moveData) }
@@ -226,7 +226,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
       makeMove(move);
       { startGame && socket.emit('move', moveData) }
-      { mode === 'random' && setTimeout(makeRandomMove, 300) }
+      { !startGame && mode === 'random' && setTimeout(makeRandomMove, 300) }
 
       //* Reset all suggestions
       resetMove()
