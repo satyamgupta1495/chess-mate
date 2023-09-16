@@ -25,7 +25,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
   const [boardWidth, setBoardWidth] = useState(window.innerWidth * 0.8);
   const [moveFrom, setMoveFrom] = useState("");
-  const [moveSquares, setMoveSquares] = useState<any>({});
+  const [moveSquares] = useState<any>({});
   const [moveTo, setMoveTo] = useState<Square | null>(null);
   const [optionSquares, setOptionSquares] = useState<any>({});
   const [showPromotionDialog, setShowPromotionDialog] = useState(false);
@@ -154,7 +154,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
     {
       if (startGame && game.turn() !== orientation[0]?.toLowerCase()) {
         toast.error('Its not your turn 😏')
-        return false
+        return
       }
     }
 
