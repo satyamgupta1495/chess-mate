@@ -11,8 +11,21 @@ export default function useSimpleBoard({ game, makeMove, currentTurn }: any) {
         makeMove(possibleMoves[randomIndex]);
     }
 
+    function getKingPosition(board: any, color: any) {
+        const squares = board.board();
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const square = squares[row][col];
+                if (square && square.type === 'k' && square.color === color) {
+                    return String.fromCharCode(97 + col) + (8 - row);
+                }
+            }
+        }
+        return null; // King not found
+    }
+
     return {
-        makeRandomMove
+        makeRandomMove, getKingPosition
     }
 
 }

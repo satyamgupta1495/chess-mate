@@ -15,11 +15,20 @@ const io = new Server(httpServer, {
 
 const rooms = new Map();
 
+
+
 io.on("connection", (socket: Socket) => {
 
     let joinedRoom: string | string[] = "";
     let playerColor: string = 'w';
 
+    //save session of current user in socket
+    let playerData: any = {
+        id: socket.id,
+        room: '',
+        color: '',
+        type: ''
+    }
 
     socket.on('startGame', (roomData: any) => {
         console.log("roomData", roomData);
@@ -39,11 +48,28 @@ io.on("connection", (socket: Socket) => {
 
             console.log(`Player 1 with socket ID ${socket.id} joined room ${joinedRoom} as ${player1Color}.`);
             socket.join(joinedRoom);
-            socket.emit(`joinedAs${player1Color}`, { player1Color })
-            console.log(player1Color, '--42--', player2Color)
+            socket.emit(`joinedAs`, { orientation: player1Color })
+
+            //save player data
+            playerData.id = socket.id;
+            playerData.room = joinedRoom;
+            playerData.color = player1Color;
+            playerData.type = 'create';
+
+            socket.emit('saveSession', { player1Data: playerData });
+
+            console.log(player1Color, '--42--', "joinedAs")
         }
 
         if (roomData?.type === 'join') {
+
+            const canJoinRoom = rooms.has(roomData?.roomName);
+            console.log("canJoinRoom", canJoinRoom);
+
+            socket.emit("roomNotFound", { canJoinRoom: canJoinRoom });
+
+            if (!canJoinRoom) return
+
             joinedRoom = `${roomData?.roomName}`;
             const players = rooms.get(joinedRoom) || [];
 
@@ -56,10 +82,23 @@ io.on("connection", (socket: Socket) => {
             rooms.set(joinedRoom, players);
             console.log(`Player 2 with socket ID ${socket.id} joined room ${joinedRoom} as ${player2Color}.`);
             socket.join(joinedRoom);
-            socket.emit(`joinedAs${player2Color}`, { player2Color })
+            socket.emit(`joinedAs`, { orientation: player2Color })
+            console.log('joinedas---', player2Color)
+
+            playerData.id = socket.id;
+            playerData.room = joinedRoom;
+            playerData.color = player2Color;
+            playerData.type = 'join';
+
+            socket.emit('saveSession', { player2Data: playerData });
 
         }
-        // console.log("rooms", rooms);
+
+        socket.on('reconnect', (data) => {
+            console.log('reconnect----', data);
+            socket.join(data?.room);
+            socket.emit(`joinedAs`, { orientation: data?.color })
+        });
 
         const players = rooms.get(joinedRoom);
         if (players?.length === 2) {
@@ -105,6 +144,9 @@ io.on("connection", (socket: Socket) => {
             socket.to(joinedRoom).emit('chat', { ...message, type: 'received', player: socket.id, time: Date.now() });
         }
     });
+
+
+
 
     socket.on("disconnect", () => {
         console.log("Client disconnected");

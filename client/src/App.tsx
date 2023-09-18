@@ -1,6 +1,6 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ChessMate from './components/Chessmate/ChessMate'
+import ChessMate from './components/Chessmate/ChessMate';
 
 
 function App() {

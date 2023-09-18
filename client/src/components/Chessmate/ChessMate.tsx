@@ -6,6 +6,7 @@ import Controls from '../Controls/Controls';
 import Footer from '../Footer/Footer';
 import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
+// import NavBar from '../Navbar/NavBar';
 
 function ChessMate() {
 
@@ -21,6 +22,12 @@ function ChessMate() {
 
   return (
     <>
+      {/* <NavBar 
+            setGame={setGame}
+            setMode={setMode}
+            mode={mode}
+            currentTheme={currTheme}
+            setCurrTheme={setCurrTheme}/> */}
       <Container fluid className='d-flex  justify-content-between align-items-center flex-column height-100 main-container' >
         <div className="board-container">
           <Controls

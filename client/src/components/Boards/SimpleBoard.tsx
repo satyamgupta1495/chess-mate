@@ -35,13 +35,44 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
   const [playerLeft, setPlayerLeft] = useState(false)
   const [roomType, setRoomType] = useState<any>({})
   const [moveHistory, setMoveHistory] = useState<any>([])
+  const [customStyles, setCustomStyles] = useState<any>({})
 
   const [message, setMessage] = useState<any>('')
   const [chat, setChat] = useState<any>([])
 
   const chatEventHandlerAdded = useRef(false);
 
-  const { makeRandomMove } = useSimpleBoard({ game, makeMove, currentTurn })
+  //handle check and checkmate
+  useEffect(() => {
+    console.log(currentTurn)
+    setCustomStyles({})
+    if (game.game_over()) {
+      if (game.in_checkmate()) {
+        toast.error(`Checkmate! 🎉 ${game.turn() === 'w' ? "Black" : "White"} wins 👏`)
+      } else if (game.in_stalemate()) {
+        toast.error(`Stalemate! 🎉 Its a draw 👏`)
+      } else if (game.in_threefold_repetition()) {
+        toast.error(`Threefold repetition! 🎉 Its a draw 👏`)
+      } else if (game.insufficient_material()) {
+        toast.error(`Insufficient material! 🎉 Its a draw 👏`)
+      }
+    } else if (game.in_check()) {
+      const currKingPosition: any = getKingPosition(game, game.turn() === 'b' ? "b" : "w")
+      setCustomStyles({
+        [currKingPosition]: {
+          background: "radial-gradient(ellipse at center, rgba(255,0,0,0) 0%, rgba(255,0,0,0.5) 50%, rgba(255,0,0,0.9) 70%)",
+
+        },
+      });
+      const message = `Uhh-humm... A check! from ${game.turn() === 'b' ? "White" : "Black"} 😬`;
+      if (!startGame || game.turn() === orientation[0]?.toLowerCase()) {
+        toast.error(message);
+      }
+    }
+    //eslint-disable-next-line
+  }, [currentTurn])
+
+  const { makeRandomMove, getKingPosition } = useSimpleBoard({ game, makeMove, currentTurn })
 
   function handleResize() {
     const windowWidth = window.innerWidth;
@@ -73,6 +104,9 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
   function makeMove(move: Move) {
 
+    if (customStyles) {
+      setCustomStyles({})
+    }
     const result = game.move(move);
     if (result !== null) {
       setCurrentTurn(currentTurn === "w" ? "b" : "w");
@@ -84,12 +118,11 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       to: move.to,
       piece: game.get(move.from)?.type,
     })));
+    setPosition(game.fen());
     return result;
   }
 
   function onDrop(sourceSquare: string, targetSquare: string, piece: string) {
-
-    console.log(game.turn() !== orientation[0], game.turn(), orientation[0])
 
     //* check if the player is moving own piece 
     {
@@ -113,8 +146,13 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
     if (move === null) return false;
     { !startGame && mode === 'random' && setTimeout(makeRandomMove, 200); }
 
-    makeMove(move)
-    { startGame && socket.emit('move', moveData) }
+    const moveSuccess = makeMove(move)
+
+    //emit only if move is valid
+    if (startGame && moveSuccess) {
+      socket.emit('move', moveData)
+    }
+
     resetMove()
     return true;
   }
@@ -154,11 +192,9 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
   function onSquareClick(square: Square) {
 
-    {
-      if (startGame && game.turn() !== orientation[0]?.toLowerCase()) {
-        toast.error('Its not your turn 😏')
-        return
-      }
+    if (startGame && game.turn() !== orientation[0]?.toLowerCase()) {
+      toast.error('Its ❌ your turn 😏')
+      return
     }
 
     setRightClickedSquares({});
@@ -227,8 +263,8 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
         return;
       }
 
-      makeMove(move);
-      { startGame && socket.emit('move', moveData) }
+      const moveSuccess = makeMove(move);
+      if (moveSuccess) { startGame && socket.emit('move', moveData) }
       { !startGame && mode === 'random' && setTimeout(makeRandomMove, 300) }
 
       //* Reset all suggestions
@@ -251,16 +287,24 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
   useEffect(() => {
 
-    //* joined as white
-    socket.on('joinedAsw', (data: any) => {
-      console.log('joined as', data)
-      setOrientation('white')
+
+    //TODO: Need to implement saving session
+    socket.on('saveSession', (playerData: any) => {
+      console.log('saveSession', playerData)
+      localStorage.setItem('playerData', JSON.stringify(playerData))
     })
 
-    //* joined as black
-    socket.on('joinedAsb', (data: any) => {
+    const playerData = localStorage.getItem('playerData')
+    console.log('playerData', playerData)
+    if (playerData) {
+      const parsedPlayerData = JSON.parse(playerData)
+      console.log('parsedPlayerData', parsedPlayerData)
+      socket.emit('reconnect', { parsedPlayerData: parsedPlayerData })
+    }
+
+    socket.on('joinedAs', (data: any) => {
       console.log('joined as', data)
-      setOrientation('black')
+      setOrientation(data?.orientation === 'w' ? 'white' : 'black')
     })
 
     socket.on('start', () => {
@@ -289,7 +333,6 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
     //eslint-disable-next-line
   }, [])
-
 
 
   useEffect(() => {
@@ -329,6 +372,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
                 ...moveSquares,
                 ...optionSquares,
                 ...rightClickedSquares,
+                ...customStyles
               }}
               promotionToSquare={moveTo}
               showPromotionDialog={showPromotionDialog}
@@ -346,12 +390,12 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
               <p className="mr-2">Move history : </p>
               {moveHistory.map((move: any, index: number) => {
                 return (
-                  <>
-                    <div key={index} className="move-history-item">
-                      <p>{move.piece}{move.to},
-                      </p>
-                    </div>
-                  </>
+
+                  <div key={index} className="move-history-item">
+                    <p>{move.piece}{move.to},
+                    </p>
+                  </div>
+
                 )
               })}
             </div>

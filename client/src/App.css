@@ -77,6 +77,30 @@ div::-webkit-scrollbar {
 /* Chessmate components styling  ends-here*/
 
 
+/* Nav-bar styling starts-here*/
+
+.nav-bar-container {
+  background-color: var(--primary-color);
+  color: white;
+}
+.nav-bar-container > div{
+  /* background-color: red; */
+  color: #f1f1f1 !important;
+}
+.nav-container a:link{
+  color: var(--primary-white) !important;
+  /* background-color: violet !important; */
+}
+
+.nav-drop-down div{
+  /* background-color: yellow; */
+  color: var(--primary-white) !important;
+}
+
+
+/* Nav-bar styling ends-here*/
+
+
 /* SimpleBoard styling starts-here*/
 
 .chess-board-container {
@@ -469,14 +493,27 @@ div::-webkit-scrollbar {
 /* footer-section starts here */
 
 .footer-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #1A1423 !important;
+  /* background-color: red !important; */
   z-index: inherit;
   width: inherit;
 }
 
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* background-color: yellow; */
+  padding: 0 0.2rem;
+  width: 100% !important;
+}
+
+.socials-links {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  /* background-color: red; */
+}
 
 .social-icon {
   color: white;
@@ -591,17 +628,17 @@ div::-webkit-scrollbar {
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
   .chess-board {
-    background-color: red !important;
+    /* background-color: red !important; */
     margin-top: 2rem;
     margin-right: 1rem;
   }
 
   .footer-section {
-    background-color: #650fe7 !important;
+    /* background-color: #650fe7 !important; */
   }
 
   .footer-section-container {
-    background-color: #650fe7 !important;
+    /* background-color: #650fe7 !important; */
   }
 
 }

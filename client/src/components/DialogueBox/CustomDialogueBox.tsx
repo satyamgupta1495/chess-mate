@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { TbChessQueen, TbChessQueenFilled } from "react-icons/tb";
 import { FaRandom } from 'react-icons/fa'
 import toast from 'react-hot-toast';
+import { socket } from '../../Socket';
 
 type Props = {
     show?: boolean,
@@ -16,21 +18,25 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
     const [createRoomId, setCreateRoomId] = useState('')
     const [show, setShow] = useState(true)
     const [playAs, setPlayAs] = useState<any>()
-
-
+    const roomExists = useRef<any>(false);
 
     const handleCreateRoom = (): any => {
         if (createRoomId === '') return toast('Please enter room id 🚀')
         setShow(false)
         const selectedColor = playAs === 'r' ? (Math.random() < 0.5 ? 'w' : 'b') : playAs;
         console.log(selectedColor, "selectedColor")
-        if (!selectedColor) toast('You should\'ve selected a color too 🤦‍♂️')
         setRoomType({ type: 'create', roomName: createRoomId, selectedColor: selectedColor ? selectedColor : 'w' });
     }
-    const handleJoinRoom = ():any => {
+    const handleJoinRoom = (): any => {
         if (createRoomId === '') return toast('Please create or enter room id 🚀')
         setRoomType({ type: 'join', roomName: createRoomId })
-        setShow(false)
+        console.log("roomExists", roomExists.current)
+        if (roomExists.current) {
+            toast.error('Room not found 🤷‍♂️')
+        } else {
+            toast.success('Room found! 🤩')
+            setShow(false)
+        }
     }
 
     const handlePlayAs = (color: string) => {
@@ -45,6 +51,21 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
             toast.success('Psstt... its a surprise 🤫')
         }
     }
+
+    //TODO : fix join empty room
+    useEffect(() => {
+        socket.on('roomNotFound', (data) => {
+            console.log("dacadsata", data?.canJoinRoom)
+            if (!data?.canJoinRoom) {
+                console.log("in if")
+                roomExists.current = false;
+                setShow(true);
+            } else {
+                console.log("in if----")
+                roomExists.current = true;
+            }
+        });
+    }, []);
 
     return (
         <>
