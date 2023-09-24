@@ -17,7 +17,7 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
     }, [chat])
 
     return (
-        <div className='w-100 px-1'>
+        <div className='chat-container'>
             <div className="chat-header">
                 {chat.map((chatData: any, index: number) => {
                     console.log(chatData, "dasdas")
@@ -52,23 +52,8 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
                         if (e.key === 'Enter') { sendChat() }
                     }}
                     value={message} onChange={(e) => setMessage(e.target.value)} />
-                <button className="custom-btn" onClick={sendChat}>Send</button>
+                <button className="custom-btn send-btn" onClick={sendChat}>Send</button>
             </div>
-
-            {/* <div className="control-btns">
-                <Button
-                    className="custom-btn reset-button mb-5"
-                    onClick={() => {
-                        setGame(new Chess());
-                        setMoveSquares({});
-                        setOptionSquares({});
-                        setRightClickedSquares({});
-                        setCurrentTurn("w");
-                    }}
-                >
-                    Reset
-                </Button>
-            </div> */}
         </div>
     )
 }

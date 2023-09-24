@@ -24,12 +24,10 @@ p {
   color: white !important;
 }
 
+
 #root {
-  height: inherit !important;
-  width: 100vw !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100vh;
+  width: 100vw;
 }
 
 .custom-btn {
@@ -62,110 +60,85 @@ div::-webkit-scrollbar {
 
 /* Chessmate components styling  starts-here*/
 
-/* .main-container {
-  height: 100vh;
-  width: 100vw !important;
-} */
 
 .chess-mate {
   /* background-color: rgb(57, 6, 243) !important; */
-  display: grid;
-  width: 100vw !important;
   height: 100%;
-  flex-direction: column;
-}
+  width: 100%;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "nav nav nav"
+    "simple-board simple-board simple-board"
+    "footer footer footer";
 
-.board-container {
-  background-color: rgb(247, 2, 231);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* width: inherit; */
-  flex-direction: column !important;
-  /* height: inherit; */
-  flex-wrap: wrap;
-}
-
-.board-container p {
-  font-family: 'Black Ops One', cursive;
-}
-
-/* Chessmate components styling  ends-here*/
-
-
-/* Nav-bar styling starts-here*/
-
-.nav-bar-container {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.nav-bar-container>div {
-  /* background-color: red; */
-  color: #f1f1f1 !important;
 }
 
 .nav-container {
-  background-color: yellow;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 80%;
-}
-
-.nav-container a:link {
-  color: var(--primary-white) !important;
-  /* background-color: violet !important; */
-}
-
-.nav-drop-down div {
+  grid-area: nav;
+  grid-column: span 3;
   /* background-color: yellow; */
-  color: var(--primary-white) !important;
+
+}
+
+.simple-board {
+  grid-area: simple-board;
+  grid-column: span 3;
+  height: 100%;
+  width: 100%;
 }
 
 
-/* Nav-bar styling ends-here*/
+.main-container {
+  display: grid;
+  width: 100%;
+  grid-gap: 1rem;
+  /* background-color: green; */
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "chat board history";
+  padding: 0 1rem;
+}
 
+.chat {
+  grid-area: chat;
+  width: 100%;
+  padding-top: 0.5rem;
+}
+
+.chat-container {
+  /* background-color: green; */
+  height: 100%;
+}
+
+
+.board {
+  grid-area: board;
+  width: 100%;
+  /* background-color: yellow; */
+}
+
+.history {
+  grid-area: history;
+  /* background-color: blue; */
+}
+
+
+/* Chessmate components styling  ends-here*/
 
 /* SimpleBoard styling starts-here*/
 
-.main-container {
-  /* background-color: pink; */
-  display: flex;
-  flex-direction: row;  
-  flex-wrap: wrap;
-  height: inherit;
-  width: 100%;
-  /* gap: 1rem; */
-}
-
-.chess-board-container {
-  /* background-color: blue; */
-  flex-wrap: wrap;
-  z-index: 1000;
-  flex-grow: 3;
-  margin-left: 5rem;
-}
-
 .chess-board-container p {
-  /* background-color: violet; */
   font-size: 2.5rem;
 }
 
-.chess-board {
-  padding-left: 1rem;
-  /* background-color: rgb(145, 10, 28); */
-}
-
 .control-container {
-  /* background-color: red !important; */
-  background-color: var(--primary-color);
   display: flex;
-  /* padding: 0.2rem 0 0 0; */
-  justify-content: space-between;
   flex-direction: column;
-  align-items: center;
-  width: 25%;
+  justify-content: space-between;
+  background-color: var(--primary-color);
   border-radius: 5px;
   /* margin-left: 1rem; */
 }
@@ -183,42 +156,67 @@ div::-webkit-scrollbar {
 }
 
 .video-grid-container {
-  /* background-color: red; */
-  height: inherit;
-  width: 100%;
+  /* background-color: yellow; */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   border-radius: 5px 5px 0 0;
-  /* border-bottom: 2px dashed var(--primary-white); */
+  border-bottom: 2px dashed var(--primary-white);
 }
 
-.video-grid {
-  height: inherit;
+.peer {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+.peer-id-input {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  /* background-color: green; */
+
+}
+
+.peer-id-input input {
+  width: 100%;
+}
+
+.call-btn {
+  /* background-color: pink; */
+  line-height: 0;
+}
+
+.call-btn button {
+  height: 2rem;
+  margin-left: 0.5rem;
 }
 
 .history {
   flex-grow: 1;
-  margin-left: 1.5rem;
   /* background-color: tomato; */
   justify-content: flex-start;
 }
 
 .turns-container {
-  /* background-color: steelblue; */
-  width: 100%;
+  /* background-color: red; */
+  flex: 1;
   text-align: center;
-  border-bottom: 2px dashed var(--primary-white);
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
+  /* border-bottom: 2px dashed var(--primary-white); */
   /* background-color: #3b3c45; */
 }
 
 .move-history {
-  align-self: flex-start;
+  text-align: start;
   width: 95%;
   flex-wrap: wrap;
   overflow-y: auto;
   line-height: 0;
-  /* border-bottom: 1px dashed #fff; */
   margin-left: 10px;
   /* background-color: yellow; */
 }
@@ -265,9 +263,7 @@ div::-webkit-scrollbar {
 
 .chat-header {
   /* background-color: turquoise; */
-  width: inherit;
-  height: 15rem;
-  flex-direction: column;
+  height: 33rem;
   overflow-y: auto;
   /* border-top: 2px dashed var(--primary-white); */
 }
@@ -280,10 +276,10 @@ div::-webkit-scrollbar {
 }
 
 .chat-input {
-
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 0.5rem;
 }
 
 .chat-input input {
@@ -317,6 +313,11 @@ div::-webkit-scrollbar {
   border: 1px dashed;
   line-height: 1;
 
+}
+
+.send-btn {
+  line-height: 0;
+  height: 2rem;
 }
 
 .sent {
@@ -559,12 +560,9 @@ div::-webkit-scrollbar {
 /* footer-section starts here */
 
 .footer-section {
-  position: relative;
-  margin-top: 0.8rem;
   background-color: #1A1423 !important;
-  /* background-color: rgb(4, 252, 4) !important; */
-  width: inherit;
-  z-index: inherit;
+  grid-area: footer;
+  grid-column: span 3;
 }
 
 .footer-content {
@@ -590,12 +588,6 @@ div::-webkit-scrollbar {
 }
 
 /* footer-section ends here */
-
-
-
-
-
-
 
 
 /* custom stylled buttons */
@@ -666,135 +658,36 @@ div::-webkit-scrollbar {
 
 /* =====================Mobile Portrait Size to Mobile Landscape Size (devices and browsers)===================== */
 @media screen and (max-width: 479px) {
-
   .chess-mate {
-    /* background-color: yellowgreen; */
-    flex-direction: column;
-  }
-
-  .chess-board-container {
-    /* background-color: #FCDC4D; */
-    margin-left: 0;
-  }
-
-  .chess-board {
-    /* background-color: lightblue; */
-    margin-right: 0 !important;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      "nav"
+      "simple-board"
+      "footer";
   }
 
   .main-container {
     /* background-color: red; */
-    flex-direction: column;
-  }
-
-  .video-grid {
-    height: 20rem;
-  }
-
-  .chat {
-    margin-top: 1rem;
-    width: 100%;
-  }
-
-  .history {
-    margin-top: 1rem;
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .chat-header {
-    height: 15rem;
-  }
-
-  .side-bar-container {
-    width: 0;
-  }
-
-  .constrols {
-    display: none;
-  }
-
-  .menu {
-    /* margin-left: 5rem !important; */
-    /* margin-top: 3.9rem; */
-    font-size: 1rem;
-    align-items: center;
-    justify-content: center;
-    /* top: 3.2rem; */
-  }
-
-  .menu button {
-    font-size: 1rem;
-    width: 11rem;
-    background: transparent !important;
-  }
-
-}
-
-/* ===================Mobile Landscape Size to Tablet Portrait (devices and browsers)=================== */
-@media only screen and (min-width: 480px) and (max-width: 767px) {
-
-
-  .chess-mate {
-    /* background-color: yellowgreen; */
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .chess-board {
-    /* background-color: lightblue; */
-    margin: auto !important;
-  }
-
-  .main-container {
-    /* background-color: red; */
-    flex-direction: column;
-  }
-
-  .video-grid {
-    height: 20rem;
+    place-items: center;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr) !important;
+    grid-template-areas:
+      "board"
+      "chat"
+      "history";
   }
 
   .chat {
-    margin-top: 1rem;
-    width: 100%;
-  }
-
-  .history {
-    margin-top: 1rem;
-    margin-left: 0;
-    width: 100%;
+    height: 100%;
   }
 
   .chat-header {
-    height: 15rem;
+    padding-top: 0.5rem;
   }
 
-
-}
-
-/* ==================All Mobile Sizes (devices and browser) ==================*/
-@media only screen and (max-width: 767px) {
-
-
-  .chess-board {
-    margin-top: 2rem;
-  }
-
-
-  .side-bar-container .offcanvas {
-    background-color: violet !important;
-    max-width: 2rem;
-  }
-
-  .footer-section .container {
-    /* background-color: rgb(253, 83, 5) !important; */
-    height: 3.5rem;
-  }
-
-  .footer-section {
-    font-size: 0.8rem;
-    /* background-color: #650fe7 !important; */
+  .history {
+    height: 100%;
   }
 
   .social-icon {
@@ -803,45 +696,115 @@ div::-webkit-scrollbar {
 
 }
 
-/* ================Tablet Portrait size to standard 960 (devices and browsers) ================ */
-/* @media only screen and (min-width: 768px) and (max-width: 959px) {} */
-@media only screen and (min-width: 768px) and (max-width: 1400px) {
+/* ===================Mobile Landscape Size to Tablet Portrait (devices and browsers)=================== */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
 
   .chess-mate {
-    /* background-color: yellowgreen; */
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .chess-board {
-    /* background-color: lightblue; */
-    margin: auto !important;
+    grid-column: 1fr;
   }
 
   .main-container {
+    place-items: center;
     /* background-color: red; */
-    flex-direction: column;
-  }
-
-  .video-grid {
-    height: 20rem;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+      "chess-board chess-board"
+      "chat history";
   }
 
   .chat {
-    margin-top: 1rem;
-    width: 100%;
-  }
-
-  .history {
-    margin-top: 1rem;
-    margin-left: 0;
-    width: 100%;
+    height: 100%;
   }
 
   .chat-header {
-    height: 15rem;
+    height: 30rem;
   }
 
+  .chess-board {
+    grid-area: chess-board;
+  }
+
+  .history {
+    height: 100%;
+  }
+
+  .social-icon {
+    font-size: 1rem;
+  }
+}
+
+/* ==================All Mobile Sizes (devices and browser) ==================*/
+/* @media only screen and (max-width: 767px) {
+  .chess-mate {
+    grid-column: 1fr;
+  }
+
+  .main-container {
+    place-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+      "chess-board chess-board"
+      "chat history";
+  }
+
+  .chess-board {
+    grid-area: chess-board;
+  }
+
+  .chat {
+    height: 100%;
+  }
+
+  .chat-header {
+    height: 40rem;
+  }
+
+  .history {
+    height: 100%;
+  }
+
+} */
+
+/* ================Tablet Portrait size to standard 960 (devices and browsers) ================ */
+/* @media only screen and (min-width: 768px) and (max-width: 959px) {} */
+@media only screen and (min-width: 768px) and (max-width: 1400px) {
+  .chess-mate {
+
+    grid-column: 1fr;
+  }
+
+  .main-container {
+    place-items: center;
+    /* background-color: red; */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+      "chess-board chess-board"
+      "chat history";
+  }
+
+  .chess-board {
+    grid-area: chess-board;
+  }
+
+  .chat {
+    height: 100%;
+  }
+
+  .chat-header {
+    height: 40rem;
+  }
+
+  .history {
+    height: 100%;
+  }
+
+
+  .social-icon {
+    font-size: 1rem;
+  }
 }
 
 /* For Projectors or Higher Resolution Screens (Full HD) */

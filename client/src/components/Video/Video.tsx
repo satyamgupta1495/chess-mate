@@ -9,7 +9,7 @@ function Video() {
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const currVideoRef = useRef<any>(null);
     const peerRef = useRef<Peer | null>(null);
-    
+
     useEffect(() => {
         const peer = new Peer();
         peer.on('open', (id) => {
@@ -90,11 +90,18 @@ function Video() {
             ) : (
                 <p>No remote stream available</p>
             )}
-            <input type='text' value={peerId} onChange={(e) => setPeerId(e.target.value)} />
-            <p className='text-white fs-1'><FaCopy onClick={handleCopy} /></p>
             
-            <button onClick={callPeer}>Call</button>
-            <button onClick={endCall}>Call End</button>
+            <div className="peer">
+                <div className="peer-id-input shadow-none">
+                    <input type='text' value={peerId} onChange={(e) => setPeerId(e.target.value)} />
+                    <span className='text-white px-2'><FaCopy onClick={handleCopy} /></span>
+                </div>
+
+                <div className="call-btn">
+                    <button onClick={callPeer}>Call</button>
+                    <button onClick={endCall}>Call End</button>
+                </div>
+            </div>
         </div>
     );
 }
