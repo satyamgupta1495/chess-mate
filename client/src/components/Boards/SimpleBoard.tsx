@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Chessboard } from "react-chessboard";
 import useSimpleBoard from "./hooks/useSimpleBoard";
-import { Container } from "react-bootstrap";
 import { TbChessQueen, TbChessQueenFilled } from "react-icons/tb";
 import { Move } from 'chess.js';
 import { Square } from 'react-chessboard/dist/chessboard/types';
@@ -42,7 +41,6 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
   const [message, setMessage] = useState<any>('')
   const [chat, setChat] = useState<any>([])
   const oppPlayePeerId = useRef<any>("")
-  const [peerId, setPeerId] = useState<string>('');
 
   const chatEventHandlerAdded = useRef(false);
 
@@ -357,48 +355,59 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
   }
 
   return (
-    <>
+    <div className="simple-board">
       <CustomDialogueBox setRoomType={setRoomType} />
-      <p className="text-center h1 my-3">♟️Chessmate</p>
-      <Container fluid className="main-container">
-        <div className="chess-board-container">
-          <div className="chess-board">
-            <Chessboard id="BasicBoard"
-              boardWidth={boardWidth}
-              customDarkSquareStyle={{ backgroundColor: `${currentTheme}` || '#769656' }}
-              customLightSquareStyle={{ backgroundColor: '#eeeed2' }}
-              customBoardStyle={{ borderRadius: '5px', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5 ' }}
-              position={position}
-              onPieceDrop={onDrop}
-              onSquareClick={onSquareClick}
-              onSquareRightClick={onSquareRightClick}
-              customSquareStyles={{
-                ...moveSquares,
-                ...optionSquares,
-                ...rightClickedSquares,
-                ...customStyles
-              }}
-              promotionToSquare={moveTo}
-              showPromotionDialog={showPromotionDialog}
-              boardOrientation={orientation}
-            />
-          </div>
+      {/* <p className="text-center h1 my-3">♟️Chessmate</p> */}
+      <div className="main-container">
+        <div className="chess-board">
+          <Chessboard id="BasicBoard"
+            boardWidth={boardWidth}
+            customDarkSquareStyle={{ backgroundColor: `${currentTheme}` || '#769656' }}
+            customLightSquareStyle={{ backgroundColor: '#eeeed2' }}
+            customBoardStyle={{ borderRadius: '5px', boxShadow: '0 5px 15px rgba(0, 0, 0, 0.5 ' }}
+            position={position}
+            onPieceDrop={onDrop}
+            onSquareClick={onSquareClick}
+            onSquareRightClick={onSquareRightClick}
+            customSquareStyles={{
+              ...moveSquares,
+              ...optionSquares,
+              ...rightClickedSquares,
+              ...customStyles
+            }}
+            promotionToSquare={moveTo}
+            showPromotionDialog={showPromotionDialog}
+            boardOrientation={orientation}
+          />
         </div>
 
-        <section className="control-container chat">
-          <Video peerId={peerId} setPeerId={setPeerId} />
+
+        <div className="control-container chat">
           <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />
-        </section>
+        </div>
 
         <div className="control-container history">
+          <Video />
           <div className="turns-container">
             <p className="my-0">
               <span className="turns-icon">{currentTurn === "w" ? <TbChessQueen /> : <TbChessQueenFilled />}</span>
               {currentTurn === "w" ? "White to move!" : "Black to move!"}
             </p>
+            <div className="move-history">
+              <p className="mr-2">Move history : </p>
+              {moveHistory.map((move: any, index: number) => {
+                return (
+                  <div key={index} className="move-history-item">
+                    <p>{move.piece}{move.to},
+                    </p>
+                  </div>
+                )
+              })}
+
+            </div>
           </div>
 
-          <div className="move-history">
+          {/* <div className="move-history">           
             <p className="mr-2">Move history : </p>
             {moveHistory.map((move: any, index: number) => {
               return (
@@ -408,14 +417,15 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
                 </div>
               )
             })}
-          </div>
+
+          </div> */}
           {/* {startGame && <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />} */}
           {/* </div> */}
         </div>
 
-      </Container >
+      </div >
       {playerLeft && <h1> Player left the game! </h1>
       }
-    </>
+    </div>
   );
 }

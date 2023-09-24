@@ -4,7 +4,7 @@ import SimpleBoard from '../Boards/SimpleBoard'
 import useChessMate from './hooks/useChessMate';
 import Controls from '../Controls/Controls';
 import Footer from '../Footer/Footer';
-import { Container } from 'react-bootstrap';
+// import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
 import NavBar from '../Navbar/NavBar';
 
@@ -23,13 +23,16 @@ function ChessMate() {
   return (
     <>
       <div className='chess-mate'>
-       
-        <Controls
+        <NavBar
+          currentTheme={currTheme}
+          setCurrTheme={setCurrTheme} />
+
+        {/* <Controls
           setGame={setGame}
           setMode={setMode}
           mode={mode}
           currentTheme={currTheme}
-          setCurrTheme={setCurrTheme} />
+          setCurrTheme={setCurrTheme} /> */}
 
         < SimpleBoard
           position={position}
@@ -42,7 +45,6 @@ function ChessMate() {
           setCurrentTurn={setCurrentTurn} />
 
         <Footer />
-
       </div >
       <Toaster
         position="top-right"
