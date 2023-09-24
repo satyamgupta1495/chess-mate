@@ -6,7 +6,7 @@ import Controls from '../Controls/Controls';
 import Footer from '../Footer/Footer';
 import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
-// import NavBar from '../Navbar/NavBar';
+import NavBar from '../Navbar/NavBar';
 
 function ChessMate() {
 
@@ -22,35 +22,28 @@ function ChessMate() {
 
   return (
     <>
-      {/* <NavBar 
-            setGame={setGame}
-            setMode={setMode}
-            mode={mode}
-            currentTheme={currTheme}
-            setCurrTheme={setCurrTheme}/> */}
-      <Container fluid className='d-flex  justify-content-between align-items-center flex-column height-100 main-container' >
-        <div className="board-container">
-          <Controls
-            setGame={setGame}
-            setMode={setMode}
-            mode={mode}
-            currentTheme={currTheme}
-            setCurrTheme={setCurrTheme} />
+      <div className='chess-mate'>
+       
+        <Controls
+          setGame={setGame}
+          setMode={setMode}
+          mode={mode}
+          currentTheme={currTheme}
+          setCurrTheme={setCurrTheme} />
 
-          < SimpleBoard
-            position={position}
-            setPosition={setPosition}
-            mode={mode}
-            game={game}
-            setGame={setGame}
-            currentTheme={currTheme}
-            currentTurn={currentTurn}
-            setCurrentTurn={setCurrentTurn} />
-        </div>
-        <section className="footer-section">
-          <Footer />
-        </section>
-      </Container >
+        < SimpleBoard
+          position={position}
+          setPosition={setPosition}
+          mode={mode}
+          game={game}
+          setGame={setGame}
+          currentTheme={currTheme}
+          currentTurn={currentTurn}
+          setCurrentTurn={setCurrentTurn} />
+
+        <Footer />
+
+      </div >
       <Toaster
         position="top-right"
         reverseOrder={true}

@@ -10,7 +10,7 @@ import { socket } from '../../Socket';
 type Props = {
     show?: boolean,
     onHide?: any,
-    setRoomType: (roomType: { type: string, roomName: string, selectedColor?: string }) => void;
+    setRoomType: (roomType: { type: string, roomName: string, selectedColor?: string, peerId?: string }) => void;
 }
 
 export default function CustomDialogueBox({ setRoomType }: Props) {
@@ -24,13 +24,17 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
         if (createRoomId === '') return toast('Please enter room id 🚀')
         setShow(false)
         const selectedColor = playAs === 'r' ? (Math.random() < 0.5 ? 'w' : 'b') : playAs;
-        console.log(selectedColor, "selectedColor")
-        setRoomType({ type: 'create', roomName: createRoomId, selectedColor: selectedColor ? selectedColor : 'w' });
+        // console.log(selectedColor, "selectedColor")
+        setRoomType({ type: 'create', roomName: createRoomId, selectedColor: selectedColor ? selectedColor : 'w', });
+        // socket.emit('new_peer', { peerId: peer.id, socketId: socket.id })
     }
     const handleJoinRoom = (): any => {
         if (createRoomId === '') return toast('Please create or enter room id 🚀')
         setRoomType({ type: 'join', roomName: createRoomId })
-        console.log("roomExists", roomExists.current)
+        // console.log("roomExists", roomExists.current)
+
+        // socket.emit('new_peer', { peerId: peer.id, socketId: socket.id })
+
         if (roomExists.current) {
             toast.error('Room not found 🤷‍♂️')
         } else {
@@ -55,13 +59,13 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
     //TODO : fix join empty room
     useEffect(() => {
         socket.on('roomNotFound', (data) => {
-            console.log("dacadsata", data?.canJoinRoom)
+            // console.log("dacadsata", data?.canJoinRoom)
             if (!data?.canJoinRoom) {
-                console.log("in if")
+                // console.log("in if")
                 roomExists.current = false;
                 setShow(true);
             } else {
-                console.log("in if----")
+                // console.log("in if----")
                 roomExists.current = true;
             }
         });

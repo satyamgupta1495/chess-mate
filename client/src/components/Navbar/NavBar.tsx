@@ -1,4 +1,4 @@
-import { Container, Button, Nav, Navbar, NavDropdown } from "react-bootstrap"
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap"
 import useControl from "./hooks/useControl"
 import { FaUserFriends, FaRobot } from "react-icons/fa"
 import { toast } from "react-hot-toast"
@@ -7,13 +7,13 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
   const { onThemeSelect } = useControl({ setGame, setMode, setCurrTheme })
 
   return (
-    <>
+    <div className="nav-container">
       <Navbar
         collapseOnSelect
         expand="sm"
-        className="shadow-none nav-bar-container px-4"
+        className="shadow-none nav-bar-container"
       >
-        <Container fluid className="nav-container">
+        <Container className="nav-container">
           <Navbar.Brand href="#">Chessmate</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav ">
@@ -35,7 +35,7 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
               <NavDropdown title="Modes" id="collapsible-nav-dropdown">
                 <NavDropdown.Item>
                   <p
-                  className={"bg-dark text-light p-2 fs-6"}
+                    className={"bg-dark text-light p-2 fs-6"}
                     value="Two Players"
                     onClick={() => {
                       toast("Winner have to buy dinner! 🤼"), setMode("analyze")
@@ -69,7 +69,7 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </>
+    </div>
   )
 }
 

@@ -19,10 +19,17 @@ body {
   background: #000 url("./assets/img/bg.jpg") center/cover no-repeat;
 }
 
-
 h1,
 p {
   color: white !important;
+}
+
+#root {
+  height: inherit !important;
+  width: 100vw !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .custom-btn {
@@ -55,17 +62,26 @@ div::-webkit-scrollbar {
 
 /* Chessmate components styling  starts-here*/
 
-.main-container {
+/* .main-container {
   height: 100vh;
   width: 100vw !important;
+} */
+
+.chess-mate {
+  /* background-color: rgb(57, 6, 243) !important; */
+  display: grid;
+  width: 100vw !important;
+  height: 100%;
+  flex-direction: column;
 }
 
 .board-container {
-  /* background-color: rgb(243, 6, 6); */
+  background-color: rgb(247, 2, 231);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: inherit;
+  /* width: inherit; */
+  flex-direction: column !important;
   /* height: inherit; */
   flex-wrap: wrap;
 }
@@ -83,16 +99,26 @@ div::-webkit-scrollbar {
   background-color: var(--primary-color);
   color: white;
 }
-.nav-bar-container > div{
+
+.nav-bar-container>div {
   /* background-color: red; */
   color: #f1f1f1 !important;
 }
-.nav-container a:link{
+
+.nav-container {
+  background-color: yellow;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.nav-container a:link {
   color: var(--primary-white) !important;
   /* background-color: violet !important; */
 }
 
-.nav-drop-down div{
+.nav-drop-down div {
   /* background-color: yellow; */
   color: var(--primary-white) !important;
 }
@@ -103,14 +129,22 @@ div::-webkit-scrollbar {
 
 /* SimpleBoard styling starts-here*/
 
+.main-container {
+  /* background-color: pink; */
+  display: flex;
+  flex-direction: row;  
+  flex-wrap: wrap;
+  height: inherit;
+  width: 100%;
+  /* gap: 1rem; */
+}
+
 .chess-board-container {
   /* background-color: blue; */
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
-  z-index: 214748;
-  /* width: 100vw; */
+  z-index: 1000;
+  flex-grow: 3;
+  margin-left: 5rem;
 }
 
 .chess-board-container p {
@@ -118,35 +152,77 @@ div::-webkit-scrollbar {
   font-size: 2.5rem;
 }
 
-.chess-board-controls {
+.chess-board {
+  padding-left: 1rem;
+  /* background-color: rgb(145, 10, 28); */
+}
+
+.control-container {
   /* background-color: red !important; */
   background-color: var(--primary-color);
   display: flex;
-  padding: 0.2rem 0 0 0;
+  /* padding: 0.2rem 0 0 0; */
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
+  width: 25%;
   border-radius: 5px;
-  margin: 1rem;
-
-  /* height: 65vh; */
+  /* margin-left: 1rem; */
 }
 
+.control-container p {
+  /* background-color: yellow; */
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.chat {
+  /* background-color: rgb(8, 247, 251) !important; */
+  flex-grow: 1;
+}
+
+.video-grid-container {
+  /* background-color: red; */
+  height: inherit;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  /* border-bottom: 2px dashed var(--primary-white); */
+}
+
+.video-grid {
+  height: inherit;
+  width: 100%;
+}
+
+.history {
+  flex-grow: 1;
+  margin-left: 1.5rem;
+  /* background-color: tomato; */
+  justify-content: flex-start;
+}
+
+.turns-container {
+  /* background-color: steelblue; */
+  width: 100%;
+  text-align: center;
+  border-bottom: 2px dashed var(--primary-white);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  /* background-color: #3b3c45; */
+}
 
 .move-history {
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  align-self: flex-start;
+  width: 95%;
   flex-wrap: wrap;
-  /* background-color: springgreen; */
-  height: 5.5rem;
-  width: 22rem;
   overflow-y: auto;
-  border-bottom: 1px dashed #fff;
-  margin-bottom: 1rem;
   line-height: 0;
-  padding-left: 1rem;
+  /* border-bottom: 1px dashed #fff; */
+  margin-left: 10px;
+  /* background-color: yellow; */
 }
+
 
 .move-history-item {
   display: inline-flex;
@@ -154,17 +230,8 @@ div::-webkit-scrollbar {
   margin-right: 10px;
   text-align: center;
   line-height: 0;
-
   /* background-color: violet; */
 }
-
-.chess-board-controls p {
-  /* background-color: yellow; */
-  margin-top: 1rem;
-  font-size: 1rem;
-  font-family: 'Ubuntu', sans-serif;
-}
-
 
 .turns-icon {
   /* background-color: red; */
@@ -185,24 +252,24 @@ div::-webkit-scrollbar {
   transition: all 0.2s ease-in-out;
 }
 
-
 .chat-section {
   background-color: var(--primary-color);
+  /* background-color: yellow !important; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 1em;
   border-radius: 5px;
-
 }
 
 .chat-header {
   /* background-color: turquoise; */
-  width: 100%;
-  height: 16rem;
+  width: inherit;
+  height: 15rem;
   flex-direction: column;
   overflow-y: auto;
+  /* border-top: 2px dashed var(--primary-white); */
 }
 
 .chat-header .sent {
@@ -213,34 +280,33 @@ div::-webkit-scrollbar {
 }
 
 .chat-input {
-  /* background-color: teal; */
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
 }
 
 .chat-input input {
   color: #FCDC4D;
   border: 2px dashed #FCDC4D;
-  background-color: #1A1423;
+  background-color: var(--primary-color);
 }
 
 .chat-input input:focus {
   color: #FCDC4D;
-  background-color: #1A1423;
+  background-color: var(--primary-color);
   box-shadow: none;
   border: 2px dashed #FCDC4D;
 }
 
 .chat-input input::placeholder {
   color: #b8a75d;
-  background-color: #1A1423;
+  background-color: var(--primary-color);
 }
 
 .chat-input input:focus::placeholder {
   color: #b8a75d;
-  background-color: #1A1423;
+  background-color: var(--primary-color);
 }
 
 .msg-div {
@@ -493,10 +559,12 @@ div::-webkit-scrollbar {
 /* footer-section starts here */
 
 .footer-section {
+  position: relative;
+  margin-top: 0.8rem;
   background-color: #1A1423 !important;
-  /* background-color: red !important; */
-  z-index: inherit;
+  /* background-color: rgb(4, 252, 4) !important; */
   width: inherit;
+  z-index: inherit;
 }
 
 .footer-content {
@@ -505,7 +573,7 @@ div::-webkit-scrollbar {
   align-items: center;
   /* background-color: yellow; */
   padding: 0 0.2rem;
-  width: 100% !important;
+  /* width: 100% !important; */
 }
 
 .socials-links {
@@ -599,6 +667,45 @@ div::-webkit-scrollbar {
 /* =====================Mobile Portrait Size to Mobile Landscape Size (devices and browsers)===================== */
 @media screen and (max-width: 479px) {
 
+  .chess-mate {
+    /* background-color: yellowgreen; */
+    flex-direction: column;
+  }
+
+  .chess-board-container {
+    /* background-color: #FCDC4D; */
+    margin-left: 0;
+  }
+
+  .chess-board {
+    /* background-color: lightblue; */
+    margin-right: 0 !important;
+  }
+
+  .main-container {
+    /* background-color: red; */
+    flex-direction: column;
+  }
+
+  .video-grid {
+    height: 20rem;
+  }
+
+  .chat {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .history {
+    margin-top: 1rem;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .chat-header {
+    height: 15rem;
+  }
+
   .side-bar-container {
     width: 0;
   }
@@ -627,19 +734,42 @@ div::-webkit-scrollbar {
 /* ===================Mobile Landscape Size to Tablet Portrait (devices and browsers)=================== */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
+
+  .chess-mate {
+    /* background-color: yellowgreen; */
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
   .chess-board {
-    /* background-color: red !important; */
-    margin-top: 2rem;
-    margin-right: 1rem;
+    /* background-color: lightblue; */
+    margin: auto !important;
   }
 
-  .footer-section {
-    /* background-color: #650fe7 !important; */
+  .main-container {
+    /* background-color: red; */
+    flex-direction: column;
   }
 
-  .footer-section-container {
-    /* background-color: #650fe7 !important; */
+  .video-grid {
+    height: 20rem;
   }
+
+  .chat {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .history {
+    margin-top: 1rem;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .chat-header {
+    height: 15rem;
+  }
+
 
 }
 
@@ -673,8 +803,46 @@ div::-webkit-scrollbar {
 
 }
 
-/* ================Tablet Portrait size to standard 960 (devices and browsers) ================*/
-@media only screen and (min-width: 768px) and (max-width: 959px) {}
+/* ================Tablet Portrait size to standard 960 (devices and browsers) ================ */
+/* @media only screen and (min-width: 768px) and (max-width: 959px) {} */
+@media only screen and (min-width: 768px) and (max-width: 1400px) {
+
+  .chess-mate {
+    /* background-color: yellowgreen; */
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .chess-board {
+    /* background-color: lightblue; */
+    margin: auto !important;
+  }
+
+  .main-container {
+    /* background-color: red; */
+    flex-direction: column;
+  }
+
+  .video-grid {
+    height: 20rem;
+  }
+
+  .chat {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .history {
+    margin-top: 1rem;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .chat-header {
+    height: 15rem;
+  }
+
+}
 
 /* For Projectors or Higher Resolution Screens (Full HD) */
 @media screen and (min-width: 1920px) {}

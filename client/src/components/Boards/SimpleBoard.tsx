@@ -9,6 +9,9 @@ import { socket } from "../../Socket";
 import CustomDialogueBox from "../DialogueBox/CustomDialogueBox";
 import Chat from "./Chat/Chat";
 import toast from "react-hot-toast";
+import Video from "../Video/Video";
+
+
 
 type SimpleBoardProps = {
   mode?: string,
@@ -36,13 +39,13 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
   const [roomType, setRoomType] = useState<any>({})
   const [moveHistory, setMoveHistory] = useState<any>([])
   const [customStyles, setCustomStyles] = useState<any>({})
-
   const [message, setMessage] = useState<any>('')
   const [chat, setChat] = useState<any>([])
+  const oppPlayePeerId = useRef<any>("")
+  const [peerId, setPeerId] = useState<string>('');
 
   const chatEventHandlerAdded = useRef(false);
 
-  //handle check and checkmate
   useEffect(() => {
     console.log(currentTurn)
     setCustomStyles({})
@@ -157,8 +160,9 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
     return true;
   }
 
-  //* This takes a square like "h2" and returns a boolean indicating whether the square has any valid moves.
   function getMoveOptions(square: Square): boolean {
+    //* This takes a square like "h2" and returns a boolean indicating whether the square has any valid moves.
+
     const moves = game.moves({
       square,
       verbose: true,
@@ -287,13 +291,6 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
   useEffect(() => {
 
-
-    //TODO: Need to implement saving session
-    socket.on('saveSession', (playerData: any) => {
-      console.log('saveSession', playerData)
-      localStorage.setItem('playerData', JSON.stringify(playerData))
-    })
-
     const playerData = localStorage.getItem('playerData')
     console.log('playerData', playerData)
     if (playerData) {
@@ -307,7 +304,9 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       setOrientation(data?.orientation === 'w' ? 'white' : 'black')
     })
 
-    socket.on('start', () => {
+    socket.on('start', (data) => {
+      console.log('start', data)
+      oppPlayePeerId.current = socket.id === data?.player1?.socketId ? data?.player2?.socketId : data?.player1?.socketId
       setStartGame(true)
     })
 
@@ -316,6 +315,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       setStartGame(false)
       setPlayerLeft(true)
     })
+
 
     socket.on('move', (playedMove: any) => {
       console.log('move played', playedMove)
@@ -331,6 +331,11 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       chatEventHandlerAdded.current = true;
     }
 
+    //TODO: Need to implement saving session
+    // socket.on('saveSession', (playerData: any) => {
+    //   console.log('saveSession', playerData)
+    //   localStorage.setItem('playerData', JSON.stringify(playerData))
+    // })
     //eslint-disable-next-line
   }, [])
 
@@ -338,11 +343,10 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
   useEffect(() => {
     console.log("roomType", roomType)
     socket.emit("startGame", { ...roomType })
-    //eslint-disable-next-line
   }, [roomType])
 
   function sendChat(e: any) {
-    e.preventDefault()
+    e?.preventDefault()
     if (!message) {
       toast.error('Please enter a message to send')
       return
@@ -355,9 +359,9 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
   return (
     <>
       <CustomDialogueBox setRoomType={setRoomType} />
-      <Container>
-        <p className="text-center h1 my-3">♟️Chessmate</p>
-        <section className="chess-board-container">
+      <p className="text-center h1 my-3">♟️Chessmate</p>
+      <Container fluid className="main-container">
+        <div className="chess-board-container">
           <div className="chess-board">
             <Chessboard id="BasicBoard"
               boardWidth={boardWidth}
@@ -379,31 +383,39 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
               boardOrientation={orientation}
             />
           </div>
+        </div>
 
-          <div className="chess-board-controls">
+        <section className="control-container chat">
+          <Video peerId={peerId} setPeerId={setPeerId} />
+          <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />
+        </section>
+
+        <div className="control-container history">
+          <div className="turns-container">
             <p className="my-0">
               <span className="turns-icon">{currentTurn === "w" ? <TbChessQueen /> : <TbChessQueenFilled />}</span>
               {currentTurn === "w" ? "White to move!" : "Black to move!"}
             </p>
-
-            <div className="move-history">
-              <p className="mr-2">Move history : </p>
-              {moveHistory.map((move: any, index: number) => {
-                return (
-
-                  <div key={index} className="move-history-item">
-                    <p>{move.piece}{move.to},
-                    </p>
-                  </div>
-
-                )
-              })}
-            </div>
-            {startGame && <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />}
           </div>
-        </section>
+
+          <div className="move-history">
+            <p className="mr-2">Move history : </p>
+            {moveHistory.map((move: any, index: number) => {
+              return (
+                <div key={index} className="move-history-item">
+                  <p>{move.piece}{move.to},
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+          {/* {startGame && <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />} */}
+          {/* </div> */}
+        </div>
+
       </Container >
-      {playerLeft && <h1> Player left the game! </h1>}
+      {playerLeft && <h1> Player left the game! </h1>
+      }
     </>
   );
 }

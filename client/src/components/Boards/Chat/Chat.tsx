@@ -17,7 +17,7 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
     }, [chat])
 
     return (
-        <Container fluid>
+        <div className='w-100 px-1'>
             <div className="chat-header">
                 {chat.map((chatData: any, index: number) => {
                     console.log(chatData, "dasdas")
@@ -47,7 +47,11 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
                 <div ref={chatEndRef} />
             </div>
             <div className="chat-input">
-                <Form.Control className='shadow-none' size="sm" type="text" placeholder="Enter message..." value={message} onChange={(e) => setMessage(e.target.value)} />
+                <Form.Control className='shadow-none' size="sm" type="text" placeholder="Enter message..."
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') { sendChat() }
+                    }}
+                    value={message} onChange={(e) => setMessage(e.target.value)} />
                 <button className="custom-btn" onClick={sendChat}>Send</button>
             </div>
 
@@ -65,7 +69,7 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
                     Reset
                 </Button>
             </div> */}
-        </Container>
+        </div>
     )
 }
 
