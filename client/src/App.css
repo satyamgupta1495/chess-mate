@@ -25,7 +25,10 @@ p {
 }
 
 
+
 #root {
+  height: 100vh;
+  width: 100vw;
   height: 100vh;
   width: 100vw;
 }
@@ -65,7 +68,17 @@ div::-webkit-scrollbar {
   /* background-color: rgb(57, 6, 243) !important; */
   height: 100%;
   width: 100%;
+  height: 100%;
+  width: 100%;
   display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "nav nav nav"
+    "simple-board simple-board simple-board"
+    "footer footer footer";
+
   grid-gap: 1rem;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 1fr 1fr;
@@ -79,7 +92,19 @@ div::-webkit-scrollbar {
 .nav-container {
   grid-area: nav;
   grid-column: span 3;
+  grid-area: nav;
+  grid-column: span 3;
   /* background-color: yellow; */
+
+}
+
+.simple-board {
+  grid-area: simple-board;
+  grid-column: span 3;
+  height: 100%;
+  width: 100%;
+}
+
 
 }
 
@@ -116,14 +141,46 @@ div::-webkit-scrollbar {
 
 .board {
   grid-area: board;
+  display: grid;
   width: 100%;
+  grid-gap: 1rem;
+  /* background-color: green; */
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "chat board history";
+  padding: 0 1rem;
+}
+
+.chat {
+  grid-area: chat;
+  width: 100%;
+  padding-top: 0.5rem;
+}
+
+.chat-container {
+  /* background-color: green; */
+  height: 100%;
+}
+
+
+.board {
+  grid-area: board;
+  width: 100%;
+  /* background-color: yellow; */
   /* background-color: yellow; */
 }
 
 .history {
   grid-area: history;
+.history {
+  grid-area: history;
   /* background-color: blue; */
 }
+
+
+/* Chessmate components styling  ends-here*/
+
+/* SimpleBoard styling starts-here*/
 
 
 /* Chessmate components styling  ends-here*/
@@ -137,7 +194,9 @@ div::-webkit-scrollbar {
 .control-container {
   display: flex;
   flex-direction: column;
+  flex-direction: column;
   justify-content: space-between;
+  background-color: var(--primary-color);
   background-color: var(--primary-color);
   border-radius: 5px;
   /* margin-left: 1rem; */
@@ -166,7 +225,21 @@ div::-webkit-scrollbar {
 }
 
 .peer {
+  /* background-color: yellow; */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 2px dashed var(--primary-white);
+}
+
+.peer {
   /* background-color: red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -181,10 +254,30 @@ div::-webkit-scrollbar {
   padding: 0 0.5rem;
   /* background-color: green; */
 
+  padding-bottom: 0.5rem;
+}
+
+.peer-id-input {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  /* background-color: green; */
+
 }
 
 .peer-id-input input {
+.peer-id-input input {
   width: 100%;
+}
+
+.call-btn {
+  /* background-color: pink; */
+  line-height: 0;
+}
+
+.call-btn button {
+  height: 2rem;
+  margin-left: 0.5rem;
 }
 
 .call-btn {
@@ -206,12 +299,16 @@ div::-webkit-scrollbar {
 .turns-container {
   /* background-color: red; */
   flex: 1;
+  /* background-color: red; */
+  flex: 1;
   text-align: center;
+  /* border-bottom: 2px dashed var(--primary-white); */
   /* border-bottom: 2px dashed var(--primary-white); */
   /* background-color: #3b3c45; */
 }
 
 .move-history {
+  text-align: start;
   text-align: start;
   width: 95%;
   flex-wrap: wrap;
@@ -264,6 +361,7 @@ div::-webkit-scrollbar {
 .chat-header {
   /* background-color: turquoise; */
   height: 33rem;
+  height: 33rem;
   overflow-y: auto;
   /* border-top: 2px dashed var(--primary-white); */
 }
@@ -279,6 +377,7 @@ div::-webkit-scrollbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 0.5rem;
   padding-left: 0.5rem;
 }
 
@@ -313,6 +412,11 @@ div::-webkit-scrollbar {
   border: 1px dashed;
   line-height: 1;
 
+}
+
+.send-btn {
+  line-height: 0;
+  height: 2rem;
 }
 
 .send-btn {
@@ -563,6 +667,8 @@ div::-webkit-scrollbar {
   background-color: #1A1423 !important;
   grid-area: footer;
   grid-column: span 3;
+  grid-area: footer;
+  grid-column: span 3;
 }
 
 .footer-content {
@@ -665,6 +771,12 @@ div::-webkit-scrollbar {
       "nav"
       "simple-board"
       "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      "nav"
+      "simple-board"
+      "footer";
   }
 
   .main-container {
@@ -680,16 +792,21 @@ div::-webkit-scrollbar {
 
   .chat {
     height: 100%;
+    height: 100%;
   }
 
   .chat-header {
+    padding-top: 0.5rem;
     padding-top: 0.5rem;
   }
 
   .history {
     height: 100%;
+  .history {
+    height: 100%;
   }
 
+  .social-icon {
   .social-icon {
     font-size: 1rem;
   }
@@ -701,9 +818,11 @@ div::-webkit-scrollbar {
 
   .chess-mate {
     grid-column: 1fr;
+    grid-column: 1fr;
   }
 
   .main-container {
+    place-items: center;
     place-items: center;
     /* background-color: red; */
     grid-template-columns: 1fr 1fr;
