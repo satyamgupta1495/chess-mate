@@ -1,21 +1,29 @@
 import express from "express";
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
+import cors from "cors";
+import { ExpressPeerServer } from 'peer';
 
 const app = express();
-
 const port = 3000;
 const httpServer = createServer(app);
 
+const peerServer = createServer(app);
+const peerJS: any = ExpressPeerServer(peerServer, {
+    allow_discovery: true
+});
+
+app.use(cors());
+app.use('/peerjs', peerJS);
+
 const io = new Server(httpServer, {
     cors: {
-        origin: "*"
+        origin: "*",
+        methods: ["GET", "POST"],
     },
 });
 
 const rooms = new Map();
-
-
 
 io.on("connection", (socket: Socket) => {
 
@@ -31,12 +39,11 @@ io.on("connection", (socket: Socket) => {
     }
 
     socket.on('startGame', (roomData: any) => {
-        console.log("roomData", roomData);
         let player1Color = "";
         let player2Color = "";
 
         if (roomData?.type === 'create') {
-            console.log("created----", roomData);
+            // console.log("created----", roomData);
 
 
             player1Color = roomData.selectedColor ? roomData.selectedColor : "w";
@@ -57,9 +64,6 @@ io.on("connection", (socket: Socket) => {
             playerData.color = player1Color;
             playerData.type = 'create';
 
-
-
-            // socket.emit('saveSession', { player1Data: playerData });
         }
 
         if (roomData?.type === 'join') {
@@ -123,10 +127,9 @@ io.on("connection", (socket: Socket) => {
     });
 
     socket.on("new_peer", (data) => {
-        console.log("new peer---->",data)
+        // console.log("new peer---->", data)
         io.to(joinedRoom).emit("new_peer", { peerId: data.peerId, socketId: data.socketId })
     })
-
 
     socket.on("disconnect", () => {
         // console.log("Client disconnected");
@@ -150,4 +153,5 @@ app.get("/", (req, res) => {
     res.send("OK 👍");
 });
 
+peerServer.listen(9000, () => console.log(`PeerJS server is active on port 9000`));
 httpServer.listen(port, () => console.log(`Port: ${port} Server active...`));

@@ -2,7 +2,6 @@
 import { useEffect } from 'react';
 import SimpleBoard from '../Boards/SimpleBoard'
 import useChessMate from './hooks/useChessMate';
-import Controls from '../Controls/Controls';
 import Footer from '../Footer/Footer';
 // import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
@@ -10,7 +9,7 @@ import NavBar from '../Navbar/NavBar';
 
 function ChessMate() {
 
-  const { game, mode, setMode, setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
+  const { game, mode,  setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
 
   useEffect(() => {
     const selectedTheme = localStorage.getItem('theme')

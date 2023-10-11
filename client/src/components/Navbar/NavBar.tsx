@@ -3,11 +3,7 @@ import useControl from "./hooks/useControl"
 import { toast } from "react-hot-toast"
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
-<<<<<<< HEAD
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-=======
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
->>>>>>> 944a3035426201f83fc83f9fd05c9b7a6cfd4069
 
 // import { FaUserFriends, FaRobot } from "react-icons/fa"
 // import Form from 'react-bootstrap/Form';
@@ -130,17 +126,10 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
                 </NavDropdown.Item>
               </NavDropdown>
               <Button className="mx-2">Create/join room</Button>
-<<<<<<< HEAD
               <Avatar>
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-=======
-              {/* <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar> */}
->>>>>>> 944a3035426201f83fc83f9fd05c9b7a6cfd4069
 
             </Nav>
           </Navbar.Collapse>

@@ -106,8 +106,6 @@ div::-webkit-scrollbar {
 }
 
 
-}
-
 .simple-board {
   grid-area: simple-board;
   grid-column: span 3;
@@ -170,8 +168,7 @@ div::-webkit-scrollbar {
   /* background-color: yellow; */
 }
 
-.history {
-  grid-area: history;
+
 .history {
   grid-area: history;
   /* background-color: blue; */
@@ -265,7 +262,6 @@ div::-webkit-scrollbar {
 
 }
 
-.peer-id-input input {
 .peer-id-input input {
   width: 100%;
 }
@@ -802,15 +798,14 @@ div::-webkit-scrollbar {
 
   .history {
     height: 100%;
-  .history {
-    height: 100%;
   }
 
   .social-icon {
-  .social-icon {
-    font-size: 1rem;
-  }
+    .social-icon {
+      font-size: 1rem;
+    }
 
+  }
 }
 
 /* ===================Mobile Landscape Size to Tablet Portrait (devices and browsers)=================== */
