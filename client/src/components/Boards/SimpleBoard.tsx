@@ -6,7 +6,7 @@ import { Move } from 'chess.js';
 import { Square } from 'react-chessboard/dist/chessboard/types';
 import { socket } from "../../Socket";
 import CustomDialogueBox from "../DialogueBox/CustomDialogueBox";
-import Chat from "./Chat/Chat";
+import Chat from "../Chat/Chat";
 import toast from "react-hot-toast";
 import Video from "../Video/Video";
 
@@ -381,7 +381,6 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
           />
         </div>
 
-
         <div className="control-container chat">
           <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />
         </div>
@@ -390,8 +389,12 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
           <Video />
           <div className="turns-container">
             <p className="my-0">
-              <span className="turns-icon">{currentTurn === "w" ? <TbChessQueen /> : <TbChessQueenFilled />}</span>
-              {currentTurn === "w" ? "White to move!" : "Black to move!"}
+              <span className="turns-icon">
+                <span className="icon">
+                  {currentTurn === "w" ? <TbChessQueen /> : <TbChessQueenFilled />}
+                </span>
+                <p>{currentTurn === "w" ? "White to move!" : "Black to move!"}</p>
+              </span>
             </p>
             <div className="move-history">
               <p className="mr-2">Move history : </p>

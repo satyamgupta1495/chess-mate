@@ -86,8 +86,6 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
-            </Nav>
-            <Nav className="d-flex">
               <NavDropdown className="text-white" title="Themes" id="collapsible-nav-dropdown">
                 <NavDropdown.Item onClick={() => onThemeSelect("#769656")}>
                   Default
@@ -108,9 +106,6 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
                     toast("Winner have to buy dinner! 🤼"), setMode("analyze")
                   }}
                 >
-                  {/* <span className="menu-icons">
-                      <FaUserFriends />
-                    </span> */}
                   Two Players
                 </NavDropdown.Item>
                 <NavDropdown.Item
@@ -118,15 +113,13 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
                     toast("Lets do this 🤖"), setMode("random")
                   }}
                 >
-                  {/* <span className="menu-icons">
-                      <FaRobot />
-                    </span> */}
                   Computer
-
                 </NavDropdown.Item>
               </NavDropdown>
-              <Button className="mx-2">Create/join room</Button>
-              <Avatar>
+            </Nav>
+            <Nav>
+              <Button className="mx-2 mt-1">New room</Button>
+              <Avatar className="mx-2 mt-1">
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>

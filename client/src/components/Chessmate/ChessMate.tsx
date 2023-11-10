@@ -26,13 +26,6 @@ function ChessMate() {
           currentTheme={currTheme}
           setCurrTheme={setCurrTheme} />
 
-        {/* <Controls
-          setGame={setGame}
-          setMode={setMode}
-          mode={mode}
-          currentTheme={currTheme}
-          setCurrTheme={setCurrTheme} /> */}
-
         < SimpleBoard
           position={position}
           setPosition={setPosition}
@@ -45,6 +38,7 @@ function ChessMate() {
 
         <Footer />
       </div >
+      
       <Toaster
         position="top-right"
         reverseOrder={true}

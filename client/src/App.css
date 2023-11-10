@@ -29,8 +29,6 @@ p {
 #root {
   height: 100vh;
   width: 100vw;
-  height: 100vh;
-  width: 100vw;
 }
 
 .custom-btn {
@@ -68,8 +66,6 @@ div::-webkit-scrollbar {
   /* background-color: rgb(57, 6, 243) !important; */
   height: 100%;
   width: 100%;
-  height: 100%;
-  width: 100%;
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(3, 1fr);
@@ -78,24 +74,12 @@ div::-webkit-scrollbar {
     "nav nav nav"
     "simple-board simple-board simple-board"
     "footer footer footer";
-
-  grid-gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas:
-    "nav nav nav"
-    "simple-board simple-board simple-board"
-    "footer footer footer";
-
 }
 
 .nav-container {
   grid-area: nav;
   grid-column: span 3;
-  grid-area: nav;
-  grid-column: span 3;
   /* background-color: yellow; */
-
 }
 
 .simple-board {
@@ -104,15 +88,6 @@ div::-webkit-scrollbar {
   height: 100%;
   width: 100%;
 }
-
-
-.simple-board {
-  grid-area: simple-board;
-  grid-column: span 3;
-  height: 100%;
-  width: 100%;
-}
-
 
 .main-container {
   display: grid;
@@ -174,12 +149,6 @@ div::-webkit-scrollbar {
   /* background-color: blue; */
 }
 
-
-/* Chessmate components styling  ends-here*/
-
-/* SimpleBoard styling starts-here*/
-
-
 /* Chessmate components styling  ends-here*/
 
 /* SimpleBoard styling starts-here*/
@@ -191,9 +160,7 @@ div::-webkit-scrollbar {
 .control-container {
   display: flex;
   flex-direction: column;
-  flex-direction: column;
   justify-content: space-between;
-  background-color: var(--primary-color);
   background-color: var(--primary-color);
   border-radius: 5px;
   /* margin-left: 1rem; */
@@ -222,26 +189,11 @@ div::-webkit-scrollbar {
 }
 
 .peer {
-  /* background-color: yellow; */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-radius: 5px 5px 0 0;
-  border-bottom: 2px dashed var(--primary-white);
-}
-
-.peer {
   /* background-color: red; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
   padding-bottom: 0.5rem;
 }
 
@@ -249,36 +201,18 @@ div::-webkit-scrollbar {
   display: flex;
   justify-content: space-between;
   padding: 0 0.5rem;
-  /* background-color: green; */
-
-  padding-bottom: 0.5rem;
-}
-
-.peer-id-input {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 0.5rem;
-  /* background-color: green; */
-
-}
-
-.peer-id-input input {
   width: 100%;
+  /* background-color: green; */
+
 }
 
 .call-btn {
   /* background-color: pink; */
+  display: flex;
+  justify-content: space-evenly;
   line-height: 0;
-}
-
-.call-btn button {
-  height: 2rem;
-  margin-left: 0.5rem;
-}
-
-.call-btn {
-  /* background-color: pink; */
-  line-height: 0;
+  width: 100%;
+  color: white;
 }
 
 .call-btn button {
@@ -294,17 +228,14 @@ div::-webkit-scrollbar {
 
 .turns-container {
   /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
-  /* background-color: red; */
-  flex: 1;
-  text-align: center;
   /* border-bottom: 2px dashed var(--primary-white); */
-  /* border-bottom: 2px dashed var(--primary-white); */
-  /* background-color: #3b3c45; */
 }
 
 .move-history {
-  text-align: start;
   text-align: start;
   width: 95%;
   flex-wrap: wrap;
@@ -325,9 +256,21 @@ div::-webkit-scrollbar {
 }
 
 .turns-icon {
-  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgb(0, 238, 255); */
   margin: 0 0.3rem;
   font-size: 1.5rem;
+}
+
+.turns-icon>span {
+  /* background-color: green; */
+  margin-right: 0.5rem;
+}
+
+.turns-icon>p {
+  font-size: 1rem;
 }
 
 .control-btns button {
@@ -660,7 +603,7 @@ div::-webkit-scrollbar {
 /* footer-section starts here */
 
 .footer-section {
-  background-color: #1A1423 !important;
+  background-color: #1A1423;
   grid-area: footer;
   grid-column: span 3;
   grid-area: footer;
@@ -672,7 +615,6 @@ div::-webkit-scrollbar {
   justify-content: space-between;
   align-items: center;
   /* background-color: yellow; */
-  padding: 0 0.2rem;
   /* width: 100% !important; */
 }
 
@@ -685,7 +627,7 @@ div::-webkit-scrollbar {
 
 .social-icon {
   color: white;
-  font-size: 1.42rem;
+  font-size: 1.2rem;
   margin-right: 1rem;
 }
 
