@@ -1,10 +1,9 @@
-import { Container } from 'react-bootstrap'
 import { SiGithub, SiLinkedin, SiTwitter } from 'react-icons/si'
 import { PiInstagramLogoFill } from 'react-icons/pi'
 
 function Footer() {
     return (
-        <Container fluid className='footer-section'>
+        <div className='footer-section'>
             <footer className="text-center text-white" >
                 <div className='footer-content'>
                     <div className="d-flex text-center ">
@@ -31,7 +30,7 @@ function Footer() {
                     </div>
                 </div>
             </footer>
-        </Container>
+        </div>
     )
 }
 

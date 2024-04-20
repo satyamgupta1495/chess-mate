@@ -85,19 +85,16 @@ div::-webkit-scrollbar {
 .simple-board {
   grid-area: simple-board;
   grid-column: span 3;
-  height: 100%;
-  width: 100%;
 }
 
 .main-container {
   display: grid;
-  width: 100%;
+  /* width: 100%; */
   grid-gap: 1rem;
   /* background-color: green; */
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
     "chat board history";
-  padding: 0 1rem;
 }
 
 .chat {
@@ -702,7 +699,13 @@ div::-webkit-scrollbar {
 
 /* =====================Mobile Portrait Size to Mobile Landscape Size (devices and browsers)===================== */
 @media screen and (max-width: 479px) {
+
+  .simple-board {
+    background-color: yellow;
+  }
+
   .chess-mate {
+    background-color: red;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas:
@@ -718,7 +721,6 @@ div::-webkit-scrollbar {
   }
 
   .main-container {
-    /* background-color: red; */
     place-items: center;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr) !important;
@@ -730,11 +732,9 @@ div::-webkit-scrollbar {
 
   .chat {
     height: 100%;
-    height: 100%;
   }
 
   .chat-header {
-    padding-top: 0.5rem;
     padding-top: 0.5rem;
   }
 
@@ -743,9 +743,16 @@ div::-webkit-scrollbar {
   }
 
   .social-icon {
-    .social-icon {
-      font-size: 1rem;
-    }
+    font-size: 1rem;
+  }
+
+  .footer-section {
+    width: 100%;
+    background-color: yellowgreen;
+  }
+
+  .control-container {
+    background-color: pink;
 
   }
 }
@@ -754,12 +761,12 @@ div::-webkit-scrollbar {
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
   .chess-mate {
-    grid-column: 1fr;
+    background-color: pink;
+
     grid-column: 1fr;
   }
 
   .main-container {
-    place-items: center;
     place-items: center;
     /* background-color: red; */
     grid-template-columns: 1fr 1fr;
@@ -827,7 +834,6 @@ div::-webkit-scrollbar {
 /* @media only screen and (min-width: 768px) and (max-width: 959px) {} */
 @media only screen and (min-width: 768px) and (max-width: 1400px) {
   .chess-mate {
-
     grid-column: 1fr;
   }
 

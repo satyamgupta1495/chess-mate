@@ -3,9 +3,13 @@ import { createServer } from "http";
 import { Server, Socket } from "socket.io";
 import cors from "cors";
 import { ExpressPeerServer } from 'peer';
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
+const peerPort = process.env.PEER_SERVER_PORT
 const httpServer = createServer(app);
 
 const peerServer = createServer(app);
@@ -153,5 +157,5 @@ app.get("/", (req, res) => {
     res.send("OK 👍");
 });
 
-peerServer.listen(9000, () => console.log(`PeerJS server is active on port 9000`));
+peerServer.listen(peerPort, () => console.log(`PeerJS server is active on port ${peerPort}`));
 httpServer.listen(port, () => console.log(`Port: ${port} Server active...`));
