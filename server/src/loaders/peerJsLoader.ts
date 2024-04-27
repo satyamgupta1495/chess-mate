@@ -1,7 +1,9 @@
 import { createServer } from "http";
 import { ExpressPeerServer } from 'peer';
 import express from "express";
+import { Service } from "typedi";
 
+@Service()
 class PeerJs {
     private peerPort: number | string;
 
