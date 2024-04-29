@@ -1,17 +1,11 @@
 import { Nav, Navbar, NavDropdown } from "react-bootstrap"
 import useControl from "./hooks/useControl"
 import { toast } from "react-hot-toast"
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useState } from "react";
-
-// import { FaUserFriends, FaRobot } from "react-icons/fa"
-// import Form from 'react-bootstrap/Form';
 
 function NavBar({ setGame, setMode, setCurrTheme }: any) {
   const { onThemeSelect } = useControl({ setGame, setMode, setCurrTheme })
-  const [showDialog, setShowDialog] = useState(false);
 
   return (
     <div className="nav-container">
@@ -57,9 +51,6 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
               </NavDropdown>
             </Nav>
             <Nav>
-              <Button className="mx-2 mt-1" onClick={() => {
-                setShowDialog(!showDialog)
-              }}>New room</Button>
               <Avatar className="mx-2 mt-1">
                 <AvatarImage src="https://github.com/shadcn.png" />
                 <AvatarFallback>CN</AvatarFallback>

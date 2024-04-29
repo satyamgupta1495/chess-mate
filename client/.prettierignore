@@ -1,0 +1,6 @@
+package-lock.json
+yarn.lock
+node_modules
+dist
+*.svg
+# any other unwanted files or folders
