@@ -579,13 +579,13 @@ div::-webkit-scrollbar {
 }
 
 .play-as button:hover {
-  background-color: #FCDC4D;
+  /* background-color: #FCDC4D; */
   color: #000;
   border: none;
 }
 
 .active-btn {
-  background-color: #FCDC4D;
+  /* background-color: #FCDC4D; */
   color: #000;
   border: none;
 }
@@ -701,11 +701,11 @@ div::-webkit-scrollbar {
 @media screen and (max-width: 479px) {
 
   .simple-board {
-    background-color: yellow;
+    /* background-color: yellow; */
   }
 
   .chess-mate {
-    background-color: red;
+    /* background-color: red; */
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas:
@@ -748,12 +748,11 @@ div::-webkit-scrollbar {
 
   .footer-section {
     width: 100%;
-    background-color: yellowgreen;
+    /* background-color: yellowgreen; */
   }
 
   .control-container {
-    background-color: pink;
-
+    /* background-color: pink; */
   }
 }
 
@@ -761,7 +760,7 @@ div::-webkit-scrollbar {
 @media only screen and (min-width: 480px) and (max-width: 767px) {
 
   .chess-mate {
-    background-color: pink;
+    /* background-color: pink; */
 
     grid-column: 1fr;
   }

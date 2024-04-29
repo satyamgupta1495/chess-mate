@@ -2,14 +2,19 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import v1RouteHandler from "../routes/v1";
+import { Service } from "typedi";
+import { createServer } from "http";
 
+@Service()
 class Express {
     public express: express.Application;
     public port: number | string;
+    public server: ReturnType<typeof createServer>;
 
     constructor() {
         this.port = process.env.PORT || 3000;
         this.express = express();
+        this.server = createServer(this.express);
     }
 
     public init() {
@@ -38,7 +43,7 @@ class Express {
 
         this.express.use('/api/v1', v1RouteHandler());
 
-        this.express.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log(`server is running... on port ${process.env.PORT}`);
         });
     }

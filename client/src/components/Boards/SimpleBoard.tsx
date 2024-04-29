@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { Chessboard } from "react-chessboard";
 import useSimpleBoard from "./hooks/useSimpleBoard";
 import { TbChessQueen, TbChessQueenFilled } from "react-icons/tb";
-import { Move } from 'chess.js';
 import { Square } from 'react-chessboard/dist/chessboard/types';
 import { socket } from "../../Socket";
 import CustomDialogueBox from "../DialogueBox/CustomDialogueBox";
 import Chat from "../Chat/Chat";
 import toast from "react-hot-toast";
 import Video from "../Video/Video";
+import { Move, TPlayedMove } from "@/types/Game";
 
 
 
@@ -39,6 +39,8 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
   const [moveHistory, setMoveHistory] = useState<any>([])
   const [customStyles, setCustomStyles] = useState<any>({})
   const [message, setMessage] = useState<any>('')
+  
+  //todo move to db
   const [chat, setChat] = useState<any>([])
   const oppPlayePeerId = useRef<any>("")
 
@@ -113,6 +115,8 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       setCurrentTurn(currentTurn === "w" ? "b" : "w");
       setPosition(game.fen());
     }
+
+    //TODO : ths will be saved in db
     setMoveHistory(game.history({ verbose: true }).map((move) => ({
       turn: currentTurn,
       from: move.from,
@@ -120,6 +124,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       piece: game.get(move.from)?.type,
     })));
     setPosition(game.fen());
+
     return result;
   }
 
@@ -315,8 +320,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
     })
 
 
-    socket.on('move', (playedMove: any) => {
-      console.log('move played', playedMove)
+    socket.on('move', (playedMove: TPlayedMove) => {
       setCurrentTurn(playedMove.playerColor === 'w' ? 'b' : 'w')
       makeMove(playedMove.playedMove.move)
     })
@@ -328,13 +332,6 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       });
       chatEventHandlerAdded.current = true;
     }
-
-    //TODO: Need to implement saving session
-    // socket.on('saveSession', (playerData: any) => {
-    //   console.log('saveSession', playerData)
-    //   localStorage.setItem('playerData', JSON.stringify(playerData))
-    // })
-    //eslint-disable-next-line
   }, [])
 
 
@@ -349,6 +346,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       toast.error('Please enter a message to send')
       return
     }
+
     setChat((prevChat: any) => [...prevChat, { type: 'sent', message: message, time: Date.now() }])
     socket.emit('chat', { message: message })
     setMessage('')
@@ -411,17 +409,17 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
           </div>
 
           {/* <div className="move-history">           
-            <p className="mr-2">Move history : </p>
-            {moveHistory.map((move: any, index: number) => {
-              return (
-                <div key={index} className="move-history-item">
-                  <p>{move.piece}{move.to},
-                  </p>
-                </div>
-              )
-            })}
+              <p className="mr-2">Move history : </p>
+              {moveHistory.map((move: any, index: number) => {
+                return (
+                  <div key={index} className="move-history-item">
+                    <p>{move.piece}{move.to},
+                    </p>
+                  </div>
+                )
+              })}
 
-          </div> */}
+            </div> */}
           {/* {startGame && <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />} */}
           {/* </div> */}
         </div>

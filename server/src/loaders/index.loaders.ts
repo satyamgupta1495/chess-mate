@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import PeerJs from "./peerJsLoader";
 import Express from "./expressLoader";
 import SocketManager from "./socketManager";
+import Container from "typedi";
 
 class App {
     private io: Server;
@@ -10,14 +11,12 @@ class App {
     constructor() { }
 
     public start() {
-        const express = new Express();
-        const httpServer = createServer(express.express);
-        const peer = new PeerJs();
-        const socket = new SocketManager(httpServer)
-
-        socket.setupSocketEventHandlers()
+        const express = Container.get(Express);
         express.init()
-        peer.init()
+        const socket = new SocketManager(express.server)
+        socket.setupSocketEventHandlers()
+        const peer = Container.get(PeerJs);
+        // peer.init()
     }
 }
 
