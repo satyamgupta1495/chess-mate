@@ -1,7 +1,6 @@
 import { Nav, Navbar, NavDropdown } from "react-bootstrap"
 import useControl from "./hooks/useControl"
 import { toast } from "react-hot-toast"
-import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
