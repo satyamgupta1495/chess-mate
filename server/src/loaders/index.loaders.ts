@@ -4,6 +4,7 @@ import PeerJs from "./peerJsLoader";
 import Express from "./expressLoader";
 import SocketManager from "./socketManager";
 import Container from "typedi";
+import connectDB from "./dbLoader";
 
 class App {
     private io: Server;
@@ -11,6 +12,7 @@ class App {
     constructor() { }
 
     public start() {
+        connectDB()
         const express = Container.get(Express);
         express.init()
         const socket = new SocketManager(express.server)

@@ -1,6 +1,6 @@
 import Footer from './Footer/Footer'
 import Piece from './3Dmodels/Piece'
-import { Nav, Navbar, Container } from 'react-bootstrap'
+import { Nav, Navbar } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 
 
@@ -9,7 +9,7 @@ function Home() {
     return (
         <div className='home_wrapper'>
             <Navbar className='w-100 ' data-bs-theme="dark">
-                <Container className='w-100 nav_wrapper'>
+                <div className='w-100 nav_wrapper'>
                     <Navbar.Brand href="#home">Chessmate</Navbar.Brand>
                     <Nav className="nav_home">
                         <button className="button-glow" style={{ fontSize: "1.5rem" }} onClick={() => { navigate('/play') }}>
@@ -20,7 +20,7 @@ function Home() {
                             <span aria-hidden="true" className="hover-text">&nbsp;Login&nbsp;</span>
                         </button>
                     </Nav>
-                </Container>
+                </div>
             </Navbar>
 
             <section className='home_page_container'>
@@ -33,8 +33,6 @@ function Home() {
                         <span aria-hidden="true" className="hover-text">&nbsp;START&nbsp;</span>
                     </button>
                 </div>
-
-
                 <Piece />
             </section>
 

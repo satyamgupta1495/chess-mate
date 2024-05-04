@@ -2,7 +2,7 @@ import { Service } from "typedi";
 import { StatusCodes } from 'http-status-codes';
 import { IResponse } from "../types/shared";
 import { Request, Response } from "express";
-import { GameService } from "../services/game.service";
+import { GameService } from "../services/gameService";
 
 @Service()
 class GameController {

@@ -1,7 +1,6 @@
 
 import 'reflect-metadata';
-import dotenv from 'dotenv'
-import { GameManager } from "./GameManager";
+import dotenv from 'dotenv';
 import App from "./loaders/index.loaders";
 
 dotenv.config()

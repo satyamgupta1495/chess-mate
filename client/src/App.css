@@ -16,6 +16,7 @@
   --primary-grey: #3b3c45;
   --primary-light-grey: #6b6d7b;
   --primary-white: #e5e5eb;
+  --primary-font-color: #FCDC4D;
 }
 
 h1,
@@ -46,7 +47,13 @@ p {
   margin-left: 5rem;
 }
 
-.nav_wrapper,
+.nav_wrapper {
+  display: flex;
+  margin: 0 6rem;
+  /* background-color: red; */
+  justify-content: space-between;
+}
+
 .nav_wrapper>a {
   /* background-color: yellow; */
   font-family: "Rubik", sans-serif;
@@ -105,6 +112,12 @@ div::-webkit-scrollbar {
   position: relative;
   top: 0 !important;
 } */
+
+
+.show-top {
+  position: fixed;
+  z-index: 2 !important;
+}
 
 .piece canvas {
   position: absolute;
@@ -182,6 +195,10 @@ div::-webkit-scrollbar {
 }
 
 .chat-container {
+  background-color: #343541;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
   /* background-color: green; */
   height: 100%;
 }
@@ -762,6 +779,29 @@ div::-webkit-scrollbar {
   box-shadow: #1A1423 2px 2px 0 0, #000 2px 2px 0 1px;
   transform: translate(2px, 2px);
 }
+
+
+
+/* LOGIN PAGE STARTS HERE */
+
+.login-container {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw !important;
+  height: 100vh !important;
+  font-family: "Rubik", sans-serif;
+}
+
+.login-container>.login-card {
+  border: none !important;
+  color: white !important;
+  background-color: var(--primary-color);
+}
+
+/* LOGIN PAGE ENDS HERE */
+
 
 @media (min-width: 768px) {
   .button-50 {
