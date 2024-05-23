@@ -105,6 +105,31 @@ div::-webkit-scrollbar {
   display: none;
 }
 
+
+/* HOME PAGE CSS starts here */
+
+.profile-container {
+  /* background-color: red; */
+  height: 50px;
+  background: linear-gradient(320deg, rgba(0, 140, 255, 0.678), rgba(128, 0, 128, 0.308));
+  border-radius: 10px;
+  padding: .4rem;
+  width: 160px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+
+.profile-container .user-name {
+  font-size: 0.9rem;
+}
+
+
+
+/* HOME PAGE CSS ends here */
+
+
 /* Chessmate components styling  starts-here*/
 
 /* .nav_home {
@@ -203,6 +228,9 @@ div::-webkit-scrollbar {
   height: 100%;
 }
 
+.sender-area>input {
+  background-color: red !important;
+}
 
 .board {
   grid-area: board;
@@ -785,7 +813,6 @@ div::-webkit-scrollbar {
 /* LOGIN PAGE STARTS HERE */
 
 .login-container {
-
   display: flex;
   justify-content: center;
   align-items: center;

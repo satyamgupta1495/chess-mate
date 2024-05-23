@@ -1,5 +1,6 @@
 import { signUp } from "@/helper";
 import React, { useRef } from "react"
+import { Link } from "react-router-dom";
 
 export default function SignUp() {
 
@@ -13,16 +14,12 @@ export default function SignUp() {
         const username = usernameRef.current?.value;
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
-
         try {
             const data = signUp({ username, email, password })
-            console.log("datad987", data)
+            console.log(data)
         } catch (error) {
             console.log(error)
         }
-
-
-        console.log(email, password, username, "usernameasd7")
     };
 
     return (
@@ -64,6 +61,7 @@ export default function SignUp() {
                         />
                     </div>
                     <button className="form-submit-btn" type="submit">Sign up</button>
+                    <p>{`Already have an account?`} {<Link to='/login'> Login</Link>} </p>
                 </form>
             </div>
         </div>

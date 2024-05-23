@@ -11,7 +11,7 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
     <div className="nav-container">
       <Navbar expand="lg" data-bs-theme="dark">
         <Container fluid>
-          <Navbar.Brand className="text-white" href="#">Chessmate</Navbar.Brand>
+          <Navbar.Brand className="text-white" href="/">Chessmate</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav

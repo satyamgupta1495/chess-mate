@@ -6,7 +6,6 @@ export type TPlayedMove = {
     };
 };
 
-
 export type Move = {
     from: string;
     to: string;
@@ -15,4 +14,9 @@ export type Move = {
     flags?: string;
     piece?: string;
     san?: string;
+}
+
+export type User = {
+    userName?: string;
+    email?: string;
 }

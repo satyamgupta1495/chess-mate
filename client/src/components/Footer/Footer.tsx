@@ -8,7 +8,7 @@ function Footer() {
                 <div className='footer-content'>
                     <div className="d-flex text-center ">
                         <p className="text-center pt-3">
-                            <span>&copy; 2023 Chessmate</span>
+                            <span>&copy; 2024 Chessmate</span>
                         </p>
                     </div>
                     <div className='dev-message'>

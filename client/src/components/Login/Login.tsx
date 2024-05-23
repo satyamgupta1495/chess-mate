@@ -1,25 +1,52 @@
-import React, { useRef } from "react"
-
+import React, { useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import useLoginHook from "./useLoginHook";
+import toast from "react-hot-toast";
+import Chessplay from "../../assets/img/chessplay.svg"
 export default function Login() {
+
+    const { isValidUser, isLoading, isError, user, navigate } = useLoginHook()
 
     const emailRef = useRef<any>()
     const passwordRef = useRef<any>()
 
+    const [isRedirected, setIsRedirected] = useState<boolean>(true)
+
+    useEffect(() => {
+        console.log(user, isRedirected, user && isRedirected)
+        if (user && isRedirected) {
+            setIsRedirected(false)
+            navigate('/')
+            toast.success("Logged in successfully ✔️")
+        } else {
+            setIsRedirected(true)
+            toast.error('User not found or wrong credentials!')
+        }
+    }, [user, navigate, isRedirected])
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
-
-        console.log(email, password, "")
-        // Do something with email and password
+        isValidUser({ email, password })
+        console.log("dasd987", user)
     };
+
+    if (isLoading) {
+        <h1>Loading...</h1>
+    }
+
+    if (isError) {
+        <h1>{isError}</h1>
+    }
 
     return (
         <div className="login-container show-top">
             <div className="form-container">
                 <form className="form" onSubmit={handleSubmit}>
-                    <h3>Login 123</h3>
+                    <div className="flex gap-5">
+                        <h3>Login</h3><img className="h-12" src={Chessplay} alt="" />
+                    </div>
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <input
@@ -38,11 +65,12 @@ export default function Login() {
                             id="password"
                             name="password"
                             ref={passwordRef}
-                            value={emailRef.current?.value}
+                            value={passwordRef.current?.value}
                             required
                         />
                     </div>
                     <button className="form-submit-btn" type="submit">Login</button>
+                    <p>{`Don't have an account yet?`} {<Link to='/signup'> Sign up</Link>} </p>
                 </form>
             </div>
         </div>
