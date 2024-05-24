@@ -64,7 +64,7 @@ p {
 .nav_home {
   /* background-color: red; */
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: center;
   width: 40%;
   flex-wrap: wrap;
@@ -114,11 +114,11 @@ div::-webkit-scrollbar {
   background: linear-gradient(320deg, rgba(0, 140, 255, 0.678), rgba(128, 0, 128, 0.308));
   border-radius: 10px;
   padding: .4rem;
-  width: 160px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   align-content: center;
+  cursor: pointer;
 }
 
 .profile-container .user-name {

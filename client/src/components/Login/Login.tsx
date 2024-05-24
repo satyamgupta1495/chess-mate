@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import Chessplay from "../../assets/img/chessplay.svg"
 export default function Login() {
 
-    const { isValidUser, isLoading, isError, user, navigate } = useLoginHook()
+    const { loginUser, isLoading, isError, user, navigate } = useLoginHook()
 
     const emailRef = useRef<any>()
     const passwordRef = useRef<any>()
@@ -13,23 +13,21 @@ export default function Login() {
     const [isRedirected, setIsRedirected] = useState<boolean>(true)
 
     useEffect(() => {
-        console.log(user, isRedirected, user && isRedirected)
         if (user && isRedirected) {
             setIsRedirected(false)
-            navigate('/')
             toast.success("Logged in successfully ✔️")
+            navigate('/')
         } else {
             setIsRedirected(true)
             toast.error('User not found or wrong credentials!')
         }
-    }, [user, navigate, isRedirected])
+    }, [user, navigate])
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const handleLogin = (event: React.FormEvent) => {
         event.preventDefault();
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
-        isValidUser({ email, password })
-        console.log("dasd987", user)
+        loginUser({ email, password })
     };
 
     if (isLoading) {
@@ -43,7 +41,7 @@ export default function Login() {
     return (
         <div className="login-container show-top">
             <div className="form-container">
-                <form className="form" onSubmit={handleSubmit}>
+                <form className="form" onSubmit={handleLogin}>
                     <div className="flex gap-5">
                         <h3>Login</h3><img className="h-12" src={Chessplay} alt="" />
                     </div>

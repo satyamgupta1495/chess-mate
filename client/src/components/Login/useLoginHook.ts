@@ -12,11 +12,10 @@ export default function useLoginHook() {
 
     const navigate = useNavigate()
 
-    const isValidUser = async (data) => {
+    const loginUser = async (data) => {
         try {
             const response: any = await login(data)
             if (response?.data?.success) {
-                console.log("response123456", response)
                 setUser(response?.data?.response)
                 mutate(baseUrl, response?.data?.response, false);
             } else {
@@ -30,13 +29,11 @@ export default function useLoginHook() {
 
     const { data, error } = useSWR(baseUrl);
 
-    console.log("datat123", data, error)
-
     return {
         user: data,
         isLoading: !error && !data,
         isError: error,
-        isValidUser,
+        loginUser,
         navigate
     }
 }
