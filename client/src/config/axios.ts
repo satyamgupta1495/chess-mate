@@ -13,11 +13,7 @@ const createAxiosInstance = (url) => {
         (error) => {
             let message;
 
-            if (error && error.response && error.response.status === 404) {
-                // window.location.href = '/not-found';
-            } else if (error && error.response && error.response.status === 403) {
-                window.location.href = '/access-denied';
-            } else {
+            if (error && error.response) {
                 switch (error.response.status) {
                     case 401:
                         message = {
@@ -26,31 +22,31 @@ const createAxiosInstance = (url) => {
                         };
                         break;
                     case 403:
-                        message = {
-                            message: 'Access Forbidden',
-                            status: error.response.status,
-                        };
-                        break;
+                        window.location.href = '/access-denied';
+                        return;  
                     case 404:
                         message = {
                             message: 'Sorry! the data you are looking for could not be found',
                             status: error.response.status,
                         };
                         break;
-                    default: {
+                    default:
                         message = {
-                            message:
-                                error.response && error.response.data
-                                    ? error.response.data['errorMsg']
-                                    : error.message || error,
+                            message: error.response.data?.errorMsg || error.message || 'An unknown error occurred',
                             status: error.response.status,
                         };
-                    }
                 }
                 return Promise.reject(message);
+            } else {
+                message = {
+                    message: 'An unknown error occurred',
+                    status: null,
+                };
+                return Promise.reject(message);
             }
-        },
+        }
     );
+
 
     // axios.interceptors.request.use(  
     // interceptor code goes here
