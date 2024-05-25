@@ -1,3 +1,4 @@
+import Page404 from '@/components/Page404';
 import { lazy } from 'react';
 import type { RouteObject } from 'react-router-dom';
 
@@ -23,6 +24,10 @@ const AppRoutes = () => {
         {
             path: '/signup',
             element: <SignUp />,
+        },
+        {
+            path: '*',
+            element: <Page404 />,
         },
     ];
     return routes;
