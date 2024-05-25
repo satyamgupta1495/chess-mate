@@ -21,6 +21,7 @@ class UsersController {
             response: {},
         };
         try {
+            console.log(req.body)
             const data: any = {
                 email: req.body?.email,
                 userName: req.body?.username,
@@ -157,9 +158,10 @@ class UsersController {
                 return;
             }
 
-            const options = {
+            const options: any = {
                 httpOnly: true,
-                secure: true
+                secure: false,
+                sameSite: 'strict'
             }
 
             response.success = true;
@@ -186,7 +188,7 @@ class UsersController {
             response: {},
         };
         try {
-            console.log("caleedddd")
+            console.log("caleedddd----2")
             const id = req.user._id
 
             const serviceResponse = await this.usersService.logout(id)

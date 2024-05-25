@@ -14,25 +14,24 @@ class Authorization {
         };
 
         try {
-            const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
+            const token = await req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
             if (!token) {
-                response.errorMsg = 'Unauthorized access'
-                response.status(StatusCodes.UNAUTHORIZED).json(response);
-                return response;
+                console.log("insede")
+                response.errorMsg = 'Token not found 🚧'
+                res.status(StatusCodes.UNAUTHORIZED).json(response);
+                return res;
             }
 
             const decodedToken: any = jwt.verify(token, process.env.ACCESS_TOKEN);
-
             const user = await Users.findById(decodedToken?._id).select('-password -refreshToken');
-
             if (!user) {
-                response.errorMsg = 'Unauthorized access'
+                response.errorMsg = 'No user found with this token!'
                 response.status(StatusCodes.UNAUTHORIZED).json(response);
-                return response;
+                res.status(StatusCodes.UNAUTHORIZED).json(response);
+                return res;
             }
 
             req.user = user;
-
             next()
         } catch (error) {
             response.internalError = true;

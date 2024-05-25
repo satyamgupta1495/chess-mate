@@ -1,15 +1,15 @@
 
 import { useEffect } from 'react';
-import SimpleBoard from '../Boards/SimpleBoard'
+import SimpleBoard from './SimpleBoard'
 import useChessMate from './hooks/useChessMate';
-import Footer from '../Footer/Footer';
+import Footer from './Footer';
 // import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
-import NavBar from '../Navbar/NavBar';
+import NavBar from './NavBar';
 
 function ChessMate() {
 
-  const { game, mode,  setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
+  const { game, mode, setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
 
   useEffect(() => {
     const selectedTheme = localStorage.getItem('theme')
@@ -38,7 +38,7 @@ function ChessMate() {
 
         <Footer />
       </div >
-      
+
       <Toaster
         position="top-right"
         reverseOrder={true}

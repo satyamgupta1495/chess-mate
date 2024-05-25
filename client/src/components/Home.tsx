@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import Footer from './Footer/Footer'
-import Piece from './3Dmodels/Piece'
+import Footer from './Chessmate/Footer'
+import Piece from './Chessmate/Piece'
 import { Nav, Navbar } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import useChessStore from '@/store/useChessStore'
@@ -13,13 +13,17 @@ function Home() {
     const { user, logout, isUserLoggedOut }: any = useChessStore((state) => state)
 
     const handleLogout = () => {
-        logoutUser()
+        const response: any = logoutUser()
+        if (response?.data?.success) {
+            toast.success("Logged out successfully!")
+        } else {
+            toast.error("Something went wrong!")
+        }
         logout()
     }
 
     useEffect(() => {
         if (isUserLoggedOut) {
-            alert(isUserLoggedOut)
             toast.success("Logged out successfully✔️")
         }
     }, [isUserLoggedOut])

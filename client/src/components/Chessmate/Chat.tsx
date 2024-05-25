@@ -17,10 +17,9 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
 
     return (
         <>
-            <div className='chat-container mx-4 '>
+            <div className='chat-container mx-4'>
                 <div className="chat-header">
                     {chat.map((chatData: any, index: number) => {
-                        console.log(chatData, "dasdas")
                         return (
                             <div key={index} className={`chat-message ${chatData.type}`}>
                                 <div className="chat-icon d-flex align-items-center">
@@ -51,7 +50,7 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
                         <input className='w-100' placeholder="Message..." type="text" id="messageInput" onKeyDown={(e) => {
                             if (e.key === 'Enter') { sendChat() }
                         }} value={message} onChange={(e) => setMessage(e.target.value)} style={{ backgroundColor: "transparent", color: "white" }} />
-                        <button id="sendButton">
+                        <button id="sendButton" onClick={() => sendChat()}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
                                 <path
                                     fill="none"

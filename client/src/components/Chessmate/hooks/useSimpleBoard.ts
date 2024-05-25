@@ -24,8 +24,8 @@ export default function useSimpleBoard({
     const [roomType, setRoomType] = useState<any>({})
     const [moveHistory, setMoveHistory] = useState<any>([])
     const [customStyles, setCustomStyles] = useState<any>({})
-    const [message, setMessage] = useState<any>("")
-
+    const [message, setMessage] = useState<string>("")
+    const [winner, setWinner] = useState<any>("");
     //todo move to db
     const [chat, setChat] = useState<any>([])
     const oppPlayePeerId = useRef<any>("")
@@ -33,13 +33,11 @@ export default function useSimpleBoard({
     const chatEventHandlerAdded = useRef(false)
 
     useEffect(() => {
-        console.log(currentTurn)
         setCustomStyles({})
         if (game.game_over()) {
             if (game.in_checkmate()) {
-                toast.error(
-                    `Checkmate! 🎉 ${game.turn() === "w" ? "Black" : "White"} wins 👏`
-                )
+                setWinner(game.turn() === "w" ? "w" : "b")
+                toast.error(`Checkmate! 🎉 ${game.turn() === "w" ? "Black" : "White"} wins 👏`)
             } else if (game.in_stalemate()) {
                 toast.error(`Stalemate! 🎉 Its a draw 👏`)
             } else if (game.in_threefold_repetition()) {
@@ -287,20 +285,16 @@ export default function useSimpleBoard({
 
     useEffect(() => {
         const playerData = localStorage.getItem("playerData")
-        console.log("playerData", playerData)
         if (playerData) {
             const parsedPlayerData = JSON.parse(playerData)
-            console.log("parsedPlayerData", parsedPlayerData)
             socket.emit("reconnect", { parsedPlayerData: parsedPlayerData })
         }
 
         socket.on("joinedAs", (data: any) => {
-            console.log("joined as", data)
             setOrientation(data?.orientation === "w" ? "white" : "black")
         })
 
         socket.on("start", (data) => {
-            console.log("start", data)
             oppPlayePeerId.current =
                 socket.id === data?.player1?.socketId
                     ? data?.player2?.socketId
@@ -315,21 +309,20 @@ export default function useSimpleBoard({
         })
 
         socket.on("move", (playedMove: TPlayedMove) => {
+            console.log("playedMove---", playedMove)
             setCurrentTurn(playedMove.playerColor === "w" ? "b" : "w")
             makeMove(playedMove.playedMove.move)
         })
 
         if (!chatEventHandlerAdded.current) {
             socket.on("chat", (chatData: any) => {
-                console.log("chat", chatData)
                 setChat((prevChat: any) => [...prevChat, chatData])
             })
             chatEventHandlerAdded.current = true
         }
-    }, [])
+    })
 
     useEffect(() => {
-        console.log("roomType", roomType)
         socket.emit("startGame", { ...roomType })
     }, [roomType])
 
@@ -394,5 +387,6 @@ export default function useSimpleBoard({
         orientation,
         playerLeft,
         moveHistory,
+        winner
     }
 }

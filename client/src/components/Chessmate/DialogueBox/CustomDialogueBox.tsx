@@ -5,7 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import { TbChessQueen, TbChessQueenFilled } from "react-icons/tb";
 import { FaRandom } from 'react-icons/fa'
 import toast from 'react-hot-toast';
-import { socket } from '../../Socket';
+import { socket } from '../../../Socket';
 
 type Props = {
     show?: boolean,
@@ -59,17 +59,14 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
     //TODO : fix join empty room
     useEffect(() => {
         socket.on('roomNotFound', (data) => {
-            // console.log("dacadsata", data?.canJoinRoom)
             if (!data?.canJoinRoom) {
-                // console.log("in if")
                 roomExists.current = false;
                 setShow(true);
             } else {
-                // console.log("in if----")
                 roomExists.current = true;
             }
         });
-    }, []);
+    });
 
     return (
         <>
@@ -77,6 +74,7 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
                 show={show}
                 size="lg"
                 onHide={() => setShow(false)}
+                backdrop={"static"}
                 centered
             >
                 <div className="custom-dialogue-box">
@@ -99,9 +97,9 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
                                 }}
                             />
                         </InputGroup>
-                        <div className='room-btn-container my-2'>
-                            <button className="button-50" onClick={handleCreateRoom}>Create Room</button>
-                            <button className="button-50" onClick={handleJoinRoom}>Join Room</button>
+                        <div className='room-btn-container m-8'>
+                            <button className="button-50 mx-4" onClick={handleCreateRoom}>Create Room</button>
+                            <button className="button-50 mx-4" onClick={handleJoinRoom}>Join Room</button>
                         </div>
                     </Modal.Body>
                 </div >

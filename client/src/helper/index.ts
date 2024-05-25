@@ -12,7 +12,11 @@ function logoutUser() {
 
 function signUp(data) {
     const baseUrl = `/api/v1/users/`
-    return axios.post(`${baseUrl}`, data);
+    return axios.post(`${baseUrl}`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    });
 }
 
 function getAllUsers() {

@@ -1,9 +1,10 @@
 import { Chessboard } from "react-chessboard";
 import useSimpleBoard from "./hooks/useSimpleBoard";
 import { TbChessQueen, TbChessQueenFilled } from "react-icons/tb";
-import CustomDialogueBox from "../DialogueBox/CustomDialogueBox";
-import Chat from "../Chat/Chat";
-import Video from "../Video/Video";
+import CustomDialogueBox from "./DialogueBox/CustomDialogueBox";
+import Chat from "./Chat";
+import Video from "./Video";
+import WinnerModel from "./DialogueBox/WinnerModel";
 
 type SimpleBoardProps = {
   mode?: string,
@@ -18,12 +19,15 @@ type SimpleBoardProps = {
 
 export default function SimpleBoard({ mode, position, setPosition, game, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
 
-  const { setRoomType, boardWidth, onDrop, onSquareClick, onSquareRightClick, moveSquares, optionSquares, moveHistory, rightClickedSquares, customStyles, showPromotionDialog, moveTo, sendChat, chat, message, setMessage, orientation, playerLeft
-  } = useSimpleBoard({ game, mode, position, setPosition, currentTheme, setCurrentTurn, currentTurn })
+  const { setRoomType, boardWidth, onDrop, onSquareClick, onSquareRightClick, moveSquares, optionSquares, moveHistory, rightClickedSquares, customStyles, showPromotionDialog, moveTo, sendChat, chat, message, setMessage, orientation, playerLeft, winner } = useSimpleBoard({ game, mode, position, setPosition, currentTheme, setCurrentTurn, currentTurn })
+
+  console.log(winner, "isCheckMate")
 
   return (
     <div className="simple-board">
+
       <CustomDialogueBox setRoomType={setRoomType} />
+      <WinnerModel winner={winner} />
       <div className="main-container">
         <div className="chess-board">
           <Chessboard id="BasicBoard"
@@ -76,7 +80,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
           </div>
         </div>
 
-      </div >
+        W</div >
       {playerLeft && <h1> Player left the game! </h1>}
     </div>
   );

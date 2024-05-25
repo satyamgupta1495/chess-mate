@@ -2,20 +2,22 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap"
 import useControl from "./hooks/useControl"
 import { toast } from "react-hot-toast"
 import Container from 'react-bootstrap/Container';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import useChessStore from "@/store/useChessStore";
 
 function NavBar({ setGame, setMode, setCurrTheme }: any) {
   const { onThemeSelect } = useControl({ setGame, setMode, setCurrTheme })
+  const { user }: any = useChessStore((state) => state)
 
   return (
-    <div className="nav-container">
+    <div className="nav-container mx-20">
       <Navbar expand="lg" data-bs-theme="dark">
         <Container fluid>
           <Navbar.Brand className="text-white" href="/">Chessmate</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
             <Nav
-              className="me-auto my-2 my-lg-0"
+              className="me-auto"
               style={{ maxHeight: '100px' }}
               navbarScroll
             >
@@ -51,11 +53,12 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
               </NavDropdown>
             </Nav>
             <Nav>
-              <Avatar className="mx-2 mt-1">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-
+              <div className="profile-container">
+                <Avatar>
+                  <AvatarImage src={user?.loggedInUser?.avatar ?? "https://github.com/shadcn.png"} />
+                </Avatar>
+                <span className='user-name ml-1'>{user?.loggedInUser?.userName || ""}</span>
+              </div>
             </Nav>
           </Navbar.Collapse>
         </Container>
