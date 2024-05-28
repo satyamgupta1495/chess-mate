@@ -26,7 +26,6 @@ p {
 
 #root {
   height: 100vh;
-  width: 100vw;
 }
 
 .rubik-regular {
@@ -129,6 +128,48 @@ div::-webkit-scrollbar {
 
 /* 404 page ends here */
 
+/* Profile page cdd starts here */
+.img-container {
+  position: absolute;
+  top: calc(50% - 130px);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-container img {
+  width: 100%;
+  height: auto;
+}
+
+@keyframes glowing-border {
+  0% {
+    border-color: #8A2BE2;
+    /* Purple */
+    box-shadow: 0 0 20px #8A2BE2 inset, 0 0 20px #8A2BE2;
+  }
+
+  50% {
+    border-color: #4B0082;
+    /* Dark purple */
+    box-shadow: 0 0 40px #4B0082 inset, 0 0 40px #4B0082;
+  }
+
+  100% {
+    border-color: #8A2BE2;
+    /* Purple */
+    box-shadow: 0 0 20px #8A2BE2 inset, 0 0 20px #8A2BE2;
+  }
+}
+
+/* Profile page cdd ends here */
+
+
 /* WINNER MODAL CSS starts here */
 .trophy-container {
   display: flex;
@@ -151,11 +192,12 @@ div::-webkit-scrollbar {
   /* background-color: red; */
   color: white;
   height: 50px;
+  min-width: 9rem !important;
   background: linear-gradient(320deg, rgba(0, 140, 255, 0.678), rgba(128, 0, 128, 0.308));
   border-radius: 10px;
   padding: .4rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   align-content: center;
   cursor: pointer;
@@ -221,9 +263,7 @@ div::-webkit-scrollbar {
   position: relative;
   background: transparent;
   height: 100%;
-  width: 100%;
   display: grid;
-  grid-gap: 1rem;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
@@ -239,18 +279,23 @@ div::-webkit-scrollbar {
 }
 
 .simple-board {
+  /* background-color: pink; */
   grid-area: simple-board;
   grid-column: span 3;
 }
 
 .main-container {
+  margin: 0 2rem;
   display: grid;
-  /* width: 100%; */
   grid-gap: 1rem;
-  /* background-color: green; */
-  grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
     "chat board history";
+}
+
+.chess-board>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .chat {
@@ -260,17 +305,19 @@ div::-webkit-scrollbar {
 .chat-container {
   background-color: #343541;
   border-radius: 8px;
-  display: flex;
-  flex-direction: column;
+  /* justify-content: flex-start; */
+  /* width: 100%; */
+  /* margin-right: 1rem; */
   /* background-color: green; */
 }
+
+
 
 .board {
   grid-area: board;
   display: grid;
   width: 100%;
   grid-gap: 1rem;
-  /* background-color: green; */
   grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
     "chat board history";
@@ -288,7 +335,6 @@ div::-webkit-scrollbar {
   /* background-color: yellow; */
   /* background-color: yellow; */
 }
-
 
 .history {
   grid-area: history;
@@ -314,18 +360,14 @@ div::-webkit-scrollbar {
 
 .control-container p {
   /* background-color: yellow; */
-  margin-top: 1rem;
+  margin: 1rem;
   font-size: 1rem;
   font-family: 'Ubuntu', sans-serif;
 }
 
-.chat {
-  /* background-color: rgb(8, 247, 251) !important; */
-  flex-grow: 1;
-}
-
 .video-grid-container {
   /* background-color: yellow; */
+  background-color: var(--primary-color);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -335,12 +377,13 @@ div::-webkit-scrollbar {
 }
 
 .peer {
-  /* background-color: red; */
+  background-color: #1a1a1a;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 0.5rem;
+  border-radius: 5px;
 }
 
 .peer-id-input {
@@ -349,7 +392,6 @@ div::-webkit-scrollbar {
   padding: 0 0.5rem;
   width: 100%;
   /* background-color: green; */
-
 }
 
 .call-btn {
@@ -367,6 +409,7 @@ div::-webkit-scrollbar {
 }
 
 .history {
+  background-color: var(--primary-color);
   flex-grow: 1;
   /* background-color: tomato; */
   justify-content: flex-start;
@@ -388,6 +431,7 @@ div::-webkit-scrollbar {
   overflow-y: auto;
   line-height: 0;
   margin-left: 10px;
+  border-radius: 5px;
   /* background-color: yellow; */
 }
 
@@ -743,33 +787,18 @@ div::-webkit-scrollbar {
   border: none;
 }
 
-
-
-
-
-
 /* CustomDialog styling ends-here*/
 
 /* footer-section starts here */
 
-.footer-section {
-  width: 100%;
-  bottom: 0;
-  position: fixed;
-  /* background-color: #1A1423; */
-  grid-area: footer;
-  grid-column: span 3;
-  grid-area: footer;
-  grid-column: span 3;
-}
-
 .footer-content {
+  /* background-color: red; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 6rem;
-  /* background-color: yellow; */
-  /* width: 100% !important; */
+  grid-area: footer;
+  grid-column: span 3;
+  grid-area: footer;
 }
 
 .socials-links {
@@ -804,6 +833,14 @@ div::-webkit-scrollbar {
   background-color: var(--primary-color);
 }
 
+.footer-content {
+  color: white;
+  width: 100%;
+  padding: 0 1rem;
+
+  /* background-color: yellow; */
+}
+
 /* LOGIN PAGE ENDS HERE */
 
 
@@ -820,20 +857,104 @@ div::-webkit-scrollbar {
 /* =====================Mobile Portrait Size to Mobile Landscape Size (devices and browsers)===================== */
 @media screen and (max-width: 479px) {
 
-  .simple-board {
+  .home_wrapper {
+    margin-top: 1.5rem;
+    /* background-color: red; */
+  }
+
+  .home_wrapper .navbar {
+    margin-top: 1rem;
     /* background-color: yellow; */
+    display: flex !important;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .nav_wrapper>a {
+    margin-right: 2rem !important;
+    /* background-color: red; */
+    width: inherit !important;
+  }
+
+  .home_page_container {
+    flex-direction: column;
+  }
+
+  .text_container {
+    font-size: 2.8rem;
+    margin: 2rem 0 0 0;
+    /* background-color: red; */
+  }
+
+  .home_page_container canvas {
+    display: flex;
+    align-self: center !important;
+    height: 90% !important;
+    width: 90% !important;
+    margin: 1rem 0;
+    /* background-color: red; */
   }
 
   .chess-mate {
     /* background-color: red; */
+    width: 100vw !important;
+    align-items: flex-start !important;
+  }
+
+  .main-container {
+    /* background-color: red; */
+    /* width: 100vw !important; */
+    margin: 0 !important;
+    align-items: flex-start !important;
+  }
+
+  .simple-board {
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    /* background-color: yellow; */
+    width: 100vw !important;
+  }
+
+  .nav-container {
+    margin: 0 !important;
+  }
+
+  .chess-board {
+    position: relative !important;
+    margin-top: 1.5rem;
+    top: 0;
+  }
+
+  .room-btn-container {
+    margin: 0 !important;
+  }
+
+  .room-btn-container .button-50 {
+    /* background-color: red !important; */
+    margin: 0rem !important;
+  }
+
+  .room-btn-container .button-50:first-child {
+    margin-right: 1rem !important;
+  }
+
+  .room-btn-container button {
+    width: 50%;
+    margin: 0rem !important;
+  }
+
+  .modal.show .modal-dialog {
+    /* background-color: red; */
+    width: 90%;
+  }
+
+  .chess-mate {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas:
       "nav"
       "simple-board"
       "footer";
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas:
       "nav"
       "simple-board"
@@ -841,39 +962,88 @@ div::-webkit-scrollbar {
   }
 
   .main-container {
+    margin-top: 1rem;
+
     place-items: center;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr) !important;
+    /* grid-template-rows: repeat(3, 1fr) !important; */
     grid-template-areas:
       "board"
       "chat"
       "history";
+    /* background-color: red; */
   }
 
-  .chat {
-    height: 100%;
+
+
+  .chat-container {
+    margin: 0 1rem !important;
+    /* background-color: yellow; */
   }
 
   .chat-header {
-    padding-top: 0.5rem;
+    /* background-color: red; */
+    width: inherit !important;
   }
 
-  .history {
-    height: 100%;
+  .turns-container {
+    margin: 0 1rem;
+    /* background-color: #1a1a1a; */
   }
 
-  .social-icon {
-    font-size: 1rem;
+  .move-history {
+    padding: 1rem;
   }
 
-  .footer-section {
-    width: 100%;
-    /* background-color: yellowgreen; */
+  .video-grid-container {
+    padding: 1rem 0;
+    margin: 0 1rem;
   }
 
-  .control-container {
-    /* background-color: pink; */
+  .peer {
+    margin: 1rem 0;
+    flex-direction: column;
+    gap: 2rem;
   }
+
+  .peer-id-input {
+    margin-top: 2rem;
+  }
+
+  .form-container {
+    width: 20% !important;
+  }
+
+
+  .footer-content {
+    /* background-color: red; */
+    color: white;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-self: flex-start;
+    margin-top: 2rem;
+    /* width: 80%; */
+  }
+
+  .footer-content .copyright {
+    line-height: 1 !important;
+  }
+
+  .footer-content .dev-message {
+    line-height: 1 !important;
+  }
+
+  .socials-links {
+    height: 2rem !important;
+    font-size: 2rem;
+    margin: 1rem 0 2rem 0;
+  }
+
+  .form-container {
+    width: 85% !important;
+  }
+
 }
 
 /* ===================Mobile Landscape Size to Tablet Portrait (devices and browsers)=================== */
@@ -881,7 +1051,6 @@ div::-webkit-scrollbar {
 
   .chess-mate {
     /* background-color: pink; */
-
     grid-column: 1fr;
   }
 

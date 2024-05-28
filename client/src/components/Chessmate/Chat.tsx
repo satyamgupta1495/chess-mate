@@ -17,7 +17,7 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
 
     return (
         <>
-            <div className='chat-container mx-4'>
+            <div className='chat-container'>
                 <div className="chat-header">
                     {chat.map((chatData: any, index: number) => {
                         return (

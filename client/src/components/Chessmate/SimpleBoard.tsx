@@ -79,8 +79,7 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
             </div>
           </div>
         </div>
-
-        W</div >
+      </div >
       {playerLeft && <h1> Player left the game! </h1>}
     </div>
   );

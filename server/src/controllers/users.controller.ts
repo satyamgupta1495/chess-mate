@@ -255,4 +255,4 @@ class UsersController {
 
 }
 
-export default UsersController
+export default UsersController;

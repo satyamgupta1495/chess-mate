@@ -1,4 +1,5 @@
 import Page404 from '@/components/Page404';
+import Profile from '@/components/Profile';
 import { lazy } from 'react';
 import type { RouteObject } from 'react-router-dom';
 
@@ -24,6 +25,10 @@ const AppRoutes = () => {
         {
             path: '/signup',
             element: <SignUp />,
+        },
+        {
+            path: '/profile',
+            element: <Profile />,
         },
         {
             path: '*',

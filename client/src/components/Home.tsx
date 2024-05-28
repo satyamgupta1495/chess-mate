@@ -39,9 +39,11 @@ function Home() {
                             <span aria-hidden="true" className="hover-text">&nbsp;Login&nbsp;</span>
                         </button>}
                         {user?.loggedInUser?._id &&
-                            <> <div className="flex gap-3 align-items-center justify-content-center user-profile">
-                                <div className="profile-container">
-                                    <Avatar>
+                            <> <div className="flex gap-3 items-center justify-between user-profile">
+                                <div className="profile-container" onClick={() => {
+                                    navigate("/profile")
+                                }}>
+                                    < Avatar >
                                         <AvatarImage src={user?.loggedInUser?.avatar ?? "https://github.com/shadcn.png"} />
                                     </Avatar>
                                     <span className='user-name ml-1'>{user?.loggedInUser?.userName || ""}</span>
@@ -55,8 +57,8 @@ function Home() {
                             </>
                         }
                     </Nav>
-                </div>
-            </Navbar>
+                </div >
+            </Navbar >
 
             <section className='home_page_container'>
                 <div className="text_container" >
@@ -70,9 +72,8 @@ function Home() {
                 </div>
                 <Piece />
             </section>
-
             <Footer />
-        </div>
+        </div >
     )
 }
 
