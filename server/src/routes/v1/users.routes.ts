@@ -24,8 +24,8 @@ export default function usersRouteHandler(): Router {
     usersRouter.post('/login', usersController.loginUser)
 
     //Private routes
-    usersRouter.get('/:id', auth.verifyJWT, usersController.getUserDetail)
-    usersRouter.post('/logout', auth.verifyJWT, usersController.logoutUser)
+    usersRouter.get('/:id', usersController.getUserDetail)
+    usersRouter.post('/logout', usersController.logoutUser)
     usersRouter.post('/refresh-token', usersController.refreshAccessToken)
 
     return usersRouter;

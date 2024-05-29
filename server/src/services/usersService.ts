@@ -1,11 +1,14 @@
 import { Service } from "typedi";
 import { Users } from "../models/Users";
 import { ServiceResponse } from "../types/shared";
+import StatsService from "./statsService";
 
 @Service()
 export default class UsersService {
 
-    constructor() { }
+    constructor(private readonly statsService: StatsService) {
+        this.statsService = statsService;
+    }
 
     public async generateToken(id: string) {
         const res: any = {
@@ -68,10 +71,17 @@ export default class UsersService {
             }
 
             const user = await Users.create(data)
+
             if (!user) {
                 res.errorMessage = 'User cannot be created';
                 return res;
             }
+
+            const playerStats = await this.statsService.createPlayerStats({ userId: user?._id });
+            if (!playerStats) {
+                res.errorMessage = res.errorMessage + ' Playerstates: User cannot be created';
+            }
+
             res.success = true;
             res.response.result = user;
             return res;
@@ -222,7 +232,7 @@ export default class UsersService {
 
         try {
             const user: any = await Users.findById(decodedToken?._id);
-            
+
             if (!user) {
                 res.errorMessage = "invalid_refresh_token";
                 return res;

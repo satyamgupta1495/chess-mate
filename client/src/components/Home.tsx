@@ -1,60 +1,35 @@
-import { useEffect } from 'react'
 import Footer from './Chessmate/Footer'
 import Piece from './Chessmate/Piece'
 import { Nav, Navbar } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import useChessStore from '@/store/useChessStore'
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { logoutUser } from '@/helper'
-import toast from 'react-hot-toast'
 
 function Home() {
     const navigate = useNavigate()
-    const { user, logout, isUserLoggedOut }: any = useChessStore((state) => state)
-
-    const handleLogout = () => {
-        const response: any = logoutUser()
-        if (response?.data?.success) {
-            toast.success("Logged out successfully!")
-        } else {
-            toast.error("Something went wrong!")
-        }
-        logout()
-    }
-
-    useEffect(() => {
-        if (isUserLoggedOut) {
-            toast.success("Logged out successfully✔️")
-        }
-    }, [isUserLoggedOut])
+    const { user }: any = useChessStore((state) => state)
 
     return (
         <div className='home_wrapper'>
-            <Navbar className='w-100 ' data-bs-theme="dark">
+            <Navbar className='w-100 my-1' data-bs-theme="dark">
                 <div className='w-100 nav_wrapper'>
                     <Navbar.Brand href="#home">Chessmate</Navbar.Brand>
                     <Nav className="nav_home">
-                        {!user?.loggedInUser?._id && <button className="button-glow" style={{ fontSize: "1.5rem" }} onClick={() => { navigate('/login') }}>
-                            <span className="actual-text">&nbsp;Login&nbsp;</span>
-                            <span aria-hidden="true" className="hover-text">&nbsp;Login&nbsp;</span>
-                        </button>}
-                        {user?.loggedInUser?._id &&
-                            <> <div className="flex gap-3 items-center justify-between user-profile">
-                                <div className="profile-container" onClick={() => {
-                                    navigate("/profile")
-                                }}>
-                                    < Avatar >
-                                        <AvatarImage src={user?.loggedInUser?.avatar ?? "https://github.com/shadcn.png"} />
-                                    </Avatar>
-                                    <span className='user-name ml-1'>{user?.loggedInUser?.userName || ""}</span>
-                                </div>
-                                <div className="logout-btn">
-                                    <button onClick={handleLogout}>
-                                        <span>Logout</span>
-                                    </button>
-                                </div>
-                            </div>
-                            </>
+                        {!user?.loggedInUser?._id && <>
+                            <button className="button-glow mx-4" style={{ fontSize: "1.5rem" }} onClick={() => { navigate('/login') }}>
+                                <span className="actual-text">&nbsp;Login&nbsp;</span>
+                                <span aria-hidden="true" className="hover-text">&nbsp;Login&nbsp;</span>
+                            </button>
+                            <button className="button-glow" style={{ fontSize: "1.5rem" }} onClick={() => { navigate('/signup') }}>
+                                <span className="actual-text">&nbsp;Signup&nbsp;</span>
+                                <span aria-hidden="true" className="hover-text">&nbsp;Signup&nbsp;</span>
+                            </button>
+                        </>
+                        }
+                        {!user?.isUserLoggedOut &&
+                            < Avatar className="cursor-pointer border-solid border-2 border-amber-500" onClick={() => navigate("/profile")}>
+                                <AvatarImage src={user?.loggedInUser?.avatar} />
+                            </Avatar>
                         }
                     </Nav>
                 </div >

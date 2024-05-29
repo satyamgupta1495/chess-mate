@@ -1,7 +1,8 @@
 import Page404 from '@/components/Page404';
 import Profile from '@/components/Profile';
+import useChessStore from '@/store/useChessStore';
 import { lazy } from 'react';
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, type RouteObject } from 'react-router-dom';
 
 const Home = lazy(() => import('../components/Home'));
 const ChessMate = lazy(() => import('../components/Chessmate/ChessMate'));
@@ -9,6 +10,9 @@ const Login = lazy(() => import('@/components/Login/Login'));
 const SignUp = lazy(() => import('@/components/Login/SignUp'));
 
 const AppRoutes = () => {
+
+    const user = useChessStore((state) => state)
+
     const routes: RouteObject[] = [
         {
             path: '/',
@@ -20,11 +24,11 @@ const AppRoutes = () => {
         },
         {
             path: '/login',
-            element: <Login />,
+            element: !user?.isUserLoggedOut ? <Navigate to="/" /> : <Login />,
         },
         {
             path: '/signup',
-            element: <SignUp />,
+            element: !user?.isUserLoggedOut ? <Navigate to="/" /> : <SignUp />,
         },
         {
             path: '/profile',

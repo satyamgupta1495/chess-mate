@@ -24,4 +24,14 @@ function getAllUsers() {
     return axios.get(`${baseUrl}`);
 }
 
-export { login, logoutUser, signUp, getAllUsers }
+function getUserStatsApi(id) {
+    const baseUrl = `/api/v1/stats/${id}`
+    return axios.get(`${baseUrl}`);
+}
+
+function updateUserStats(id: string | number, data) {
+    const baseUrl = `/api/v1/stats/${id}`
+    return axios.put(`${baseUrl}`, data);
+}
+
+export { login, logoutUser, signUp, getAllUsers, getUserStatsApi, updateUserStats }

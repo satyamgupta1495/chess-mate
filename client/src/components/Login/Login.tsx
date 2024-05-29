@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import useLoginHook from "./useLoginHook";
 import toast from "react-hot-toast";
 import Chessplay from "../../assets/img/chessplay.svg"
+import { HiMiniArrowLongLeft } from "react-icons/hi2";
 
 export default function Login() {
-    
+
     const { loginUser, isLoading, isError, user, navigate } = useLoginHook()
 
     const emailRef = useRef<any>()
@@ -42,6 +43,14 @@ export default function Login() {
     return (
         <div className="login-container show-top">
             <div className="form-container">
+                <div className="flex justify-start items-center gap-2 cursor-pointer" style={{ color: "#0d6efd" }}>
+                    <span onClick={() => navigate('/')} className="flex gap-2 items-center">
+                        <span className="text-2xl">
+                            <HiMiniArrowLongLeft />
+                        </span>
+                        <span> Back home </span>
+                    </span>
+                </div>
                 <form className="form" onSubmit={handleLogin}>
                     <div className="flex gap-5">
                         <h3>Login</h3><img className="h-12" src={Chessplay} alt="" />
@@ -68,8 +77,8 @@ export default function Login() {
                             required
                         />
                     </div>
-                    <button className="form-submit-btn" type="submit">Login</button>
-                    <p>{`Don't have an account yet?`} {<Link to='/signup'> Sign up</Link>} </p>
+                    <button className="form-submit-btn text-white" type="submit">Login</button>
+                    <p>{`Don't have an account yet?`}{<Link to='/signup'> Sign up</Link>} </p>
                 </form>
             </div>
         </div>

@@ -16,7 +16,6 @@ class Authorization {
         try {
             const token = await req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "");
             if (!token) {
-                console.log("insede")
                 response.errorMsg = 'Token not found 🚧'
                 res.status(StatusCodes.UNAUTHORIZED).json(response);
                 return res;

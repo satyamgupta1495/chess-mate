@@ -4,13 +4,27 @@ import { toast } from "react-hot-toast"
 import Container from 'react-bootstrap/Container';
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import useChessStore from "@/store/useChessStore";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "@/helper";
 
 function NavBar({ setGame, setMode, setCurrTheme }: any) {
   const { onThemeSelect } = useControl({ setGame, setMode, setCurrTheme })
-  const { user }: any = useChessStore((state) => state)
+  const navigate = useNavigate()
+
+  const { user, logout, isUserLoggedOut }: any = useChessStore((state) => state)
+
+  const handleLogout = () => {
+    const response: any = logoutUser()
+    if (response?.data?.success) {
+      toast.success("Logged out successfully!")
+    } else {
+      toast.error("Something went wrong!")
+    }
+    logout()
+  }
 
   return (
-    <div className="nav-container mx-20">
+    <div className="nav-container mx-20 my-3 show-top">
       <Navbar expand="lg" data-bs-theme="dark">
         <Container fluid>
           <Navbar.Brand className="text-white" href="/">Chessmate</Navbar.Brand>
@@ -53,17 +67,23 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
               </NavDropdown>
             </Nav>
             <Nav>
-              <div className="profile-container">
-                <Avatar>
-                  <AvatarImage src={user?.loggedInUser?.avatar ?? "https://github.com/shadcn.png"} />
-                </Avatar>
-                <span className='user-name ml-1'>{user?.loggedInUser?.userName || ""}</span>
+              <div className="flex gap-3 items-center justify-between user-profile">
+                {!isUserLoggedOut &&
+                  <Avatar className="cursor-pointer border-solid border-2 border-amber-500" onClick={() => navigate("/profile")}>
+                    <AvatarImage src={user?.loggedInUser?.avatar} />
+                  </Avatar>}
+                {!isUserLoggedOut &&
+                  <div className="logout-btn">
+                    <button onClick={handleLogout}>
+                      <span>Logout</span>
+                    </button>
+                  </div>}
               </div>
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </div>
+    </div >
   );
 }
 

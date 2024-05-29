@@ -21,8 +21,6 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
   const { setRoomType, boardWidth, onDrop, onSquareClick, onSquareRightClick, moveSquares, optionSquares, moveHistory, rightClickedSquares, customStyles, showPromotionDialog, moveTo, sendChat, chat, message, setMessage, orientation, playerLeft, winner } = useSimpleBoard({ game, mode, position, setPosition, currentTheme, setCurrentTurn, currentTurn })
 
-  console.log(winner, "isCheckMate")
-
   return (
     <div className="simple-board">
 

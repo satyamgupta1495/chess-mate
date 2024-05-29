@@ -222,7 +222,7 @@ div::-webkit-scrollbar {
 
 
 .show-top {
-  position: fixed;
+  position: relative;
   z-index: 2 !important;
 }
 
@@ -854,29 +854,102 @@ div::-webkit-scrollbar {
 
 
 
+/* PROFILE PAGE CSS STARTS HERE */
+
+.profile-wrapper .nav-container {
+  width: 90%;
+  position: absolute;
+}
+
+.profile-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  /* background-color: red !important; */
+}
+
+.profile-bg {
+  width: 100%;
+  position: relative;
+  /* background-color: yellow; */
+}
+
+.profile-bg img {
+  width: 100%;
+  height: 25rem;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background-color: whitesmoke;
+  top: 18rem;
+  height: 30rem;
+  width: 95%;
+  position: absolute;
+  border-radius: 1rem;
+  /* background-color: red; */
+}
+
+.profile-img-container {
+  position: relative;
+  top: -5rem;
+  width: 150px;
+  height: 150px;
+  border-radius: 100% !important;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.stats-container {
+  position: relative;
+  top: -3rem;
+  width: 30%;
+  height: 65%;
+}
+
+.data {
+  margin: 0rem 0 1rem 0;
+  padding: 0.8rem;
+  border: 2px solid;
+}
+
+/* PROFILE PAGE CSS ENDS HERE */
+
+
+
 /* =====================Mobile Portrait Size to Mobile Landscape Size (devices and browsers)===================== */
 @media screen and (max-width: 479px) {
 
   .home_wrapper {
     margin-top: 1.5rem;
+    width: 100%;
     /* background-color: red; */
   }
 
-  .home_wrapper .navbar {
-    margin-top: 1rem;
-    /* background-color: yellow; */
-    display: flex !important;
-    justify-content: space-evenly;
-    align-items: center;
+  .nav_wrapper {
+    margin: 0 1rem;
+    width: 100% !important;
+    /* background-color: pink; */
   }
 
   .nav_wrapper>a {
-    margin-right: 2rem !important;
+    margin-right: 2rem;
     /* background-color: red; */
-    width: inherit !important;
   }
 
   .home_page_container {
+    /* background-color: red; */
     flex-direction: column;
   }
 
@@ -890,7 +963,7 @@ div::-webkit-scrollbar {
     display: flex;
     align-self: center !important;
     height: 90% !important;
-    width: 90% !important;
+    /* width: 90% !important; */
     margin: 1rem 0;
     /* background-color: red; */
   }

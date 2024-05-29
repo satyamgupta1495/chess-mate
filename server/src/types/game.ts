@@ -18,6 +18,13 @@ export interface Room {
     players: Player[];
 }
 
+export interface IPlayerStats {
+    userId: String | any,
+    wins?: Number,
+    losses?: Number,
+    draws?: Number
+}
+
 export enum GameOver {
     CHECK_MATE = 'checkmate',
     STALE_MATE = 'stalemate',

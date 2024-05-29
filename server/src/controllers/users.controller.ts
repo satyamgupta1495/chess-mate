@@ -1,9 +1,8 @@
-import { Container, Service } from "typedi";
+import { Service } from "typedi";
 import UsersService from "../services/usersService";
 import { StatusCodes } from "http-status-codes";
 import { NextFunction, Request, Response } from 'express';
 import { uploadToCloudinary } from "../utils/cloudinaryService";
-import { Users } from "../models/Users";
 import jwt from "jsonwebtoken";
 import { cookieOption } from "../constants";
 
@@ -51,12 +50,14 @@ class UsersController {
             if (!serviceResponse.success && serviceResponse.error === "user_exists") {
                 response.response = serviceResponse.response;
                 response.error = "user_exists";
+                response.errorMsg = serviceResponse.errorMessage;
                 res.status(StatusCodes.CONFLICT).json(response);
                 return;
             }
 
             if (!serviceResponse.success) {
                 response.response = serviceResponse.response;
+                response.errorMsg = serviceResponse.errorMessage;
                 res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response);
                 return;
             }
@@ -85,6 +86,7 @@ class UsersController {
 
             if (!serviceResponse.success) {
                 response.response = serviceResponse.response;
+                response.errorMsg = serviceResponse.errorMessage;
                 res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response);
                 return;
             }
@@ -113,6 +115,7 @@ class UsersController {
 
             if (!serviceResponse.success) {
                 response.response = serviceResponse.response;
+                response.errorMsg = serviceResponse.errorMessage;
                 res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response);
                 return;
             }
@@ -154,14 +157,9 @@ class UsersController {
 
             if (!serviceResponse.success) {
                 response.response = serviceResponse.response;
+                response.errorMsg = serviceResponse.errorMessage;
                 res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response);
                 return;
-            }
-
-            const options: any = {
-                httpOnly: true,
-                secure: false,
-                sameSite: 'strict'
             }
 
             response.success = true;
@@ -169,8 +167,8 @@ class UsersController {
             response.response = serviceResponse.response;
 
             res.status(StatusCodes.OK)
-                .cookie("accessToken", serviceResponse.response.accessToken, options)
-                .cookie("refreshToken", serviceResponse.response.refreshToken, options)
+                .cookie("accessToken", serviceResponse.response.accessToken, cookieOption)
+                .cookie("refreshToken", serviceResponse.response.refreshToken, cookieOption)
                 .json(response);
 
             return res;
@@ -188,13 +186,12 @@ class UsersController {
             response: {},
         };
         try {
-            console.log("caleedddd----2")
             const id = req.user._id
 
             const serviceResponse = await this.usersService.logout(id)
 
             if (!serviceResponse?.response?.user) {
-                response.errorMessage = 'Unable to fetch user details';
+                response.errorMsg = serviceResponse.errorMessage;
                 return response;
             }
 
@@ -233,7 +230,7 @@ class UsersController {
             const serviceResponse = await this.usersService.refreshAccessToken(incomingRefreshToken, decodedToken)
 
             if (!serviceResponse.success) {
-                response.errorMessage = 'Unable to refresh token';
+                response.errorMsg = serviceResponse.errorMessage;
                 return response;
             }
 
