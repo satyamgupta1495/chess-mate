@@ -369,6 +369,7 @@ export default function useSimpleBoard({
     return {
         makeRandomMove,
         getKingPosition,
+        roomType,
         setRoomType,
         boardWidth,
         onDrop,
@@ -387,6 +388,7 @@ export default function useSimpleBoard({
         orientation,
         playerLeft,
         moveHistory,
-        winner
+        winner,
+        startGame
     }
 }

@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import SimpleBoard from './SimpleBoard'
 import useChessMate from './hooks/useChessMate';
 import Footer from './Footer';
-// import { Container } from 'react-bootstrap';
 import { Toaster } from 'react-hot-toast';
 import NavBar from './NavBar';
 

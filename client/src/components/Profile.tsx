@@ -25,6 +25,7 @@ function Profile() {
                     <div className="profile-img-container">
                         <img src={user?.loggedInUser?.avatar} />
                     </div>
+
                     <div className="stats-container text-black">
                         {userStats && <>
                             <div className="d-flex data justify-content-between align-items-center">

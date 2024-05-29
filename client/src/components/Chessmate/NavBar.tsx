@@ -69,7 +69,7 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
             <Nav>
               <div className="flex gap-3 items-center justify-between user-profile">
                 {!isUserLoggedOut &&
-                  <Avatar className="cursor-pointer border-solid border-2 border-amber-500" onClick={() => navigate("/profile")}>
+                  <Avatar className="cursor-pointer border-solid border-2 border-white-500" onClick={() => navigate("/profile")}>
                     <AvatarImage src={user?.loggedInUser?.avatar} />
                   </Avatar>}
                 {!isUserLoggedOut &&

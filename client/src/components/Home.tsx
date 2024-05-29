@@ -27,7 +27,7 @@ function Home() {
                         </>
                         }
                         {!user?.isUserLoggedOut &&
-                            < Avatar className="cursor-pointer border-solid border-2 border-amber-500" onClick={() => navigate("/profile")}>
+                            < Avatar className="cursor-pointer border-solid border-2 border-white-500" onClick={() => navigate("/profile")}>
                                 <AvatarImage src={user?.loggedInUser?.avatar} />
                             </Avatar>
                         }
