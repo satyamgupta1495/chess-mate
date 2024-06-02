@@ -309,7 +309,6 @@ export default function useSimpleBoard({
         })
 
         socket.on("move", (playedMove: TPlayedMove) => {
-            console.log("playedMove---", playedMove)
             setCurrentTurn(playedMove.playerColor === "w" ? "b" : "w")
             makeMove(playedMove.playedMove.move)
         })

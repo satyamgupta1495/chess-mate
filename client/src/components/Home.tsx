@@ -1,9 +1,11 @@
+import { Suspense } from 'react'
 import Footer from './Chessmate/Footer'
 import Piece from './Chessmate/Piece'
 import { Nav, Navbar } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import useChessStore from '@/store/useChessStore'
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import logo from "@/assets/img/chessmate.png"
 
 function Home() {
     const navigate = useNavigate()
@@ -13,10 +15,15 @@ function Home() {
         <div className='home_wrapper'>
             <Navbar className='w-100 my-1' data-bs-theme="dark">
                 <div className='w-100 nav_wrapper'>
-                    <Navbar.Brand href="#home">Chessmate</Navbar.Brand>
+                    <Navbar.Brand href="/" className="d-flex align-items-center">
+                        <span className='h-8 w-8 rounded-full bg-amber-400 mr-2'> <img src={logo} alt="img" /></span>
+                        <span>Chessmate</span>
+                    </Navbar.Brand>
                     <Nav className="nav_home">
-                        {!user?.loggedInUser?._id && <>
-                            <button className="button-glow mx-4" style={{ fontSize: "1.5rem" }} onClick={() => { navigate('/login') }}>
+                        {!user?.loggedInUser && <>
+                            <button className="button-glow mx-4" style={{ fontSize: "1.5rem" }} onClick={() => {
+                                navigate('/login')
+                            }}>
                                 <span className="actual-text">&nbsp;Login&nbsp;</span>
                                 <span aria-hidden="true" className="hover-text">&nbsp;Login&nbsp;</span>
                             </button>
@@ -26,14 +33,14 @@ function Home() {
                             </button>
                         </>
                         }
-                        {!user?.isUserLoggedOut &&
+                        {user?.loggedInUser?.avatar &&
                             < Avatar className="cursor-pointer border-solid border-2 border-white-500" onClick={() => navigate("/profile")}>
                                 <AvatarImage src={user?.loggedInUser?.avatar} />
                             </Avatar>
                         }
                     </Nav>
-                </div >
-            </Navbar >
+                </div>
+            </Navbar>
 
             <section className='home_page_container'>
                 <div className="text_container" >
@@ -45,7 +52,9 @@ function Home() {
                         <span aria-hidden="true" className="hover-text">&nbsp;START&nbsp;</span>
                     </button>
                 </div>
-                <Piece />
+                <Suspense fallback={<div className="relative flex justify-center items-center w-100 h-100 text-white"> Loading... </div>}>
+                    <Piece />
+                </Suspense>
             </section>
             <Footer />
         </div >

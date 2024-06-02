@@ -160,8 +160,8 @@ export default class UsersService {
         try {
             const user: any = await Users.findOne({ email: data.email });
 
-            if (!user._id) {
-                res.errorMessage = 'Unable to fetch user details';
+            if (!user) {
+                res.errorMessage = 'Invalid credentials';
                 return res;
             }
 

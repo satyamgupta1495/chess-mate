@@ -33,28 +33,28 @@ function Profile() {
                                     <PiGameController />
                                     <span className="ms-2">Match played</span>
                                 </div>
-                                <span>{parseInt(userStats?.wins) + parseInt(userStats?.draws) + parseInt(userStats?.losses)}</span>
+                                <span>{(userStats?.wins || userStats?.draws || userStats?.losses) ? parseInt(userStats?.wins) + parseInt(userStats?.draws) + parseInt(userStats?.losses) : 0}</span>
                             </div>
                             <div className="d-flex data justify-content-between align-items-center">
                                 <div className="d-flex align-items-center">
                                     <GiLaurelsTrophy />
                                     <span className="ms-2">Wins</span>
                                 </div>
-                                <span>{parseInt(userStats?.wins)}</span>
+                                <span>{userStats?.wins ? parseInt(userStats?.wins) : 0}</span>
                             </div>
                             <div className="d-flex data justify-content-between align-items-center">
                                 <div className="d-flex align-items-center">
                                     <GiCrossedAxes />
                                     <span className="ms-2">Losses</span>
                                 </div>
-                                <span>{parseInt(userStats?.losses)}</span>
+                                <span>{userStats?.losses ? parseInt(userStats?.losses) : 0}</span>
                             </div>
                             <div className="d-flex data justify-content-between align-items-center">
                                 <div className="d-flex align-items-center">
                                     <FaRegHandshake />
                                     <span className="ms-2">Draws</span>
                                 </div>
-                                <span>{parseInt(userStats?.draws)}</span>
+                                <span>{userStats?.draws ? parseInt(userStats?.draws) : 0}</span>
                             </div>
                         </>
                         }

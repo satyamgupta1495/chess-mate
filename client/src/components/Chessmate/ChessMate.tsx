@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import SimpleBoard from './SimpleBoard'
 import useChessMate from './hooks/useChessMate';
 import Footer from './Footer';
-import { Toaster } from 'react-hot-toast';
 import NavBar from './NavBar';
 
 function ChessMate() {
@@ -36,19 +35,7 @@ function ChessMate() {
           setCurrentTurn={setCurrentTurn} />
 
         <Footer />
-      </div >
-
-      <Toaster
-        position="top-right"
-        reverseOrder={true}
-        toastOptions={{
-          style: {
-            fontSize: '14px',
-            border: '1px dashed white',
-            color: '#000'
-          }
-        }}
-      />
+      </div>
     </>
   )
 }

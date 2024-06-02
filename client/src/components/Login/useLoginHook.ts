@@ -12,18 +12,18 @@ export default function useLoginHook() {
 
     const navigate = useNavigate()
 
-    const loginUser = async (data) => {
+    const loginUser = async (data): Promise<void> => {
         try {
-            const response: any = await login(data)
-            if (response?.data?.success) {
-                setUser(response?.data?.response)
-                mutate(baseUrl, response?.data?.response, false);
-            } else {
-                toast.error('Failed to get user details');
-                throw new Error('Failed to get user details');
+            const response: { data: any } = await login(data);
+            if (response.data.success) {
+                setUser(response.data.response)
+                mutate(baseUrl, response.data.response, false)
+                toast.success("Logged in successfully ✔️")
+                navigate('/')
             }
-        } catch (error) {
-            console.error('Error posting data:', error);
+        } catch (error: any) {
+            toast.error(error?.message);
+            console.error('Login error:', error);
         }
     };
 

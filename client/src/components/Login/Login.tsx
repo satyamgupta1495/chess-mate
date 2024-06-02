@@ -1,29 +1,15 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import useLoginHook from "./useLoginHook";
-import toast from "react-hot-toast";
 import Chessplay from "../../assets/img/chessplay.svg"
 import { HiMiniArrowLongLeft } from "react-icons/hi2";
 
 export default function Login() {
 
-    const { loginUser, isLoading, isError, user, navigate } = useLoginHook()
+    const { loginUser, isLoading, isError, navigate } = useLoginHook()
 
     const emailRef = useRef<any>()
     const passwordRef = useRef<any>()
-
-    const [isRedirected, setIsRedirected] = useState<boolean>(true)
-
-    useEffect(() => {
-        if (user && isRedirected) {
-            setIsRedirected(false)
-            toast.success("Logged in successfully ✔️")
-            navigate('/')
-        } else {
-            setIsRedirected(true)
-            toast.error('User not found or wrong credentials!')
-        }
-    }, [user, navigate])
 
     const handleLogin = (event: React.FormEvent) => {
         event.preventDefault();

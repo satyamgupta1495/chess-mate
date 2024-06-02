@@ -6,6 +6,7 @@ import Chat from "./Chat";
 import Video from "./Video";
 import WinnerModel from "./DialogueBox/WinnerModel";
 import HourLoader from "./HourLoader";
+import PlayerDisconnected from "./DialogueBox/PlayerDisconnected";
 
 type SimpleBoardProps = {
   mode?: string,
@@ -25,7 +26,8 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
 
   return (
     <>
-      {!startGame && roomType?.roomName && <HourLoader />}
+      {!startGame && roomType?.roomName && !playerLeft && <HourLoader />}
+      {playerLeft && <PlayerDisconnected />}
 
       <div className="simple-board">
         <CustomDialogueBox setRoomType={setRoomType} />
@@ -82,7 +84,6 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
             </div>
           </div>
         </div >
-        {playerLeft && <h1> Player left the game! </h1>}
       </div>
     </>
   );

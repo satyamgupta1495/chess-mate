@@ -1,8 +1,8 @@
 export const DB_NAME = 'chess_mate'
 
 export const cookieOption = {
-    path: "/",
+    // path: "/",
     httpOnly: true,
-    secure: true,
-    withCredentials: true
+    // secure: true,
+    // withCredentials: true
 }

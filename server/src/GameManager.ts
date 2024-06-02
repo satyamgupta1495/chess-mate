@@ -89,7 +89,6 @@ export class GameManager {
     }
 
     public makeMove(moveData, socket) {
-        console.log("movedata----", moveData)
         const roomFound = this.getRoomNameBySocketId(socket.id);
 
         if (!roomFound) {
@@ -110,6 +109,13 @@ export class GameManager {
         const roomFound = this.getRoomNameBySocketId(socket.id);
         if (roomFound) {
             socket.to(roomFound).emit('chat', { ...message, type: 'received', player: socket.id, time: Date.now() });
+        }
+    }
+
+    public playerDisconnected(socket) {
+        const roomFound = this.getRoomNameBySocketId(socket.id);
+        if (roomFound) {
+            socket.to(roomFound).emit("playerLeft", { playerId: socket.id });
         }
     }
 

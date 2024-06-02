@@ -161,14 +161,14 @@ class UsersController {
                 res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(response);
                 return;
             }
-
+            console.log(serviceResponse.response.refreshToken, "serviceResponse.response.accessToken", serviceResponse.response.accessToken)
             response.success = true;
             response.successMsg = 'User logged in successfully 👍';
             response.response = serviceResponse.response;
 
             res.status(StatusCodes.OK)
-                .cookie("accessToken", serviceResponse.response.accessToken, cookieOption)
-                .cookie("refreshToken", serviceResponse.response.refreshToken, cookieOption)
+                .cookie("accessToken", serviceResponse.response.accessToken)
+                .cookie("refreshToken", serviceResponse.response.refreshToken)
                 .json(response);
 
             return res;
@@ -186,6 +186,7 @@ class UsersController {
             response: {},
         };
         try {
+            console.log(req.user)
             const id = req.user._id
 
             const serviceResponse = await this.usersService.logout(id)

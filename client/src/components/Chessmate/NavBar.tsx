@@ -6,6 +6,7 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import useChessStore from "@/store/useChessStore";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "@/helper";
+import logo from "@/assets/img/chessmate.png"
 
 function NavBar({ setGame, setMode, setCurrTheme }: any) {
   const { onThemeSelect } = useControl({ setGame, setMode, setCurrTheme })
@@ -13,22 +14,30 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
 
   const { user, logout, isUserLoggedOut }: any = useChessStore((state) => state)
 
-  const handleLogout = () => {
-    const response: any = logoutUser()
-    if (response?.data?.success) {
-      toast.success("Logged out successfully!")
-    } else {
-      toast.error("Something went wrong!")
+  const handleLogout = async () => {
+    logout();
+    navigate('/');
+    try {
+      const response: any = await logoutUser();
+      if (response?.data?.success) {
+        toast.success("Logged out successfully!");
+      } else {
+        toast.error("Something went wrong!");
+      }
+    } catch (error) {
+      toast.error("An error occurred during logout");
+      console.error("Logout error:", error);
     }
-    logout()
-  }
+  };
 
   return (
     <div className="nav-container mx-20 my-3 show-top">
       <Navbar expand="lg" data-bs-theme="dark">
         <Container fluid>
-          <Navbar.Brand className="text-white" href="/">Chessmate</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Brand href="/" className="d-flex align-items-center">
+            <span className='h-8 w-8 rounded-full bg-amber-400 mr-2'> <img src={logo} alt="img" /></span>
+            <span>Chessmate</span>
+          </Navbar.Brand>
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto"
@@ -69,8 +78,8 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
             <Nav>
               <div className="flex gap-3 items-center justify-between user-profile">
                 {!isUserLoggedOut &&
-                  <Avatar className="cursor-pointer border-solid border-2 border-white-500" onClick={() => navigate("/profile")}>
-                    <AvatarImage src={user?.loggedInUser?.avatar} />
+                  <Avatar className="cursor-pointer object-contain border-solid border-2 " onClick={() => navigate("/profile")}>
+                    <AvatarImage className="object-fill" src={user?.loggedInUser?.avatar} />
                   </Avatar>}
                 {!isUserLoggedOut &&
                   <div className="logout-btn">
@@ -83,7 +92,7 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </div >
+    </div>
   );
 }
 
