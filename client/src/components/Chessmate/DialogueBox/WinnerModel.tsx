@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import WinnerImg from '../../../assets/img/Winner2.svg'
+import Fail from '../../../assets/img/loose.png'
 import Confetti from 'react-confetti';
 import { useNavigate } from 'react-router-dom';
 
-function WinnerModel(winner: any) {
+function WinnerModel({ winner, orientation }: any) {
 
     const navigate = useNavigate()
     const [show, setShow] = useState(false)
 
+    console.log("winnnerrrr", winner, orientation)
+
     useEffect(() => {
-        if (winner?.winner !== "") {
+        if (winner && winner?.winner !== "") {
             setShow(true);
         }
     }, [winner]);
 
+    const isWinner = (winner === 'w' && orientation === 'white') || (winner === 'b' && orientation === 'black');
+    const winnerMessage = winner === 'w' ? "White wins 👏" : winner === 'b' ? "Black wins 👏" : "No winner yet";
+
     return (
         <>
-            {show && <Confetti
+            {show && isWinner && <Confetti
                 width={window.innerWidth - 10}
                 height={window.innerHeight - 10}
             />}
@@ -34,10 +40,10 @@ function WinnerModel(winner: any) {
                 <div className="custom-dialogue-box">
                     <Modal.Body>
                         <p className="h2 text-center my-2">
-                            {winner.winner === 'w' ? "White wins 👏" : (winner.winner === "b" ? "Black wins 👏" : "No winner yet")}
+                            {winnerMessage}
                         </p>
                         <div className="trophy-container my-5">
-                            <img src={WinnerImg} alt="Winner" />
+                            <img src={isWinner ? WinnerImg : Fail} alt="Winner" />
                         </div>
                         <div className='room-btn-container my-2'>
                             <button className="modal-button show-top mx-4" onClick={() => {

@@ -10,6 +10,7 @@ import PlayerDisconnected from "./DialogueBox/PlayerDisconnected";
 
 type SimpleBoardProps = {
   mode?: string,
+  setMode?: any,
   position?: any,
   game?: any,
   setGame?: any,
@@ -19,10 +20,10 @@ type SimpleBoardProps = {
   setPosition: any
 }
 
-export default function SimpleBoard({ mode, position, setPosition, game, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
+export default function SimpleBoard({ mode, setMode, position, setPosition, game, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
 
   const { roomType, setRoomType, boardWidth, onDrop, onSquareClick, onSquareRightClick, moveSquares, optionSquares, moveHistory, rightClickedSquares, customStyles, showPromotionDialog, moveTo, sendChat, chat, message, setMessage, orientation, playerLeft, winner, startGame } = useSimpleBoard({ game, mode, position, setPosition, currentTheme, setCurrentTurn, currentTurn })
-
+  console.log("modemode", mode)
 
   return (
     <>
@@ -30,8 +31,8 @@ export default function SimpleBoard({ mode, position, setPosition, game, current
       {playerLeft && <PlayerDisconnected />}
 
       <div className="simple-board">
-        <CustomDialogueBox setRoomType={setRoomType} />
-        <WinnerModel winner={winner} />
+        <CustomDialogueBox setRoomType={setRoomType} setMode={setMode} />
+        <WinnerModel winner={winner} orientation={orientation} />
         <div className="main-container">
           <div className="chess-board">
             <Chessboard id="BasicBoard"

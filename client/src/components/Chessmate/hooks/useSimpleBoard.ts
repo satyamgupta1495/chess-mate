@@ -171,10 +171,7 @@ export default function useSimpleBoard({
         {
             !startGame && mode === "random" && setTimeout(makeRandomMove, 200)
         }
-
         const moveSuccess = makeMove(move)
-
-        //emit only if move is valid
         if (startGame && moveSuccess) {
             socket.emit("move", moveData)
         }

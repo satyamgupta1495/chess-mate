@@ -12,7 +12,7 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
   const { onThemeSelect } = useControl({ setGame, setMode, setCurrTheme })
   const navigate = useNavigate()
 
-  const { user, logout, isUserLoggedOut }: any = useChessStore((state) => state)
+  const { user, logout }: any = useChessStore((state) => state)
 
   const handleLogout = async () => {
     logout();
@@ -31,7 +31,7 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
   };
 
   return (
-    <div className="nav-container mx-20 my-3 show-top">
+    <div className="nav-container mx-20 my-3 z-4">
       <Navbar expand="lg" data-bs-theme="dark">
         <Container fluid>
           <Navbar.Brand href="/" className="d-flex align-items-center">
@@ -61,14 +61,16 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
               <NavDropdown title="Modes" id="collapsible-nav-dropdown">
                 <NavDropdown.Item
                   onClick={() => {
-                    toast("Winner have to buy dinner! 🤼"), setMode("analyze")
+                    toast("Winner have to buy dinner! 🤼")
+                    setMode("analyze")
                   }}
                 >
                   Two Players
                 </NavDropdown.Item>
                 <NavDropdown.Item
                   onClick={() => {
-                    toast("Lets do this 🤖"), setMode("random")
+                    toast("Lets do this 🤖")
+                    setMode("random")
                   }}
                 >
                   Computer
@@ -77,11 +79,11 @@ function NavBar({ setGame, setMode, setCurrTheme }: any) {
             </Nav>
             <Nav>
               <div className="flex gap-3 items-center justify-between user-profile">
-                {!isUserLoggedOut &&
+                {user && user?.isLoggedInUser?._id &&
                   <Avatar className="cursor-pointer object-contain border-solid border-2 " onClick={() => navigate("/profile")}>
                     <AvatarImage className="object-fill" src={user?.loggedInUser?.avatar} />
                   </Avatar>}
-                {!isUserLoggedOut &&
+                {user && user?.isLoggedInUser?._id &&
                   <div className="logout-btn">
                     <button onClick={handleLogout}>
                       <span>Logout</span>
