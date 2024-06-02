@@ -79,10 +79,9 @@ class StatsController {
         };
 
         try {
-            const { id } = req.params
             const { body } = req.body
 
-            const serviceResponse = await this.statsService.updateStats(id, body)
+            const serviceResponse = await this.statsService.updateStats(body)
 
             if (!serviceResponse.success) {
                 response.response = serviceResponse.response;

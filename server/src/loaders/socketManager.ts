@@ -25,7 +25,6 @@ class SocketManager {
             console.log(`New socket connection: ${socket.id}`);
 
             socket.on('startGame', (roomData: TRoomData) => {
-                console.log("roomData", roomData)
                 try {
                     this.gameManager?.startGame(roomData, socket, this.io);
                 } catch (error) {

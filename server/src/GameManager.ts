@@ -117,9 +117,11 @@ export class GameManager {
         if (roomFound) {
             socket.to(roomFound).emit("playerLeft", { playerId: socket.id });
         }
+        const room: any = this.rooms.get(roomFound);
+        if (room) {
+            this.rooms.delete(roomFound);
+        }
     }
-
-
 }
 
 

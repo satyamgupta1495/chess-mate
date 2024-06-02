@@ -12,7 +12,7 @@ export default function statsRouteHandler(): Router {
     //Private routes
     statsRouter.post('/', statsController.createPlayStats)
     statsRouter.get('/:id', statsController.getPlayerStats)
-    statsRouter.put('/:id', statsController.updatePlayerStats)
+    statsRouter.put('/', statsController.updatePlayerStats)
 
     return statsRouter;
 }

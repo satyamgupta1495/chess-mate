@@ -3,6 +3,8 @@ import taost, { toast } from "react-hot-toast"
 import { socket } from "@/Socket"
 import { Square } from "chess.js"
 import { Move, TPlayedMove } from "@/types/Game"
+import useChessStore from "@/store/useChessStore"
+import { updateUserStatsApi } from "@/helper"
 
 export default function useSimpleBoard({
     mode,
@@ -32,19 +34,49 @@ export default function useSimpleBoard({
 
     const chatEventHandlerAdded = useRef(false)
 
+    const { user }: any = useChessStore(state => state)
+
+    const updateUserStats = async (data) => {
+        try {
+            const updatedStats = await updateUserStatsApi(data)
+            console.log("updatedState", updatedStats)
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
+
+
     useEffect(() => {
         setCustomStyles({})
         if (game.game_over()) {
+            let outcome = "";
             if (game.in_checkmate()) {
-                setWinner(game.turn() === "w" ? "w" : "b")
-                toast.error(`Checkmate! 🎉 ${game.turn() === "w" ? "Black" : "White"} wins 👏`)
+                const winningPlayer = game.turn() === "w" ? "b" : "w";
+                setWinner(winningPlayer);
+                toast.error(`Checkmate! 🎉 ${winningPlayer === "w" ? "White" : "Black"} wins 👏`);
+                const isUserWhite = orientation === 'white';
+                const isUserWinner = (isUserWhite && winningPlayer === 'w') || (!isUserWhite && winningPlayer === 'b');
+                outcome = isUserWinner ? 'wins' : 'losses';
             } else if (game.in_stalemate()) {
+                outcome = 'draws';
                 toast.error(`Stalemate! 🎉 Its a draw 👏`)
             } else if (game.in_threefold_repetition()) {
+                outcome = 'draws';
                 toast.error(`Threefold repetition! 🎉 Its a draw 👏`)
             } else if (game.insufficient_material()) {
+                outcome = 'draws';
                 toast.error(`Insufficient material! 🎉 Its a draw 👏`)
             }
+
+            console.log("outcome", outcome)
+            if (user?.loggedInUser?._id) {
+                const data = {
+                    userId: user?.loggedInUser?._id,
+                    [outcome]: true
+                }
+                updateUserStats(data)
+            }
+
         } else if (game.in_check()) {
             const currKingPosition: any = getKingPosition(
                 game,
@@ -295,10 +327,9 @@ export default function useSimpleBoard({
         })
 
         socket.on("start", (data) => {
-            oppPlayePeerId.current =
-                socket.id === data?.player1?.socketId
-                    ? data?.player2?.socketId
-                    : data?.player1?.socketId
+            oppPlayePeerId.current = socket.id === data?.player1?.socketId
+                ? data?.player2?.socketId
+                : data?.player1?.socketId
             setStartGame(true)
         })
 

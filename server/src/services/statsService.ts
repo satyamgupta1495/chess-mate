@@ -75,7 +75,7 @@ export default class StatsService {
         }
     }
 
-    public async updateStats(id: string | number, data: any) {
+    public async updateStats(data: any) {
         const res: ServiceResponse<any> = {
             errorMessage: '',
             internalError: false,
@@ -106,7 +106,7 @@ export default class StatsService {
             }
 
             const stats = await PlayerStats.findOneAndUpdate(
-                { userId: id },
+                { userId: data?.userId },
                 { $inc: { [toupdate]: 1 } },
                 { new: true }
             );

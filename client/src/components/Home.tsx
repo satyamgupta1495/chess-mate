@@ -22,6 +22,7 @@ function Home() {
                     <Nav className="nav_home">
                         {!user?.loggedInUser && <>
                             <button className="button-glow mx-4" style={{ fontSize: "1.5rem" }} onClick={() => {
+                                console.log("login")
                                 navigate('/login')
                             }}>
                                 <span className="actual-text">&nbsp;Login&nbsp;</span>

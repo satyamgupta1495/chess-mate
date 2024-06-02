@@ -6,6 +6,8 @@ import { TbChessQueen, TbChessQueenFilled } from "react-icons/tb";
 import { FaRandom } from 'react-icons/fa'
 import toast from 'react-hot-toast';
 import { socket } from '../../../Socket';
+import { HiMiniArrowLongLeft } from "react-icons/hi2";
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     show?: boolean,
@@ -14,6 +16,8 @@ type Props = {
 }
 
 export default function CustomDialogueBox({ setRoomType }: Props) {
+
+    const navigate = useNavigate()
 
     const [createRoomId, setCreateRoomId] = useState('')
     const [show, setShow] = useState(true)
@@ -81,11 +85,11 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
                     <Modal.Body>
                         <p className="h2 text-center my-2">
                             Create or Join a Room</p>
-                        <div className='play-as d-flex flex-row justify-content-center align-items-center'>
+                        <div className='play-as h1 d-flex flex-row justify-content-center align-items-center'>
                             <span className='fs-5'>Play as : </span>
-                            <button className={`mx-2 fs-5  ${playAs === 'b' ? 'active-btn' : ''}`} onClick={() => { handlePlayAs('b') }} > <TbChessQueen /> </button>
-                            <button className={`mx-2 fs-5 ${playAs === 'r' ? 'active-btn' : ''}`} onClick={() => { handlePlayAs('r') }} > <FaRandom /> </button>
-                            <button className={`mx-2 fs-5 ${playAs === 'w' ? 'active-btn' : ''}`} onClick={() => { handlePlayAs('w') }} > <TbChessQueenFilled /> </button>
+                            <button className={` ${playAs === 'b' ? 'active-btn' : ''}`} onClick={() => { handlePlayAs('b') }} > <TbChessQueen /> </button>
+                            <button className={`${playAs === 'r' ? 'active-btn' : ''}`} onClick={() => { handlePlayAs('r') }} > <FaRandom /> </button>
+                            <button className={`${playAs === 'w' ? 'active-btn' : ''}`} onClick={() => { handlePlayAs('w') }} > <TbChessQueenFilled /> </button>
                         </div>
 
                         <InputGroup className="my-4 input">
@@ -100,6 +104,14 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
                         <div className='room-btn-container m-8'>
                             <button className="button-50 mx-4" onClick={handleCreateRoom}>Create Room</button>
                             <button className="button-50 mx-4" onClick={handleJoinRoom}>Join Room</button>
+                        </div>
+                        <div className="flex mt-4 text-xs justify-start items-center gap-1 cursor-pointer">
+                            <span onClick={() => navigate('/')} className="flex gap-1 items-center">
+                                <span className="text-xl">
+                                    <HiMiniArrowLongLeft />
+                                </span>
+                                <span> Back home </span>
+                            </span>
                         </div>
                     </Modal.Body>
                 </div >

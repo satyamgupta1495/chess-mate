@@ -11,7 +11,7 @@ const SignUp = lazy(() => import('@/components/Login/SignUp'));
 
 const AppRoutes = () => {
 
-    const user = useChessStore((state) => state)
+    const user: any = useChessStore((state) => state)
 
     const routes: RouteObject[] = [
         {
@@ -24,11 +24,11 @@ const AppRoutes = () => {
         },
         {
             path: '/login',
-            element: !user?.isUserLoggedOut ? <Navigate to="/" /> : <Login />,
+            element: user?.loggedInUser ? <Navigate to="/" /> : <Login />,
         },
         {
             path: '/signup',
-            element: !user?.isUserLoggedOut ? <Navigate to="/" /> : <SignUp />,
+            element: user?.loggedInUser ? <Navigate to="/" /> : <SignUp />,
         },
         {
             path: '/profile',

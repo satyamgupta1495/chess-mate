@@ -29,9 +29,9 @@ function getUserStatsApi(id) {
     return axios.get(`${baseUrl}`);
 }
 
-function updateUserStats(id: string | number, data) {
-    const baseUrl = `/api/v1/stats/${id}`
-    return axios.put(`${baseUrl}`, data);
+function updateUserStatsApi(data) {
+    const baseUrl = `/api/v1/stats/`
+    return axios.put(`${baseUrl}`, { body: data });
 }
 
-export { login, logoutUser, signUp, getAllUsers, getUserStatsApi, updateUserStats }
+export { login, logoutUser, signUp, getAllUsers, getUserStatsApi, updateUserStatsApi }
