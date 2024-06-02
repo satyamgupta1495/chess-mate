@@ -1016,17 +1016,16 @@ div::-webkit-scrollbar {
   }
 
   .room-btn-container {
+    /* background-color: red; */
+    flex-direction: column;
     margin: 0 !important;
   }
 
   .room-btn-container .button-50 {
     /* background-color: red !important; */
-    margin: 0rem !important;
+    margin-bottom: 1rem !important;
   }
 
-  .room-btn-container .button-50:first-child {
-    margin-right: 1rem !important;
-  }
 
   .room-btn-container button {
     width: 50%;

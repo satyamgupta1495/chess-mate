@@ -12,10 +12,11 @@ import { useNavigate } from 'react-router-dom';
 type Props = {
     show?: boolean,
     onHide?: any,
+    setMode?: any,
     setRoomType: (roomType: { type: string, roomName: string, selectedColor?: string, peerId?: string }) => void;
 }
 
-export default function CustomDialogueBox({ setRoomType }: Props) {
+export default function CustomDialogueBox({ setRoomType, setMode }: Props) {
 
     const navigate = useNavigate()
 
@@ -28,10 +29,9 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
         if (createRoomId === '') return toast('Please enter room id 🚀')
         setShow(false)
         const selectedColor = playAs === 'r' ? (Math.random() < 0.5 ? 'w' : 'b') : playAs;
-        // console.log(selectedColor, "selectedColor")
         setRoomType({ type: 'create', roomName: createRoomId, selectedColor: selectedColor ? selectedColor : 'w', });
-        // socket.emit('new_peer', { peerId: peer.id, socketId: socket.id })
     }
+
     const handleJoinRoom = (): any => {
         if (createRoomId === '') return toast('Please create or enter room id 🚀')
         setRoomType({ type: 'join', roomName: createRoomId })
@@ -58,6 +58,11 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
             setPlayAs('r')
             toast.success('Psstt... its a surprise 🤫')
         }
+    }
+
+    const playWithComputer = () => {
+        setShow(false)
+        setMode("random")
     }
 
     //TODO : fix join empty room
@@ -102,6 +107,7 @@ export default function CustomDialogueBox({ setRoomType }: Props) {
                             />
                         </InputGroup>
                         <div className='room-btn-container m-8'>
+                            <button className="button-50 mx-4" onClick={playWithComputer}>Computer</button>
                             <button className="button-50 mx-4" onClick={handleCreateRoom}>Create Room</button>
                             <button className="button-50 mx-4" onClick={handleJoinRoom}>Join Room</button>
                         </div>

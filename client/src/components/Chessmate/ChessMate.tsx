@@ -7,7 +7,7 @@ import NavBar from './NavBar';
 
 function ChessMate() {
 
-  const { game, mode, setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
+  const { game, mode, setMode, setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
 
   useEffect(() => {
     const selectedTheme = localStorage.getItem('theme')
@@ -22,12 +22,15 @@ function ChessMate() {
       <div className='chess-mate'>
         <NavBar
           currentTheme={currTheme}
-          setCurrTheme={setCurrTheme} />
+          setCurrTheme={setCurrTheme}
+          setMode={setMode}
+        />
 
         < SimpleBoard
           position={position}
           setPosition={setPosition}
           mode={mode}
+          setMode={setMode}
           game={game}
           setGame={setGame}
           currentTheme={currTheme}
