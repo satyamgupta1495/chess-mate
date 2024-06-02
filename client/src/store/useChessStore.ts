@@ -8,7 +8,7 @@ const chessStore = (set) => ({
     },
     isUserLoggedOut: false,
     logout: () => {
-        set({ user: {}, isUserLoggedOut: true })
+        set({ user: {}, isUserLoggedOut: true, userStats: {} })
     },
     userStats: {},
     setUserStats: (userData) => {
