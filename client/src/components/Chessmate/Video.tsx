@@ -2,14 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { socket } from '../../Socket';
 import Peer from 'peerjs';
 import toast from 'react-hot-toast';
-import { FaCopy } from 'react-icons/fa';
+// import { FaCopy } from 'react-icons/fa';
 
 function Video() {
     const [myPeerId, setMyPeerId] = useState<string>('');
     const [peerId, setPeerId] = useState<string>('');
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
     const [incomingCall, setIncomingCall] = useState<any>(null);
-    const [callingPeerId, setCallingPeerId] = useState<string>('');
+    // const [callingPeerId, setCallingPeerId] = useState<string>('');
     const currVideoRef = useRef<any>(null);
     const peerRef = useRef<Peer | null>(null);
 
@@ -31,7 +31,7 @@ function Video() {
         peer.on('call', (call) => {
             console.log('Incoming call from:', call.peer);
             setIncomingCall(call);
-            setCallingPeerId(call.peer);
+            // setCallingPeerId(call.peer);
             toast((t) => (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <p className='text-black' style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>Incoming call from {call.peer}</p>
@@ -113,10 +113,10 @@ function Video() {
         }
     }
 
-    function handleCopy() {
-        navigator.clipboard.writeText(myPeerId);
-        toast.success('ID copied');
-    }
+    // function handleCopy() {
+    //     navigator.clipboard.writeText(myPeerId);
+    //     toast.success('ID copied');
+    // }
 
     return (
         <div className='video-grid-container'>

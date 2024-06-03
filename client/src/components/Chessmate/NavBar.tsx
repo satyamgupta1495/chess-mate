@@ -8,7 +8,7 @@ import { logoutUser } from "@/helper";
 import logo from "@/assets/img/chessmate.png";
 import { Chess } from "chess.js";
 
-function NavBar({ setPosition, setGame, setMode, setCurrTheme }) {
+function NavBar({ setPosition, setGame, setMode, setCurrTheme }: any) {
   const { onThemeSelect } = useControl({ setMode, setCurrTheme });
   const navigate = useNavigate();
 
