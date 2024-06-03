@@ -20,7 +20,7 @@ type SimpleBoardProps = {
   setPosition: any
 }
 
-export default function SimpleBoard({ mode, setMode, position, setPosition, game, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
+export default function SimpleBoard({ mode, setMode, position, setPosition, game, setGame, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
 
   const { roomType, setRoomType, boardWidth, onDrop, onSquareClick, onSquareRightClick, moveSquares, optionSquares, moveHistory, rightClickedSquares, customStyles, showPromotionDialog, moveTo, sendChat, chat, message, setMessage, orientation, playerLeft, winner, startGame } = useSimpleBoard({ game, mode, position, setPosition, currentTheme, setCurrentTurn, currentTurn })
   console.log("modemode", mode)
@@ -32,7 +32,7 @@ export default function SimpleBoard({ mode, setMode, position, setPosition, game
 
       <div className="simple-board">
         <CustomDialogueBox setRoomType={setRoomType} setMode={setMode} />
-        <WinnerModel winner={winner} orientation={orientation} />
+        <WinnerModel winner={winner} orientation={orientation} setPosition={setPosition} setGame={setGame} />
         <div className="main-container">
           <div className="chess-board">
             <Chessboard id="BasicBoard"
@@ -56,23 +56,23 @@ export default function SimpleBoard({ mode, setMode, position, setPosition, game
             />
           </div>
 
-          <div className="control-container chat">
+
+          <div className={`${mode !== "" ? "hidden" : ""} control-container chat`}>
             <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />
           </div>
 
-          <div className="control-container history">
-            <Video />
+          <div className={`${mode !== "" ? "hidden" : ""} control-container history`}>
             <div className="turns-container">
-              <p className="my-0">
-                <span className="turns-icon">
-                  <span className="icon">
-                    {currentTurn === "w" ? <TbChessQueen /> : <TbChessQueenFilled />}
-                  </span>
-                  <p>{currentTurn === "w" ? "White to move!" : "Black to move!"}</p>
+              <div className="turn-indicator">
+                <span className="turn-icon">
+                  {currentTurn === "w" ? <TbChessQueen /> : <TbChessQueenFilled />}
                 </span>
-              </p>
+                <span className="turn-text">
+                  {currentTurn === "w" ? "White to move" : "Black to move"}
+                </span>
+              </div>
               <div className="move-history">
-                <p className="mr-2">Move history : </p>
+                <p>Move history : </p>
                 {moveHistory.map((move: any, index: number) => {
                   return (
                     <div key={index} className="move-history-item">
@@ -83,6 +83,7 @@ export default function SimpleBoard({ mode, setMode, position, setPosition, game
                 })}
               </div>
             </div>
+            <Video />
           </div>
         </div >
       </div>

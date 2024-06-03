@@ -112,7 +112,10 @@ export default function CustomDialogueBox({ setRoomType, setMode }: Props) {
                             <button className="button-50 mx-4" onClick={handleJoinRoom}>Join Room</button>
                         </div>
                         <div className="flex mt-4 text-xs justify-start items-center gap-1 cursor-pointer">
-                            <span onClick={() => navigate('/')} className="flex gap-1 items-center">
+                            <span onClick={() => {
+                                setShow(false)
+                                navigate('/')
+                            }} className="flex gap-1 items-center">
                                 <span className="text-xl">
                                     <HiMiniArrowLongLeft />
                                 </span>

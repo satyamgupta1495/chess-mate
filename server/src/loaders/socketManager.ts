@@ -59,6 +59,16 @@ class SocketManager {
                     socket.emit('error', 'Failed to disconnec user');
                 }
             });
+
+            socket.on("new_peer", (data) => {
+                try {
+                    console.log("datain gamaemanager---", data)
+                    this.gameManager.playerVideoCall(data, this.io, socket)
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+
         });
     }
 }

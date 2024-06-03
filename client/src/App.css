@@ -291,6 +291,23 @@ div::-webkit-scrollbar {
     "chat board history";
 }
 
+.turn-indicator {
+  width: fit-content;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 2px 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.turn-icon {
+  /* font-size: 16px; */
+  margin-right: 5px;
+}
+
 .chess-board>div {
   display: flex;
   justify-content: center;
@@ -335,10 +352,6 @@ div::-webkit-scrollbar {
   /* background-color: yellow; */
 }
 
-.history {
-  grid-area: history;
-  /* background-color: blue; */
-}
 
 /* Chessmate components styling  ends-here*/
 
@@ -366,22 +379,24 @@ div::-webkit-scrollbar {
 
 .video-grid-container {
   /* background-color: yellow; */
+  height: 50%;
   background-color: var(--primary-color);
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 5px 5px 0 0;
-  border-bottom: 2px dashed var(--primary-white);
+  border-radius: 5px;
+  border-top: 2px dashed var(--primary-white);
 }
 
 .peer {
-  background-color: #1a1a1a;
+  /* background-color: red; */
+  /* background-color: #1a1a1a; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem;
   border-radius: 5px;
 }
 
@@ -391,6 +406,12 @@ div::-webkit-scrollbar {
   padding: 0 0.5rem;
   width: 100%;
   /* background-color: green; */
+}
+
+.peer-id-input input {
+  color: white;
+  border: 1px solid white;
+  background-color: var(--primary-color);
 }
 
 .call-btn {
@@ -403,23 +424,33 @@ div::-webkit-scrollbar {
 }
 
 .call-btn button {
+  border: 1px solid white;
   height: 2rem;
+  padding: 0 1rem;
+  border-radius: 5px;
   margin-left: 0.5rem;
 }
 
 .history {
+  /* background-color: red; */
+  grid-area: history;
+  display: flex;
+  width: 90%;
   background-color: var(--primary-color);
   flex-grow: 1;
-  /* background-color: tomato; */
   justify-content: flex-start;
 }
 
 .turns-container {
   /* background-color: red; */
   display: flex;
+  justify-content: flex-start;
   flex-direction: column;
-  align-items: center;
-  flex: 1;
+  align-items: flex-start;
+  padding: 0 1rem;
+  margin-top: 1rem;
+  height: 40%;
+  /* flex: 1; */
   /* border-bottom: 2px dashed var(--primary-white); */
 }
 
@@ -429,7 +460,6 @@ div::-webkit-scrollbar {
   flex-wrap: wrap;
   overflow-y: auto;
   line-height: 0;
-  margin-left: 10px;
   border-radius: 5px;
   /* background-color: yellow; */
 }
@@ -438,7 +468,6 @@ div::-webkit-scrollbar {
 .move-history-item {
   display: inline-flex;
   flex-wrap: wrap;
-  margin-right: 10px;
   text-align: center;
   line-height: 0;
   /* background-color: violet; */
@@ -488,10 +517,9 @@ div::-webkit-scrollbar {
 
 .chat-header {
   /* background-color: turquoise; */
-  padding-top: 1rem;
+  margin-top: 1rem;
   height: 32rem;
   overflow-y: auto;
-  /* border-top: 2px dashed var(--primary-white); */
 }
 
 .chat-header .sent {
@@ -553,13 +581,13 @@ div::-webkit-scrollbar {
 }
 
 .sent {
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 10px 10px 10px;
   border-radius: 15px 0 15px 15px;
   text-align: start;
 }
 
 .received {
-  padding: 0 1rem 1rem 1rem;
+  padding: 0 10px 10px 10px;
   border-radius: 0 15px 15px 15px;
 }
 
@@ -1026,7 +1054,6 @@ div::-webkit-scrollbar {
     margin-bottom: 1rem !important;
   }
 
-
   .room-btn-container button {
     width: 50%;
     margin: 0rem !important;
@@ -1052,7 +1079,6 @@ div::-webkit-scrollbar {
 
   .main-container {
     margin-top: 1rem;
-
     place-items: center;
     grid-template-columns: 1fr;
     /* grid-template-rows: repeat(3, 1fr) !important; */
@@ -1063,7 +1089,10 @@ div::-webkit-scrollbar {
     /* background-color: red; */
   }
 
-
+  .turn-indicator {
+    margin-top: 2rem;
+    margin-left: 0 !important;
+  }
 
   .chat-container {
     margin: 0 1rem !important;
@@ -1072,17 +1101,15 @@ div::-webkit-scrollbar {
 
   .chat-header {
     /* background-color: red; */
+    height: 8rem;
     width: inherit !important;
   }
 
   .turns-container {
-    margin: 0 1rem;
+    margin-top: 0;
     /* background-color: #1a1a1a; */
   }
 
-  .move-history {
-    padding: 1rem;
-  }
 
   .video-grid-container {
     padding: 1rem 0;
@@ -1146,6 +1173,19 @@ div::-webkit-scrollbar {
     /* background-color: pink; */
     grid-column: 1fr;
   }
+
+  .room-btn-container {
+    /* background-color: red; */
+    flex-direction: column;
+    margin: 0 !important;
+    align-items: stretch;
+  }
+
+  .room-btn-container .button-50 {
+    /* background-color: red !important; */
+    margin-bottom: 1rem !important;
+  }
+
 
   .main-container {
     place-items: center;
@@ -1217,6 +1257,20 @@ div::-webkit-scrollbar {
   .chess-mate {
     grid-column: 1fr;
   }
+
+  .room-btn-container {
+    /* background-color: red; */
+    flex-direction: column;
+    margin-top: 1rem !important;
+    align-items: stretch;
+  }
+
+  .room-btn-container .button-50 {
+    /* background-color: red !important; */
+    margin-bottom: 1rem !important;
+
+  }
+
 
   .main-container {
     place-items: center;

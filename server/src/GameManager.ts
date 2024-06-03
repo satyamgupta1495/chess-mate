@@ -122,6 +122,13 @@ export class GameManager {
             this.rooms.delete(roomFound);
         }
     }
+
+    public playerVideoCall(data, io: any, socket) {
+        const roomFound = this.getRoomNameBySocketId(socket.id);
+        console.log(socket.id, roomFound, "videocalldata----", data)
+        // io.to(roomFound).emit("new_peer", { peerId: data.peerId, socketId: data.socketId, room: roomFound })
+        socket.broadcast.to(roomFound).emit("new_peer", { peerId: data.peerId, socketId: data.socketId, room: roomFound })
+    }
 }
 
 

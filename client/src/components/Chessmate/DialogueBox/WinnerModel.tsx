@@ -4,8 +4,9 @@ import WinnerImg from '../../../assets/img/Winner2.svg'
 import Fail from '../../../assets/img/loose.png'
 import Confetti from 'react-confetti';
 import { useNavigate } from 'react-router-dom';
+import { Chess } from 'chess.js';
 
-function WinnerModel({ winner, orientation }: any) {
+function WinnerModel({ winner, orientation, setGame, setPosition }: any) {
 
     const navigate = useNavigate()
     const [show, setShow] = useState(false)
@@ -45,9 +46,11 @@ function WinnerModel({ winner, orientation }: any) {
                         <div className="trophy-container my-5">
                             <img src={isWinner ? WinnerImg : Fail} alt="Winner" />
                         </div>
-                        <div className='room-btn-container my-2'>
+                        <div className='winner-btn-container my-2'>
                             <button className="modal-button show-top mx-4" onClick={() => {
                                 setShow(false)
+                                setPosition("start")
+                                setGame(new Chess())
                             }}>New game</button>
                             <button className="modal-button show-top mx-4" onClick={() => {
                                 setShow(false)

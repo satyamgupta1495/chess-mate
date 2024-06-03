@@ -21,9 +21,10 @@ function ChessMate() {
     <>
       <div className='chess-mate'>
         <NavBar
-          currentTheme={currTheme}
           setCurrTheme={setCurrTheme}
           setMode={setMode}
+          setGame={setGame}
+          setPosition={setPosition}
         />
 
         < SimpleBoard
