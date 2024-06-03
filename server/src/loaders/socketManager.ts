@@ -62,8 +62,7 @@ class SocketManager {
 
             socket.on("new_peer", (data) => {
                 try {
-                    console.log("datain gamaemanager---", data)
-                    this.gameManager.playerVideoCall(data, this.io, socket)
+                    this.gameManager.playerVideoCall(data, socket)
                 } catch (error) {
                     console.error(error);
                 }

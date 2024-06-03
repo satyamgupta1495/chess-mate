@@ -389,6 +389,15 @@ div::-webkit-scrollbar {
   border-top: 2px dashed var(--primary-white);
 }
 
+.video-grid-container video {
+  border-radius: 5px;
+  border: 2px dashed var(--primary-white);
+  height: 50%;
+  width: 100%;
+}
+
+
+
 .peer {
   /* background-color: red; */
   /* background-color: #1a1a1a; */

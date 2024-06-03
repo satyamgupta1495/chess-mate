@@ -23,7 +23,8 @@ type SimpleBoardProps = {
 export default function SimpleBoard({ mode, setMode, position, setPosition, game, setGame, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
 
   const { roomType, setRoomType, boardWidth, onDrop, onSquareClick, onSquareRightClick, moveSquares, optionSquares, moveHistory, rightClickedSquares, customStyles, showPromotionDialog, moveTo, sendChat, chat, message, setMessage, orientation, playerLeft, winner, startGame } = useSimpleBoard({ game, mode, position, setPosition, currentTheme, setCurrentTurn, currentTurn })
-  console.log("modemode", mode)
+  console.log("modemode", roomType)
+
 
   return (
     <>
@@ -83,7 +84,7 @@ export default function SimpleBoard({ mode, setMode, position, setPosition, game
                 })}
               </div>
             </div>
-            <Video />
+            <Video roomId={roomType?.roomName} startGame={startGame} />
           </div>
         </div >
       </div>

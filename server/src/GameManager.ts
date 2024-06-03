@@ -123,11 +123,13 @@ export class GameManager {
         }
     }
 
-    public playerVideoCall(data, io: any, socket) {
+    public playerVideoCall(data: any, socket) {
         const roomFound = this.getRoomNameBySocketId(socket.id);
-        console.log(socket.id, roomFound, "videocalldata----", data)
-        // io.to(roomFound).emit("new_peer", { peerId: data.peerId, socketId: data.socketId, room: roomFound })
-        socket.broadcast.to(roomFound).emit("new_peer", { peerId: data.peerId, socketId: data.socketId, room: roomFound })
+        if (!roomFound) {
+            console.error('Room not found for socket ID:', socket.id);
+            return;
+        }
+        socket.broadcast.to(data?.roomId).emit("new_peer", { peerId: data.peerId, socketId: data.socketId, room: roomFound })
     }
 }
 
