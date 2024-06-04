@@ -19,6 +19,10 @@
   --primary-font-color: #FCDC4D;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 h1,
 p {
   color: white !important;
@@ -327,8 +331,6 @@ div::-webkit-scrollbar {
   /* background-color: green; */
 }
 
-
-
 .board {
   grid-area: board;
   display: grid;
@@ -379,23 +381,32 @@ div::-webkit-scrollbar {
 
 .video-grid-container {
   /* background-color: yellow; */
-  height: 50%;
-  background-color: var(--primary-color);
-  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1;
+  padding: 1rem 1rem 0 1rem;
   border-radius: 5px;
+  height: 50%;
+  background-color: var(--primary-color);
   border-top: 2px dashed var(--primary-white);
 }
 
 .video-grid-container video {
   border-radius: 5px;
-  height: 50%;
+  height: 80%;
   width: 100%;
 }
 
-
+.video-grid-container .no-video {
+  /* background-color: red; */
+  font-size: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  height: 80%;
+}
 
 .peer {
   /* background-color: #1a1a1a; */
@@ -427,6 +438,7 @@ div::-webkit-scrollbar {
   border: none;
   font-size: 1.5rem;
   border-radius: 100%;
+  margin: 0.5rem 0;
 }
 
 .call-btn button:first-child {
@@ -459,12 +471,11 @@ div::-webkit-scrollbar {
 }
 
 .history {
-  /* background-color: red; */
   grid-area: history;
   display: flex;
-  width: 90%;
+  width: 100%;
   background-color: var(--primary-color);
-  flex-grow: 1;
+  /* background-color: red; */
   justify-content: flex-start;
 }
 
@@ -477,27 +488,20 @@ div::-webkit-scrollbar {
   padding: 0 1rem;
   margin-top: 1rem;
   height: 40%;
+  width: 100%;
   /* flex: 1; */
   /* border-bottom: 2px dashed var(--primary-white); */
 }
 
 .move-history {
-  text-align: start;
-  width: 95%;
+  display: inline;
+  flex-direction: row;
   flex-wrap: wrap;
   overflow-y: auto;
-  line-height: 0;
-  border-radius: 5px;
+  width: 100%;
+  height: 13rem;
+  /* max-width: 50%; */
   /* background-color: yellow; */
-}
-
-
-.move-history-item {
-  display: inline-flex;
-  flex-wrap: wrap;
-  text-align: center;
-  line-height: 0;
-  /* background-color: violet; */
 }
 
 .turns-icon {
@@ -507,6 +511,7 @@ div::-webkit-scrollbar {
   /* background-color: rgb(0, 238, 255); */
   margin: 0 0.3rem;
   font-size: 1.5rem;
+  width: 100%;
 }
 
 .turns-icon>span {
@@ -911,6 +916,7 @@ div::-webkit-scrollbar {
 /* PROFILE PAGE CSS STARTS HERE */
 
 .profile-wrapper .nav-container {
+  z-index: 10;
   width: 90%;
   position: absolute;
 }
@@ -1137,16 +1143,29 @@ div::-webkit-scrollbar {
     /* background-color: #1a1a1a; */
   }
 
+  .history {
+    width: 90%;
+  }
+
+  .history .turns-container {
+    height: 50% !important;
+    /* background-color: red; */
+  }
 
   .video-grid-container {
-    padding: 1rem 0;
-    margin: 0 1rem;
+    padding: 0.5rem 0;
+    margin: 0 0.1rem;
+  }
+
+  .video-grid-container video {
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
   }
 
   .peer {
-    margin: 1rem 0;
+    margin-top: 0.5rem;
     flex-direction: column;
-    gap: 2rem;
   }
 
   .peer-id-input {

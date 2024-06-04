@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import { IoMdCall } from "react-icons/io";
 import { MdCallEnd } from "react-icons/md";
 import { MdMicOff, MdMic } from "react-icons/md";
+import { FcNoVideo } from "react-icons/fc";
 
 function Video({ startGame, roomId }: any) {
 
@@ -146,20 +147,27 @@ function Video({ startGame, roomId }: any) {
                     }}
                     autoPlay
                 />
-            ) : (<p>No remote stream available</p>)}
+            ) : (
+                <div className="no-video">
+                    <FcNoVideo />
+                </div>
+            )}
 
             <div className="peer">
                 <div className="call-btn">
                     <button onClick={callPeer}>
                         <IoMdCall />
                     </button>
-                    <button onClick={endCall}>
-                        <MdCallEnd />
-                    </button>
-
-                    <button onClick={toggleMute} className={isMuted ? 'muted' : ''}>
-                        {isMuted ? <MdMicOff /> : <MdMic />}
-                    </button>
+                    {remoteStream &&
+                        <>
+                            <button onClick={endCall}>
+                                <MdCallEnd />
+                            </button>
+                            <button onClick={toggleMute} className={isMuted ? 'muted' : ''}>
+                                {isMuted ? <MdMicOff /> : <MdMic />}
+                            </button>
+                        </>
+                    }
 
                 </div>
 

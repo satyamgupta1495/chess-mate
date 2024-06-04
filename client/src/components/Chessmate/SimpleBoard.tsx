@@ -23,8 +23,6 @@ type SimpleBoardProps = {
 export default function SimpleBoard({ mode, setMode, position, setPosition, game, setGame, currentTheme, setCurrentTurn, currentTurn }: SimpleBoardProps) {
 
   const { roomType, setRoomType, boardWidth, onDrop, onSquareClick, onSquareRightClick, moveSquares, optionSquares, moveHistory, rightClickedSquares, customStyles, showPromotionDialog, moveTo, sendChat, chat, message, setMessage, orientation, playerLeft, winner, startGame } = useSimpleBoard({ game, mode, position, setPosition, currentTheme, setCurrentTurn, currentTurn })
-  console.log("modemode", roomType)
-
 
   return (
     <>
@@ -76,7 +74,7 @@ export default function SimpleBoard({ mode, setMode, position, setPosition, game
                 <p>Move history : </p>
                 {moveHistory.map((move: any, index: number) => {
                   return (
-                    <div key={index} className="move-history-item">
+                    <div key={index} className="history-item">
                       <p>{move.piece}{move.to},
                       </p>
                     </div>

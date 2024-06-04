@@ -1,5 +1,5 @@
 // import { FaArrowCircleDown, FaArrowCircleUp } from 'react-icons/fa';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 type ChatProps = {
     chat: any,
@@ -10,10 +10,6 @@ type ChatProps = {
 
 function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
     const chatEndRef: any = useRef(null);
-
-    useEffect(() => {
-        chatEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }, [chat])
 
     return (
         <>
@@ -66,7 +62,6 @@ function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
                             </svg>
                         </button>
                     </div>
-
                 </div>
             </div>
         </>

@@ -343,6 +343,7 @@ export default function useSimpleBoard({
 
         if (!chatEventHandlerAdded.current) {
             socket.on("chat", (chatData: any) => {
+                toast("New message ✉️")
                 setChat((prevChat: any) => [...prevChat, chatData])
             })
             chatEventHandlerAdded.current = true
