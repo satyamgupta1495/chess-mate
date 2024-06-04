@@ -343,12 +343,15 @@ export default function useSimpleBoard({
 
         if (!chatEventHandlerAdded.current) {
             socket.on("chat", (chatData: any) => {
-                toast("New message ✉️")
                 setChat((prevChat: any) => [...prevChat, chatData])
             })
             chatEventHandlerAdded.current = true
         }
-    })
+
+        socket.on("msg-receieved", () => {
+            toast("New message ✉️")
+        })
+    }, [])
 
     useEffect(() => {
         socket.emit("startGame", { ...roomType })

@@ -1,5 +1,5 @@
 // import { FaArrowCircleDown, FaArrowCircleUp } from 'react-icons/fa';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 type ChatProps = {
     chat: any,
@@ -10,11 +10,18 @@ type ChatProps = {
 
 function Chat({ chat, sendChat, message, setMessage }: ChatProps) {
     const chatEndRef: any = useRef(null);
+    const chatContainerRef: any = useRef(null);
+
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [chat]);
 
     return (
         <>
             <div className='chat-container'>
-                <div className="chat-header">
+                <div className="chat-header" ref={chatContainerRef}>
                     {chat.map((chatData: any, index: number) => {
                         return (
                             <div key={index} className={`chat-message ${chatData.type}`}>
