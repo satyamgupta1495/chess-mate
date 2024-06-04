@@ -294,7 +294,7 @@ div::-webkit-scrollbar {
 .turn-indicator {
   width: fit-content;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 5px;
   padding: 2px 5px;
@@ -391,7 +391,6 @@ div::-webkit-scrollbar {
 
 .video-grid-container video {
   border-radius: 5px;
-  border: 2px dashed var(--primary-white);
   height: 50%;
   width: 100%;
 }
@@ -399,45 +398,64 @@ div::-webkit-scrollbar {
 
 
 .peer {
-  /* background-color: red; */
   /* background-color: #1a1a1a; */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 0.5rem;
   border-radius: 5px;
 }
 
-.peer-id-input {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 0.5rem;
-  width: 100%;
-  /* background-color: green; */
-}
-
-.peer-id-input input {
-  color: white;
-  border: 1px solid white;
-  background-color: var(--primary-color);
-}
 
 .call-btn {
   /* background-color: pink; */
   display: flex;
-  justify-content: space-evenly;
-  line-height: 0;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+  gap: 2rem;
   color: white;
 }
 
 .call-btn button {
-  border: 1px solid white;
-  height: 2rem;
-  padding: 0 1rem;
-  border-radius: 5px;
-  margin-left: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 100%;
+}
+
+.call-btn button:first-child {
+  background-color: #30C04F;
+
+}
+
+.call-btn button:first-child:hover {
+  background-color: #2bac47;
+}
+
+.call-btn button:nth-child(2) {
+  background-color: #FF2849;
+}
+
+.call-btn button:nth-child(2):hover {
+  background-color: #e52441;
+}
+
+.call-btn button:nth-child(3) {
+  background-color: grey;
+}
+
+.call-btn button:nth-child(3):hover {
+  background-color: #e52441;
+}
+
+.muted {
+  background-color: #e52441 !important;
 }
 
 .history {

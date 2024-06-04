@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { socket } from '../../Socket';
 import Peer from 'peerjs';
 import toast from 'react-hot-toast';
-// import { FaCopy } from 'react-icons/fa';
+import { IoMdCall } from "react-icons/io";
+import { MdCallEnd } from "react-icons/md";
+import { MdMicOff, MdMic } from "react-icons/md";
 
 function Video({ startGame, roomId }: any) {
 
@@ -12,6 +14,8 @@ function Video({ startGame, roomId }: any) {
     const [incomingCall, setIncomingCall] = useState<any>(null);
     const currVideoRef = useRef<any>(null);
     const peerRef = useRef<Peer | null>(null);
+    const localStreamRef = useRef<MediaStream | null>(null);
+    const [isMuted, setIsMuted] = useState(false);
 
     useEffect(() => {
         if (startGame) {
@@ -69,10 +73,10 @@ function Video({ startGame, roomId }: any) {
     }, [startGame]);
 
     function callPeer() {
-
         navigator.mediaDevices
             .getUserMedia({ video: true, audio: true })
             .then((stream) => {
+                localStreamRef.current = stream;
                 console.log('Local stream:', stream);
                 const call = peerRef.current?.call(opponentPeerIdRef.current, stream);
                 call?.on('stream', (remoteStream) => {
@@ -89,6 +93,7 @@ function Video({ startGame, roomId }: any) {
         navigator.mediaDevices
             .getUserMedia({ video: true, audio: true })
             .then((stream) => {
+                localStreamRef.current = stream;
                 console.log('Answering call with local stream:', stream);
                 call.answer(stream);
                 call.on('stream', (remoteStream) => {
@@ -113,6 +118,19 @@ function Video({ startGame, roomId }: any) {
             incomingCall.close();
             setIncomingCall(null);
         }
+        if (localStreamRef.current) {
+            localStreamRef.current.getTracks().forEach(track => track.stop());
+            localStreamRef.current = null;
+        }
+    }
+
+    function toggleMute() {
+        if (localStreamRef.current) {
+            localStreamRef.current.getAudioTracks().forEach(track => {
+                track.enabled = !track.enabled;
+                setIsMuted(!track.enabled);
+            });
+        }
     }
 
     return (
@@ -132,8 +150,17 @@ function Video({ startGame, roomId }: any) {
 
             <div className="peer">
                 <div className="call-btn">
-                    <button onClick={callPeer} style={{ backgroundColor: 'green', borderRadius: '50%', width: '60px', height: '60px', color: 'white', border: 'none', marginRight: '10px' }}>Call</button>
-                    <button onClick={endCall} style={{ backgroundColor: 'red', borderRadius: '50%', width: '60px', height: '60px', color: 'white', border: 'none' }}>End</button>
+                    <button onClick={callPeer}>
+                        <IoMdCall />
+                    </button>
+                    <button onClick={endCall}>
+                        <MdCallEnd />
+                    </button>
+
+                    <button onClick={toggleMute} className={isMuted ? 'muted' : ''}>
+                        {isMuted ? <MdMicOff /> : <MdMic />}
+                    </button>
+
                 </div>
 
             </div>
