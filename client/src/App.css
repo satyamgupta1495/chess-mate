@@ -199,18 +199,23 @@ div::-webkit-scrollbar {
   min-width: 9rem !important;
   background: linear-gradient(320deg, rgba(0, 140, 255, 0.678), rgba(128, 0, 128, 0.308));
   border-radius: 10px;
-  padding: .4rem;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  align-content: center;
-  cursor: pointer;
+  /* align-content: center; */
+  /* cursor: pointer; */
 }
 
 .profile-container .user-name {
   font-size: 0.9rem;
 }
 
+.sign-up-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
 
 /* HOME PAGE CSS ends here */
 
@@ -291,6 +296,7 @@ div::-webkit-scrollbar {
   margin: 0 2rem;
   display: grid;
   grid-gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
   grid-template-areas:
     "chat board history";
 }
@@ -320,14 +326,13 @@ div::-webkit-scrollbar {
 
 .chat {
   grid-area: chat;
+  width: 100%;
+  /* height: inherit; */
 }
 
 .chat-container {
   background-color: #343541;
   border-radius: 8px;
-  /* justify-content: flex-start; */
-  /* width: 100%; */
-  /* margin-right: 1rem; */
   /* background-color: green; */
 }
 
@@ -340,11 +345,6 @@ div::-webkit-scrollbar {
   grid-template-areas:
     "chat board history";
   padding: 0 1rem;
-}
-
-.chat {
-  grid-area: chat;
-  width: 100%;
 }
 
 .board {
@@ -363,21 +363,18 @@ div::-webkit-scrollbar {
   font-size: 2.5rem;
 }
 
-.control-container {
+/* .control-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* background-color: var(--primary-color); */
   border-radius: 5px;
-  /* margin-left: 1rem; */
 }
 
 .control-container p {
-  /* background-color: yellow; */
   margin: 1rem;
   font-size: 1rem;
   font-family: 'Ubuntu', sans-serif;
-}
+} */
 
 .video-grid-container {
   /* background-color: yellow; */
@@ -414,8 +411,7 @@ div::-webkit-scrollbar {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0.5rem;
-  border-radius: 5px;
+  /* padding: 0.5rem; */
 }
 
 
@@ -473,10 +469,10 @@ div::-webkit-scrollbar {
 .history {
   grid-area: history;
   display: flex;
-  width: 100%;
-  background-color: var(--primary-color);
-  /* background-color: red; */
+  flex-direction: column;
   justify-content: flex-start;
+  background-color: var(--primary-color);
+  border-radius: 8px !important;
 }
 
 .turns-container {
@@ -487,8 +483,7 @@ div::-webkit-scrollbar {
   align-items: flex-start;
   padding: 0 1rem;
   margin-top: 1rem;
-  height: 40%;
-  width: 100%;
+
   /* flex: 1; */
   /* border-bottom: 2px dashed var(--primary-white); */
 }
@@ -498,10 +493,19 @@ div::-webkit-scrollbar {
   flex-direction: row;
   flex-wrap: wrap;
   overflow-y: auto;
+  max-height: 12rem;
   width: 100%;
-  height: 13rem;
-  /* max-width: 50%; */
   /* background-color: yellow; */
+}
+
+.history-item {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.5rem !important;
+  /* background-color: red; */
+}
+.history-item p{
+  margin-right: 0.5rem;
 }
 
 .turns-icon {
@@ -538,7 +542,6 @@ div::-webkit-scrollbar {
 
 .chat-section {
   background-color: var(--primary-color);
-  /* background-color: yellow !important; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -549,8 +552,8 @@ div::-webkit-scrollbar {
 
 .chat-header {
   /* background-color: turquoise; */
-  margin-top: 1rem;
-  height: 32rem;
+  /* margin-top: 1rem; */
+  height: 32.5rem;
   overflow-y: auto;
 }
 
@@ -558,48 +561,16 @@ div::-webkit-scrollbar {
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
+  margin-top: 0.5rem;
   /* background-color: rgb(8, 28, 243); */
 }
 
-.chat-input {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 0.5rem;
-  padding-left: 0.5rem;
-}
-
-.chat-input input {
-  color: #FCDC4D;
-  border: 2px dashed #FCDC4D;
-  background-color: var(--primary-color);
-}
-
-.chat-input input:focus {
-  color: #FCDC4D;
-  background-color: var(--primary-color);
-  box-shadow: none;
-  border: 2px dashed #FCDC4D;
-}
-
-.chat-input input::placeholder {
-  color: #b8a75d;
-  background-color: var(--primary-color);
-}
-
-.chat-input input:focus::placeholder {
-  color: #b8a75d;
-  background-color: var(--primary-color);
-}
-
 .msg-div {
-  /* background-color: #700505; */
   display: flex;
   align-items: center;
   flex-direction: column;
   border: 1px dashed;
   line-height: 1;
-
 }
 
 .send-btn {
@@ -625,14 +596,11 @@ div::-webkit-scrollbar {
 
 .msg-div::after {
   content: '';
-
 }
 
 .msg-div span {
   font-size: 0.8rem !important;
 }
-
-
 
 /* SimpleBoard styling ends-here*/
 
@@ -784,7 +752,8 @@ div::-webkit-scrollbar {
 }
 
 .custom-dialogue-box p {
-  color: #FCDC4D;
+  font-family: "Rubik Mono One", monospace, !important;
+  color: #FCDC4D !important;
 }
 
 .modal.show {
@@ -818,7 +787,6 @@ div::-webkit-scrollbar {
 
 .input input::placeholder {
   color: #b8a75d;
-  background-color: #1A1423;
 }
 
 .input input:focus::placeholder {
@@ -1026,6 +994,12 @@ div::-webkit-scrollbar {
     /* background-color: red; */
   }
 
+  .sign-up-container button:nth-child(2) {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    /* background-color: red; */
+  }
+
   .home_page_container {
     /* background-color: red; */
     flex-direction: column;
@@ -1149,7 +1123,7 @@ div::-webkit-scrollbar {
 
   .history .turns-container {
     height: 50% !important;
-    /* background-color: red; */
+    /* background-color: red !important; */
   }
 
   .video-grid-container {
@@ -1332,11 +1306,8 @@ div::-webkit-scrollbar {
     grid-area: chess-board;
   }
 
-  .chat {
-    height: 100%;
-  }
-
   .chat-header {
+    /* background-color: red; */
     height: 40rem;
   }
 

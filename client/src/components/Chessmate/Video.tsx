@@ -168,9 +168,7 @@ function Video({ startGame, roomId }: any) {
                             </button>
                         </>
                     }
-
                 </div>
-
             </div>
         </div>
     );

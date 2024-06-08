@@ -56,11 +56,11 @@ export default function SimpleBoard({ mode, setMode, position, setPosition, game
           </div>
 
 
-          <div className={`${mode !== "" ? "hidden" : ""} control-container chat`}>
+          <div className={`${mode !== "" ? "hidden" : ""} chat`}>
             <Chat sendChat={sendChat} chat={chat} message={message} setMessage={setMessage} />
           </div>
 
-          <div className={`${mode !== "" ? "hidden" : ""} control-container history`}>
+          <div className={`${mode !== "" ? "hidden" : ""} history`}>
             <div className="turns-container">
               <div className="turn-indicator">
                 <span className="turn-icon">
@@ -75,8 +75,7 @@ export default function SimpleBoard({ mode, setMode, position, setPosition, game
                 {moveHistory.map((move: any, index: number) => {
                   return (
                     <div key={index} className="history-item">
-                      <p>{move.piece}{move.to},
-                      </p>
+                      <p>{move.piece}{move.to},</p>
                     </div>
                   )
                 })}

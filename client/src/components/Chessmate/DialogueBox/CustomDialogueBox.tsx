@@ -85,6 +85,7 @@ export default function CustomDialogueBox({ setRoomType, setMode }: Props) {
                 onHide={() => setShow(false)}
                 backdrop={"static"}
                 centered
+                className='flex justify-center items-center'
             >
                 <div className="custom-dialogue-box">
                     <Modal.Body>

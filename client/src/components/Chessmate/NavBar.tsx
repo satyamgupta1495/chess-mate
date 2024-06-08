@@ -81,7 +81,7 @@ function NavBar({ setPosition, setGame, setMode, setCurrTheme }: any) {
             </Nav>
             <Nav>
               <div className="d-flex gap-3 align-items-center user-profile">
-                {user && user?.isLoggedInUser?._id && (
+                {user && user?.loggedInUser?._id && (
                   <>
                     <Avatar className="cursor-pointer object-contain border-solid border-2" onClick={() => navigate("/profile")}>
                       <AvatarImage className="object-fill" src={user?.loggedInUser?.avatar} />

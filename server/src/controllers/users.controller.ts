@@ -201,8 +201,8 @@ class UsersController {
             response.response = serviceResponse.response;
 
             res.status(StatusCodes.OK)
-                .clearCookie("accessToken", cookieOption)
-                .clearCookie("refreshToken", cookieOption)
+                .clearCookie("accessToken")
+                .clearCookie("refreshToken")
                 .json(response);
             return res;
         } catch (error) {
