@@ -12,11 +12,11 @@ function Video({ startGame, roomId }: any) {
     const myPeerIdRef = useRef<any>(null);
     const opponentPeerIdRef = useRef<any>(null);
     const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
-    const [incomingCall, setIncomingCall] = useState<any>(null);
     const currVideoRef = useRef<any>(null);
     const peerRef = useRef<Peer | null>(null);
     const localStreamRef = useRef<MediaStream | null>(null);
     const [isMuted, setIsMuted] = useState(false);
+
 
     useEffect(() => {
         if (startGame) {
@@ -37,7 +37,6 @@ function Video({ startGame, roomId }: any) {
 
             peer.on('call', (call) => {
                 console.log('Incoming call from...');
-                setIncomingCall(call);
                 toast((t) => (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <p className='text-black' style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '10px' }}>Incoming video call...</p>
@@ -69,6 +68,14 @@ function Video({ startGame, roomId }: any) {
                 console.error('Peer error:', err);
             });
 
+            peer.on("close", () => {
+                console.log("Peer closed");
+                setRemoteStream(null);
+                localStreamRef.current = null;
+                peerRef.current = null;
+
+            })
+
             peerRef.current = peer;
         }
     }, [startGame]);
@@ -78,7 +85,6 @@ function Video({ startGame, roomId }: any) {
             .getUserMedia({ video: true, audio: true })
             .then((stream) => {
                 localStreamRef.current = stream;
-                console.log('Local stream:', stream);
                 const call = peerRef.current?.call(opponentPeerIdRef.current, stream);
                 call?.on('stream', (remoteStream) => {
                     console.log('Remote stream:', remoteStream);
@@ -102,26 +108,26 @@ function Video({ startGame, roomId }: any) {
                     setRemoteStream(remoteStream);
                 });
                 call.on('close', () => {
-                    console.log('Call ended');
                     setRemoteStream(null);
+                    localStreamRef.current = null;
                 });
-                setIncomingCall(null);
             })
             .catch((err) => {
                 console.error('Failed to get local stream', err);
             });
     }
 
+
     function endCall() {
         peerRef.current?.disconnect();
         setRemoteStream(null);
-        if (incomingCall) {
-            incomingCall.close();
-            setIncomingCall(null);
-        }
         if (localStreamRef.current) {
             localStreamRef.current.getTracks().forEach(track => track.stop());
             localStreamRef.current = null;
+        }
+        if (remoteStream) {
+            remoteStream.getTracks().forEach(track => track.stop());
+            setRemoteStream(null);
         }
     }
 
@@ -137,20 +143,37 @@ function Video({ startGame, roomId }: any) {
     return (
         <div className='video-grid-container'>
             {remoteStream ? (
-                <video
-                    ref={(video: HTMLVideoElement | null) => {
-                        if (video) {
-                            currVideoRef.current = video;
-                            currVideoRef.current.srcObject = remoteStream;
-                            currVideoRef.current.play().catch(err => console.error('Failed to play video:', err));
-                        }
-                    }}
-                    autoPlay
-                />
+                <>
+                    <video
+                        ref={(video: HTMLVideoElement | null) => {
+                            if (video) {
+                                currVideoRef.current = video;
+                                currVideoRef.current.srcObject = remoteStream;
+                                currVideoRef.current.play().catch(err => console.error('Failed to play video:', err));
+                            }
+                        }}
+                        autoPlay
+                    />
+                </>
             ) : (
                 <div className="no-video">
                     <FcNoVideo />
                 </div>
+            )}
+
+            {localStreamRef.current && (
+                <>
+                    <video
+                        className="local-video"
+                        ref={(video: HTMLVideoElement | null) => {
+                            if (video && localStreamRef.current) {
+                                video.srcObject = localStreamRef.current;
+                                video.play().catch(err => console.error('Failed to play local video:', err));
+                            }
+                        }}
+                        autoPlay
+                    />
+                </>
             )}
 
             <div className="peer">
