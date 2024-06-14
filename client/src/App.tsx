@@ -7,6 +7,7 @@ import { Suspense } from 'react';
 import AppRoutes from '@/routes/index';
 import Particle from './components/Particles';
 import Loader from './Loader';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
 
@@ -15,6 +16,18 @@ function App() {
     <>
       <Suspense fallback={<Loader />}>
         {routing}
+        <Toaster
+          position="top-right"
+          reverseOrder={true}
+          toastOptions={{
+            style: {
+              fontSize: '14px',
+              border: '1px dashed white',
+              color: '#000',
+              zIndex: 100
+            }
+          }}
+        />
         <Particle id="tsparticles" />
       </Suspense>
     </>

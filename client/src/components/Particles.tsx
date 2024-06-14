@@ -4,6 +4,7 @@ import { useEffect, useMemo } from "react";
 // import { loadFull } from "tsparticles"; // if you are going to use `loadFull`, install the "tsparticles" package too.
 import { loadSlim } from "@tsparticles/slim"; // if you are going to use `loadSlim`, install the "@tsparticles/slim" package too.
 // import { loadBasic } from "@tsparticles/basic"; // if you are going to use `loadBasic`, install the "@tsparticles/basic" package too.
+import type { MoveDirection } from 'tsparticles-engine';
 
 const Particle = (props) => {
     useEffect(() => {
@@ -12,11 +13,7 @@ const Particle = (props) => {
         });
     }, []);
 
-    const particlesLoaded = (container) => {
-        console.log("container", container);
-    };
-
-    const options = useMemo(
+    const options: any = useMemo(
         () => ({
             background: {
                 color: {
@@ -57,7 +54,7 @@ const Particle = (props) => {
                     width: 1,
                 },
                 move: {
-                    direction: "none",
+                    direction: "none" as MoveDirection,
                     enable: true,
                     outModes: {
                         default: "bounce",
@@ -87,7 +84,8 @@ const Particle = (props) => {
         [],
     );
 
-    return <Particles id={props.id} init={particlesLoaded} options={options} />;
+    // eslint-disable-next-line
+    return <Particles id={props.id} options={options} />;
 };
 
 export default Particle;

@@ -89,7 +89,6 @@ export class GameManager {
     }
 
     public makeMove(moveData, socket) {
-        console.log("movedata----", moveData)
         const roomFound = this.getRoomNameBySocketId(socket.id);
 
         if (!roomFound) {
@@ -110,10 +109,29 @@ export class GameManager {
         const roomFound = this.getRoomNameBySocketId(socket.id);
         if (roomFound) {
             socket.to(roomFound).emit('chat', { ...message, type: 'received', player: socket.id, time: Date.now() });
+            socket.to(roomFound).emit('msg-receieved');
         }
     }
 
+    public playerDisconnected(socket) {
+        const roomFound = this.getRoomNameBySocketId(socket.id);
+        if (roomFound) {
+            socket.to(roomFound).emit("playerLeft", { playerId: socket.id });
+        }
+        const room: any = this.rooms.get(roomFound);
+        if (room) {
+            this.rooms.delete(roomFound);
+        }
+    }
 
+    public playerVideoCall(data: any, socket) {
+        const roomFound = this.getRoomNameBySocketId(socket.id);
+        if (!roomFound) {
+            console.error('Room not found for socket ID:', socket.id);
+            return;
+        }
+        socket.broadcast.to(data?.roomId).emit("new_peer", { peerId: data.peerId, socketId: data.socketId, room: roomFound })
+    }
 }
 
 

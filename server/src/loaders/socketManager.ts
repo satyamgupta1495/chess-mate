@@ -25,7 +25,6 @@ class SocketManager {
             console.log(`New socket connection: ${socket.id}`);
 
             socket.on('startGame', (roomData: TRoomData) => {
-                console.log("roomData", roomData)
                 try {
                     this.gameManager?.startGame(roomData, socket, this.io);
                 } catch (error) {
@@ -36,11 +35,10 @@ class SocketManager {
 
             socket.on('move', (moveData: any) => {
                 try {
-                    console.log("moveData", moveData)
                     this.gameManager.makeMove(moveData, socket)
                 } catch (error) {
-                    console.error('Error starting game:', error);
-                    socket.emit('error', 'Failed to start game');
+                    console.error('Invalid move', error);
+                    socket.emit('error', 'Invalid move');
                 }
             })
 
@@ -53,9 +51,23 @@ class SocketManager {
                 }
             })
 
-            socket.on('disconnect', () => {
-                console.log(`Socket disconnected: ${socket.id}`);
+            socket.on("disconnect", () => {
+                try {
+                    this.gameManager.playerDisconnected(socket)
+                } catch (error) {
+                    console.error(error);
+                    socket.emit('error', 'Failed to disconnec user');
+                }
             });
+
+            socket.on("new_peer", (data) => {
+                try {
+                    this.gameManager.playerVideoCall(data, socket)
+                } catch (error) {
+                    console.error(error);
+                }
+            });
+
         });
     }
 }

@@ -1,15 +1,13 @@
 
 import { useEffect } from 'react';
-import SimpleBoard from '../Boards/SimpleBoard'
+import SimpleBoard from './SimpleBoard'
 import useChessMate from './hooks/useChessMate';
-import Footer from '../Footer/Footer';
-// import { Container } from 'react-bootstrap';
-import { Toaster } from 'react-hot-toast';
-import NavBar from '../Navbar/NavBar';
+import Footer from './Footer';
+import NavBar from './NavBar';
 
 function ChessMate() {
 
-  const { game, mode,  setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
+  const { game, mode, setMode, setGame, currTheme, setCurrTheme, currentTurn, setCurrentTurn, position, setPosition } = useChessMate()
 
   useEffect(() => {
     const selectedTheme = localStorage.getItem('theme')
@@ -23,13 +21,17 @@ function ChessMate() {
     <>
       <div className='chess-mate'>
         <NavBar
-          currentTheme={currTheme}
-          setCurrTheme={setCurrTheme} />
+          setCurrTheme={setCurrTheme}
+          setMode={setMode}
+          setGame={setGame}
+          setPosition={setPosition}
+        />
 
         < SimpleBoard
           position={position}
           setPosition={setPosition}
           mode={mode}
+          setMode={setMode}
           game={game}
           setGame={setGame}
           currentTheme={currTheme}
@@ -37,19 +39,7 @@ function ChessMate() {
           setCurrentTurn={setCurrentTurn} />
 
         <Footer />
-      </div >
-      
-      <Toaster
-        position="top-right"
-        reverseOrder={true}
-        toastOptions={{
-          style: {
-            fontSize: '14px',
-            border: '1px dashed white',
-            color: '#000'
-          }
-        }}
-      />
+      </div>
     </>
   )
 }
